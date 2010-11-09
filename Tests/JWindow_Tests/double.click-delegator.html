@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<title>Double Click Delegator</title>
+	</head>
+	<body>
+		<div class="jframe_padded">
+			<p>Note that to use double click delegation on a container with links in it, if you don't want the links to fire on single click, you must add the css class "jframe_ignore" to them and configure the double click delegator to point to the desired link. This is especially useful with HtmlTables with selectable rows if you don't want a single click on the row to load another page, even if the user clicks on a link.</p>
+			
+			<div data-dblclick-delegate="{'dblclick_loads':'.dblme'}" style="width: 200px; height: 100px; padding: 40px; background: #ccc; border: 1px solid #000; float: left; margin: 0px 10px;">
+				<a class="dblme jframe_ignore" href="/test/?project=jframe&path=/JWindow_Tests/post-load.alert.popup.html">I show an alert if you double click anywhere inside the box around me. Note that I have the css class "jframe_ignore" which means a single click on me does nothing.</a>
+			</div>
+
+			<div data-dblclick-delegate="{'dblclick_loads':'.dblme'}" style="width: 200px; height: 100px; padding: 40px; background: #ccc; border: 1px solid #000; float: left; margin: 0px 10px;">
+				I'm a div with a double click delegate specified, but no link matching, so I don't do anything.
+			</div>
+
+			<div data-dblclick-delegate="{'dblclick_loads':'.dblme'}" style="width: 200px; height: 100px; padding: 40px; background: #ccc; border: 1px solid #000; float: left; clear:both; margin: 10px; clear:both;">
+				<a class="dblme">I'm an anchor with no href, so clicking me or double clicking my container should do nothing.</a>
+			</div>
+
+			<div data-dblclick-delegate="{'dblclick_loads':'.dblme'}" style="width: 200px; height: 100px; padding: 40px; background: #ccc; border: 1px solid #000;  margin: 10px; float: left;">
+				<a class="dblme jframe-nav_back">I'm a link with no href, but I have the jframe class name jframe-nav_back, so I navigate back in the app window's history. Double clicking my container should send you back to the JFrame gallery.</a>
+			</div>
+		</div>
+
+	</body>
+</html>

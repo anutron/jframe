@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<title>JFrame Gallery</title>
+	</head>
+	<body>
+		<div class="jframe_padded">
+			<h1>Gallery pages:</h1>
+			<ul>
+				{% for file in files %}
+					<li><a href="{{file.filename}}" id="{{file.id}}">{{file.name}}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</body>
+</html>

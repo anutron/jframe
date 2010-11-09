@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+    <title>Timer</title>
+  </head>
+  <body>
+  <div class="jframe_padded">
+		<p>This filter creates a timer that counts up from zero (or some other value you specify). It uses "human" wording, so when it passes 59 seconds it reads "about a minute ago" and on to "an hour", "a day", etc.</p>
+		<p>Example from zero:
+			<span data-filters="Timer"></span>
+		</p>
+		<p>Example from zero, showing seconds when less than 1 min:
+			<span data-filters="Timer" class="showSeconds"></span>
+		</p>
+		<p>Example from Dec 31, 1999:
+			<span data-filters="Timer" data-start-time="12/31/1999 11:59pm"></span>
+		</p>
+  </div>
+</body>
+</html>

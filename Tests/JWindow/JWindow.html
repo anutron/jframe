@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>JWindow</title>
+		<link rel="stylesheet" href="/static/css/reset.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+		<link rel="stylesheet" href="/static/css/tests.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+		<link rel="stylesheet" href="/asset/jframe/shared.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+		<script src="/depender/build?require=JFrame/JWindow,Core/DomReady"></script>
+	</head>
+	<body class="loaded">
+		<div id="hotkeys" style="display:none"></div>
+		<!-- test_runner_no_wrapper -->
+		<script>
+			window.addEvent('domready', function(){
+				var jwin = new JWindow('http://localhost:9876/', {
+					element: document.body
+				});
+				var sizer = function(){
+					var size = window.getScrollSize();
+					console.log(size);
+					jwin.resize(size.x, size.y);
+				};
+				sizer();
+				window.addEvent('resize', sizer);
+			});
+		</script>
+	</body>
+</html>
+

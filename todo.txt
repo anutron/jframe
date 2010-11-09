@@ -1,0 +1,24 @@
+CCS > JFrame etc
+
+.jframe-fake_refresh > .jframe-fake_refresh
+.jframe-error-popup > .jframe-error-popup
+.css-shared > .jframe-shared
+(jframe.js) onCcsErrorPopup > onErrorPopup
+FlashMessage stuff
+
+[CCS]JFrame.addGlobalLinkers
+
+ccs-shortcut_list > jframe-shortcut_list
+
+request: onCcsError > onJFrameError
+ccsError > JFrameError
+ccsErrorPopup > jframeErrorPopup
+ccs- > jframe-
+
+JFrame.Keys - widget.getName
+
+ccs-hide_history > jbrowser-hide_history
+ccs-show_history > jbrowser-show_history
+
+
+jframe target nixed

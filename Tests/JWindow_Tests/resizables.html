@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+    <title>Resizables</title>
+  </head>
+  <body>
+  <div class="jframe_padded">
+    <p>You should be able to resize the box below by dragging the grey handle.</p>
+    <div data-filters="Resizable" data-resize-handle=".textresizer" data-resize-child="textarea" data-resize-modifiers="{'x': false}">
+      <textarea tabindex="4" class="resizable" rows="15" cols="50" name="comment" style="width: 250px; height: 100px;"></textarea>
+      <div class="textresizer" style="width: 254px; background: #ddd; border-top: 1px solid #eee; border-left: 1px solid #eee; border-right: 1px solid #333; border-bottom: 1px solid #333; height: 4px; cursor: s-resize; margin-bottom: 10px; clear:both;"></div>
+    </div>
+    <hr style="clear:both"/>
+		<p>The example below uses the default style for a resize handle, which is positioned on the bottom right corner of its container. It has the .jframe-resize_handle class.</p>
+		<div data-filters="Resizable" data-resize-handle=".jframe-resize_handle" style="min-height: 100px; min-width: 100px; border: 1px solid #000; position: relative; width: 100px; height: 100px">
+			<p style="padding: 8px">drag the little icon in the bottom right to resize...</p>
+			<a class="jframe-resize_handle">resize</a>
+		</div>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+  </div>
+</body>
+</html>

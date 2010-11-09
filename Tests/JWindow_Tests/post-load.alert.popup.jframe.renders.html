@@ -1,0 +1,12 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<title>Post-load alert popup</title>
+	</head>
+	<body>
+		<div class="alert_popup jframe_renders">
+				I'm a post-load alert. You can click "ok" or the modal layer below me to close me.
+		</div>
+		<p>Despite the alert, this content still rendered. My popup is in a div with the class .alert_popup but <em>also</em> has .jframe_renders. This allows the page below the popup to still render the response (without the popup content of course).</p>
+	</body>
+</html>
