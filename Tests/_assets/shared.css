@@ -189,6 +189,13 @@ input[type=submit] {
 .jframe-shared .jframe-code, .jframe-shared.jframe-code, .jframe-code {
 	font-family: "Andale Mono", "Monaco", "Courier New" !important;
 }
+/* text wrapping */
+.jframe-shared .normal-wrap, .jframe-shared .normal-wrap * {
+  white-space: normal !important;
+}
+.jframe-shared .no-wrap, .jframe-shared .no-wrap * {
+  white-space: nowrap !important;
+}
 /* text is not selectable; good for double click actions like links to prevent the double click from selecting
 		note that the user cannot select this text even if that's their intention; use sparingly */
 .jframe-no_select, .jframe-no_select * {
@@ -232,13 +239,13 @@ input[type=submit] {
 /* inline block display; makes elements block level, but follows page flow */
 .jframe-shared .jframe-inline, .jframe-shared ul.jframe-inline_list li {
 	display:-moz-inline-box;		/* FF2 */
-	display:inline-block;		   /* webkit and FF3 */
+	display:inline-block;			 /* webkit and FF3 */
 	#zoom: 1; /* set hasLayout:true to mimic inline-block */
 	#display:inline; 
 	border:0;
 	padding:0;
 	vertical-align:middle;
-	#vertical-align: auto;  /* makes TextBox,Button line up w/native counterparts on IE6 */
+	#vertical-align: auto;	/* makes TextBox,Button line up w/native counterparts on IE6 */
 	position: relative;
 }
 /* down divot image */
@@ -336,13 +343,13 @@ see: HtmlTable.js, HtmlTable.Zebra.js, HtmlTable.Select.js, HtmlTable.Sort.js in
 give it class "selectable" to allow the user to select rows
 give it class "sortable" to allow the user to sort the table
 */
-table[data-filters*=HtmlTable] {
+.jframe-shared table[data-filters*=HtmlTable] {
 	width: 100%;
 }
-table[data-filters*=HtmlTable] thead {
+.jframe-shared table[data-filters*=HtmlTable] thead {
 	background: url(/asset/jframe/th_back.png);
 }
-table[data-filters*=HtmlTable] thead th {
+.jframe-shared table[data-filters*=HtmlTable] thead th {
 	text-align: left;
 	white-space: nowrap;
 	padding: 0px 6px;
@@ -354,11 +361,11 @@ table[data-filters*=HtmlTable] thead th {
 	font-weight: normal;
 	overflow: hidden;
 }
-table[data-filters*=HtmlTable] th:last-child {
+.jframe-shared table[data-filters*=HtmlTable] th:last-child {
 	border-right: none;
 }
 
-table[data-filters*=HtmlTable] td {
+.jframe-shared table[data-filters*=HtmlTable] td {
 	white-space: nowrap;
 	padding: 0px 8px;
 	height: 20px;
@@ -367,43 +374,43 @@ table[data-filters*=HtmlTable] td {
 	border: none;
 	overflow: hidden;
 }
-table[data-filters*=HtmlTable] tr.table-tr-odd td {
+.jframe-shared table[data-filters*=HtmlTable] tr.table-tr-odd td {
 	background-color: #f3f3f3;
 }
-table.jframe-bordered-table {
+.jframe-shared table.jframe-bordered-table {
 	width: 98%;
 	margin: 4px 1%;
 	border: 1px solid #888;
 }
 
-table[data-filters*=HtmlTable].selectable tr:hover > td, table[data-filters*=HtmlTable].selectable tr.table-tr-hovered td,
-	table[data-filters*=HtmlTable].multiselect tr:hover > td, table[data-filters*=HtmlTable].multiselect tr.table-tr-hovered td,
-	table[data-filters*=HtmlTable].selectable tr:hover > td a, table[data-filters*=HtmlTable].selectable tr.table-tr-hovered td a,
-	table[data-filters*=HtmlTable].multiselect tr:hover > td a, table[data-filters*=HtmlTable].multiselect tr.table-tr-hovered td a {
+.jframe-shared table[data-filters*=HtmlTable].selectable tr:hover > td, .jframe-shared table[data-filters*=HtmlTable].selectable tr.table-tr-hovered td,
+	table[data-filters*=HtmlTable].multiselect tr:hover > td, .jframe-shared table[data-filters*=HtmlTable].multiselect tr.table-tr-hovered td,
+	table[data-filters*=HtmlTable].selectable tr:hover > td a, .jframe-shared table[data-filters*=HtmlTable].selectable tr.table-tr-hovered td a,
+	table[data-filters*=HtmlTable].multiselect tr:hover > td a, .jframe-shared table[data-filters*=HtmlTable].multiselect tr.table-tr-hovered td a {
 	background-color: #d4e7f8;
 	color: #000;
 	cursor: pointer;
 }
 
-table[data-filters*=HtmlTable] tr.selected td,
-	table[data-filters*=HtmlTable] tr.table-tr-selected td,
-	table[data-filters*=HtmlTable] tr.selected td a,
-	table[data-filters*=HtmlTable] tr.table-tr-selected td a,
-	table[data-filters*=HtmlTable] tr.selected:hover td,
-	table[data-filters*=HtmlTable] tr.table-tr-selected:hover td,
-	table[data-filters*=HtmlTable] tr.selected:hover td a,
-	table[data-filters*=HtmlTable] tr.table-tr-selected:hover td a {
+.jframe-shared table[data-filters*=HtmlTable] tr.selected td,
+	.jframe-shared table[data-filters*=HtmlTable] tr.table-tr-selected td,
+	.jframe-shared table[data-filters*=HtmlTable] tr.selected td a,
+	.jframe-shared table[data-filters*=HtmlTable] tr.table-tr-selected td a,
+	.jframe-shared table[data-filters*=HtmlTable] tr.selected:hover td,
+	.jframe-shared table[data-filters*=HtmlTable] tr.table-tr-selected:hover td,
+	.jframe-shared table[data-filters*=HtmlTable] tr.selected:hover td a,
+	.jframe-shared table[data-filters*=HtmlTable] tr.table-tr-selected:hover td a {
 	background-color: #3875d7;
 	color: #fff;
 }
-table.table-sortable th {
+.jframe-shared table.table-sortable th {
 	cursor: pointer;
 }
-table.table-sortable th div {
+.jframe-shared table.table-sortable th div {
 	position: relative;
 	padding-right: 10px;
 }
-span.table-th-sort-span {
+.jframe-shared span.table-th-sort-span {
 	width: 7px;
 	height: 16px;
 	display: block;
@@ -412,13 +419,13 @@ span.table-th-sort-span {
 	right: -2px;
 	top: 0px;
 }
-.table-th-sort span.table-th-sort-span {
-	background: url(/asset/jframe/icons/bullet_arrow_down.png) -4px top no-repeat;
+.jframe-shared .table-th-sort span.table-th-sort-span {
+	background: url(/asset/jframe/bullet_arrow_down.png) -4px top no-repeat;
 }
-.table-th-sort-rev span.table-th-sort-span {
-	background: url(/asset/jframe/icons/bullet_arrow_up.png) -4px top no-repeat;
+.jframe-shared .table-th-sort-rev span.table-th-sort-span {
+	background: url(/asset/jframe/bullet_arrow_up.png) -4px top no-repeat;
 }
-table[data-filters*=HtmlTable].treeView tr a.expand {
+.jframe-shared table[data-filters*=HtmlTable].treeView tr a.expand {
 	display: block;
 	float: left;
 	width: 10px;
@@ -430,21 +437,21 @@ table[data-filters*=HtmlTable].treeView tr a.expand {
 	text-indent: -200px;
 	overflow: hidden;
 }
-table[data-filters*=HtmlTable].treeView tr.table-expanded a.expand {
+.jframe-shared table[data-filters*=HtmlTable].treeView tr.table-expanded a.expand {
 	background: url(/asset/jframe/divots.png) 0px -14px;
 }
-table[data-filters*=HtmlTable].treeView tbody tr > td:first-child {
+.jframe-shared table[data-filters*=HtmlTable].treeView tbody tr > td:first-child {
 	padding-right: 20px;
 }
-.table-th-resizable.table-th-sort span.table-th-sort-span, .table-th-resizable.table-th-sort-rev span.table-th-sort-span {
+.jframe-shared .table-th-resizable.table-th-sort span.table-th-sort-span, .jframe-shared .table-th-resizable.table-th-sort-rev span.table-th-sort-span {
 	padding-right: 13px;
 }
 
-table.table-resizable th div {
+.jframe-shared table.table-resizable th div {
 	position: relative;
 	padding-right: 0px;
 }
-span.table-th-resizer {
+.jframe-shared span.table-th-resizer {
 	position: absolute;
 	cursor: col-resize;
 	right: 9px;
@@ -456,15 +463,15 @@ span.table-th-resizer {
 }
 
 
-table a.jframe-table_config_link {
+.jframe-shared table a.jframe-table_config_link {
 	display: inline-block;
 	width: 16px;
 	height: 16px;
 	padding: 0px 4px;
-	background: no-repeat 50% 50% url(/asset/jframe/icons/small_cog.png);
+	background: no-repeat 50% 50% url(/asset/jframe/small_cog.png);
 	position: relative;
 }
-form.jframe-table_config {
+.jframe-shared form.jframe-table_config {
 	position: absolute;
 	background: #fff;
 	border: 1px solid #777;
@@ -487,35 +494,35 @@ form.jframe-table_config {
 	height: 7px;
 	cursor: se-resize;
 }
-form.jframe-table_config label {
+.jframe-shared form.jframe-table_config label {
 	display: block;
 }
-form.jframe-table_config label:hover {
+.jframe-shared form.jframe-table_config label:hover {
 	color: #36f;
 }
-form.jframe-table_config ul {
+.jframe-shared form.jframe-table_config ul {
 	padding: 2px;
 	height: 125px;
 	min-width: 200px;
 	overflow: auto;
 	border-bottom:1px solid #777;
 }
-*[data-filters*=Sortable] {
+.jframe-shared *[data-filters*=Sortable] {
 	user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
 }
-*[data-filters*=Sortable] .sorting {
+.jframe-shared *[data-filters*=Sortable] .sorting {
 	cursor: pointer;
 	z-index: 12;
 }
-*[data-filters*=Sortable] > * {
+.jframe-shared *[data-filters*=Sortable] > * {
 	cursor: move;
 }
-*[data-filters*=Sortable] .clone {
+.jframe-shared *[data-filters*=Sortable] .clone {
 	z-index: 1;
 }
-form.jframe-table_config li, .jframe-sort_handle {
+.jframe-shared form.jframe-table_config li, .jframe-shared .jframe-sort_handle {
 	user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
@@ -527,23 +534,23 @@ form.jframe-table_config li, .jframe-sort_handle {
 	margin-bottom: 2px;
 	background: #fff url(/asset/jframe/sortable-handle.png) 5px 50% no-repeat;
 }
-form.jframe-table_config li input {
+.jframe-shared form.jframe-table_config li input {
 	margin-right: 6px;
 }
-form.jframe-table_config .art {
+.jframe-shared form.jframe-table_config .art {
 	margin: 4px;
 }
 
 /* JFrame styles */
 /* these are applied for you by default */
-div.jframe_wrapper {
+.jframe-shared div.jframe_wrapper {
 	position: relative;
 	height: 100%;
 }
-div.jframe_contents {
+.jframe-shared div.jframe_contents {
 	min-height: 100%;
 }
-div.jframe_default h1, h2, h3, h4, h5 {
+div.jframe_default h1, div.jframe_default h2, div.jframe_default h3, div.jframe_default h4, div.jframe_default h5 {
 	padding: 0;
 	margin: 0;
 	margin-bottom: .3em;
@@ -557,25 +564,25 @@ div.jframe_default h1, h2, h3, h4, h5 {
 		good for documents for example. */
 div.jframe_default ul,
 div.jframe_default ol {
-  padding-left: 1.5em;
-  margin: 0;
-  margin-bottom: 1em;
+	padding-left: 1.5em;
+	margin: 0;
+	margin-bottom: 1em;
 }
 
 div.jframe_default ul li{
-  list-style-type: disc;
-  margin-bottom: 0.5em;
+	list-style-type: disc;
+	margin-bottom: 0.5em;
 }
 
 div.jframe_default a{
-  font-weight: bold;
+	font-weight: bold;
 }
 div.jframe_default code {
-  font-family: fixed;
+	font-family: fixed;
 }
 
 div.jframe_default table {
-  border-collapse: separate;
+	border-collapse: separate;
 }
 div.jframe_default h1,
 div.jframe_default h2,
@@ -706,13 +713,13 @@ Takes a multi-select box and makes it so you can click to move elements from a s
 /* help text links */
 [data-filters*=HelpTip], [data-filters*=InfoTip] {
 	display:-moz-inline-box;		/* FF2 */
-	display:inline-block;		   /* webkit and FF3 */
+	display:inline-block;			 /* webkit and FF3 */
 	#zoom: 1; /* set hasLayout:true to mimic inline-block */
 	#display:inline; 
 	border:0;
 	padding:0;
 	vertical-align:middle;
-	#vertical-align: auto;  /* makes TextBox,Button line up w/native counterparts on IE6 */
+	#vertical-align: auto;	/* makes TextBox,Button line up w/native counterparts on IE6 */
 	position: relative;
 	width: 14px;
 	height: 14px;
@@ -744,10 +751,10 @@ Takes a multi-select box and makes it so you can click to move elements from a s
  Blueprint CSS Framework 0.9
  http://blueprintcss.org
 
-   * Copyright (c) 2007-Present. See LICENSE for more info.
-   * See README for instructions on how to use Blueprint.
-   * For credits and origins, see AUTHORS.
-   * This is a compressed file. See the sources in the 'src' directory.
+	 * Copyright (c) 2007-Present. See LICENSE for more info.
+	 * See README for instructions on how to use Blueprint.
+	 * For credits and origins, see AUTHORS.
+	 * This is a compressed file. See the sources in the 'src' directory.
 
 Copyright (c) 2007 - 2010 blueprintcss.org
 
