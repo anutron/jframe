@@ -15,7 +15,7 @@
 // limitations under the License.
 /*
 ---
-description: Makes form validator instances scroll the jframe to the errors.
+description: Registers HtmlTable keyboards to the JFrame instance
 provides: [Behavior.HtmlTableKeyboard]
 requires: [Widgets/Behavior.HtmlTable]
 script: Behavior.HtmlTableKeyboard.js
@@ -31,6 +31,8 @@ Behavior.addGlobalPlugin('HtmlTable', 'HtmlTableJFrame', function(element, metho
 		this.markForCleanup(element, function(){
 			methods.unregisterKeyboard(table.keyboard);
 		});
-		ART.Popup.DefaultManager.keyboard.activate();
+		// I don't think we need this anymore, but I'm leaving it; it's not clear why
+		// it was even added in the first place...
+		// ART.Popup.DefaultManager.keyboard.activate();
 	}
 });
