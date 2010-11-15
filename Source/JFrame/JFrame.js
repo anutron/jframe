@@ -157,7 +157,7 @@ JFrame = new Class({
 		this.addEvent('resize', this.behavior.resize.bind(this.behavior));
 		this.addBehaviors(this.options.behaviors);
 
-		this.element.addClass('jframe_wrapper').addClass('jframe-shared');
+		this.element.addClass('jframe_wrapper').addClass('jframe-shared').setStyle('overflow', 'auto');
 		this.scroller = new Fx.Scroll(this.options.getScroller.call(this));
 		this.content = new Element('div', {
 			'class': 'jframe_contents'
