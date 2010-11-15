@@ -28,16 +28,16 @@ Behavior.addGlobalFilters({
 	/*
 		elements are given data properties for data-size-to-height or data-size-to-width
 		these values are either offsets or percentages. So, for example:
-		
+
 			<div data-filters="SizeTo" data-size-to-height="-100"></div>
-		
+
 		will size that div to the height of the window -100 pixels and
-                        <div data-filters="SizeTo" data-size-to-width="90%"></div>
-                        
-                will size that div to 90% of the width of the window.
-                
-                Both values are not required, although one is.
- 	*/
+			<div data-filters="SizeTo" data-size-to-width="90%"></div>
+
+		will size that div to 90% of the width of the window.
+
+		Both values are not required, although one is.
+	*/
 	SizeTo: function(element, methods) {
 		var sizeTo = {
 			x: element.get('data', 'size-to-width'),
@@ -51,15 +51,15 @@ Behavior.addGlobalFilters({
 			if (sizeTo.x) element.setStyle('width', calcSize(x, sizeTo.x));
 			if (sizeTo.y) element.setStyle('height', calcSize(y, sizeTo.y));
 		};
-                var calcSize = function(value, sizeTo) {
-                        if (sizeTo.contains("%")) {
-                                sizeTo = sizeTo.replace("%", "");
-                                sizeTo = parseFloat(sizeTo)/100.0;
-                                return value * sizeTo;
-                        } else {
-                                return value + sizeTo.toInt();
-                        }
-                };
+		var calcSize = function(value, sizeTo) {
+			if (sizeTo.contains("%")) {
+				sizeTo = sizeTo.replace("%", "");
+				sizeTo = parseFloat(sizeTo)/100.0;
+				return value * sizeTo;
+			} else {
+				return value + sizeTo.toInt();
+			}
+		};
 
 		size = methods.getContainerSize();
 		resize(size.x, size.y);
