@@ -6,19 +6,32 @@
 		<link rel="stylesheet" href="/static/css/tests.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 		<link rel="stylesheet" href="/asset/jframe/shared.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 		<script src="/depender/build?require=JFrame/JWindow,Core/DomReady"></script>
+		<style>
+		#toolbar {
+			width: 100%;
+			position: relative;
+			height: 30px;
+			background: #999;
+			border-bottom: 1px solid #444;
+		}
+		</style>
 	</head>
 	<body class="loaded">
 		<div id="hotkeys" style="display:none"></div>
+		<div id="toolbar"></div>
 		<!-- test_runner_no_wrapper -->
 		<script>
 			window.addEvent('domready', function(){
-				var jwin = new JWindow('http://localhost:9876/', {
-					element: document.body
+				var path = '/';
+				var hash = window.location.hash;
+				if (hash) path = hash.substring(1);
+				var jwin = new JWindow(path, {
+					element: document.body,
+					toolbar: document.id('toolbar')
 				});
 				var sizer = function(){
-					var size = window.getScrollSize();
-					console.log(size);
-					jwin.resize(size.x, size.y);
+					var size = window.getSize();
+					jwin.resize(size.x, size.y - 31); //subtract 30 for the toolbar
 				};
 				sizer();
 				window.addEvent('resize', sizer);
