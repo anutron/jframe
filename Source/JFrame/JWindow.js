@@ -53,6 +53,8 @@ script: JWindow.js
 
 		Extends: ART.Widget,
 
+		Implements: ART.WindowTools,
+
 		options: {
 			makeCanvas: false,
 			//onLoad: $empty(view),
@@ -72,7 +74,27 @@ script: JWindow.js
 			this.addClass('jframe-shared');
 			this.toolbar = document.id(this.options.toolbar);
 			this.footerText = document.id(this.options.footerText);
-			this._makeJFrame(path);
+			if (!this.options._jbrowser) {
+				this.getWindow = $lambda(this);
+				this.getWindowElement = this._getContent.bind(this);
+			}
+			this._makeJFrame(path, options);
+			if (!this.options._jbrowser) {
+				this.jframe.getContentElement = this._getContent.bind(this);
+				this.jframe.getWindow = $lambda(this);
+				this.contents = this.element;
+
+				var timer;
+				window.addEvent('resize', function(e){
+					var size = this.element.getSize();
+					this.resize(size.x, size.y);
+					clearTimeout(timer);
+					timer = (function(){
+						this.jframe.behavior.show();
+					}).delay(30, this);
+				}.bind(this));
+			}
+			this._setupHistory();
 		},
 
 		_getContent: function(){
@@ -80,7 +102,15 @@ script: JWindow.js
 		},
 
 		_setupHistory: function(path){
-			//todo
+			this.history = new History({
+				onChange: function(hashpath){
+					if (hashpath) {
+						this.load({
+							requestPath: hashpath
+						});
+					}
+				}.bind(this)
+			});
 		},
 
 		_makeJFrame: function(path, options){
@@ -95,23 +125,21 @@ script: JWindow.js
 					width: size.x,
 					height: size.y
 				},
-				getScroller: function(){
-					return this._getContent();
-				}.bind(this),
 				spinnerTarget: this._getContent()
 			}, this.options.jframeOptions, options);
 			opt.parentWidget = this;
 			this.jframe = new JFrame(path, opt);
 			this.jframe.inject(this, this._getContent());
 
-			this.jframe.getContentElement = this._getContent.bind(this);
-			this.jframe.getWindow = $lambda(this);
-			this.contents = this.element;
-
 			if (this.toolbar) this.jframe.applyDelegates(this.toolbar);
 			if (this.footerText) this.jframe.applyDelegates(this.footerText);
 			this.jframe.addEvent('refresh', this._storeScroll.bind(this));
+			new ART.Keyboard(this);
+		},
 
+		getSize: function(){
+			var size = this.element.getSize();
+			return {width: size.x, height: size.y};
 		},
 
 		wait: function(start){
@@ -148,7 +176,9 @@ script: JWindow.js
 		},
 
 		_incrementHistory: function(data){
-			if (!data.suppressHistory && this.history) return; //todo
+			if (!data.suppressHistory && this.history) {
+				this.history.push(data);
+			}
 		},
 
 		_jframeLoaded: function(data) {
@@ -163,7 +193,7 @@ script: JWindow.js
 				this.footerText.empty();
 				if (data.footer) this.footerText.adopt(data.footer);
 			}
-			this._incrementHistory(data);
+			this._incrementHistory(data.responsePath);
 			if (this._jframe_view != data.view) {
 				if (this._jframe_view) {
 					this.removeClass(this._jframe_view);
@@ -211,6 +241,148 @@ script: JWindow.js
 				});
 			}
 			this._scrolled = null;
+		}
+
+	});
+
+	var History = new Class({
+
+		Implements: [Options, Events],
+
+		options: {
+			/*
+			onAdd: $empty(item, index),
+			onRemove: $empty(item),
+			onSelectManual: $empty(path),
+			onSelect: $empty(item),
+			onBack: $empty(item, index),
+			onForward: $empty(item, index),
+			onRefresh: $empty,
+			selected: null,
+			*/
+			pathFilter: function(val){ return val;},
+			pathBuilder: function(val){ return val; },
+			history: [],
+			start: window.location.hash
+		},
+
+		initialize: function(options) {
+			this.setOptions(options);
+			this.setHistory(this.options.history);
+			this._currentLocation = this.options.start;
+			this.attach();
+		},
+
+		history: [],
+
+		attach: function(attach) {
+			clearInterval(this._locationMonitor);
+			if (attach || attach == null) this._locationMonitor = this._monitor.periodical(100, this);
+		},
+
+		detach: function(){
+			this.attach(false);
+		},
+
+		_monitor: function(){
+			if ("#" + this._currentLocation != window.location.hash) {
+				var location = window.location.hash.replace('#', '');
+				this.fireEvent('change', location);
+				this._currentLocation = location;
+			}
+		},
+
+		push: function(item, select, index) {
+			item = item.item || item;
+			this._currentLocation = item;
+			window.location.hash = item;
+			//here for API compatibility
+		},
+
+		pop: function(){
+			//here for API compatibility
+		},
+
+		remove: function(item) {
+			//here for API compatibility
+		},
+
+		dropFutureHistory: function(){
+			//here for API compatibility
+		},
+
+		toggle: function(e){
+			//here for API compatibility
+		},
+
+		showEditor: function(show){
+			//here for API compatibility
+		},
+
+		//displays the dropdown list of your history
+		show: function(e){
+			//here for API compatibility
+		},
+
+		hide: function(e){
+			//here for API compatibility
+		},
+
+		blur: function(){
+			//here for API compatibility
+		},
+
+		disable: function(){
+			//here for API compatibility
+		},
+
+		enable: function(){
+			//here for API compatibility
+		},
+
+		select: function(hist, suppressEvent){
+			//here for API compatibility
+		},
+
+		setNavState: function(){
+			//here for API compatibility
+		},
+
+		back: function(e){
+			window.history.back();
+		},
+
+		next: function(e){
+			window.history.forward();
+		},
+
+		setEditable: function(editable) {
+			//here for API compatibility
+		},
+
+		setTitle: function(title) {
+			$$('title')[0].set('text', title);
+		},
+
+		getHistory: function(){
+			//here for API compatibility
+			return [];
+		},
+
+		setHistory: function(arr) {
+			//here for API compatibility
+		},
+
+		clear: function(){
+			//here for API compatibility
+		},
+
+		makeEndSelected: function(){
+			//here for API compatibility
+		},
+
+		getSelected: function(){
+			//here for API compatibility
 		}
 
 	});
