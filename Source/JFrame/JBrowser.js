@@ -31,9 +31,8 @@ script: JBrowser.js
 (function(){
 
 	var jbrowserWindow = new Class({
-		Extends: JWindow,
 
-		Implements: ART.WindowTools,
+		Extends: JWindow,
 
 		_getContent: function(){
 			return this.parentWidget.content;
@@ -83,7 +82,6 @@ script: JBrowser.js
 			options = options || {};
 			var show = $pick(options.showNow, true);
 			options.showNow = false;
-			
 			this.parent(options);
 
 			this.toolbar = new Element('div', {
@@ -101,7 +99,8 @@ script: JBrowser.js
 				windowTitler: this.options.windowTitler,
 				jframeOptions: this.options.jframeOptions,
 				toolbar: this.toolbar,
-				footerText: this.footerText
+				footerText: this.footerText,
+				_jbrowser: true
 			});
 			jWindowOpts.parentWidget = this;
 			this.jWindow = new jbrowserWindow(path, jWindowOpts);
