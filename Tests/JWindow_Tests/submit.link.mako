@@ -4,10 +4,9 @@
 		<title>Submit Links</title>
 	</head>
 	<body>
-
 		<p>Click either submit button to update the box below. The box should have an ajax spinner and then update with the content in the button.</p>
 
-		<form action="/test/?project=jframe&path=/JWindow_Tests/submit.link.html" method="post" style="margin: 6px 0px 0px;">
+		<form action="/test/?project=jframe&path=/JWindow_Tests/submit.link.mako" method="post" style="margin: 6px 0px 0px;">
 			<input type="submit" name="button" value="fetch html (button 1)"/>
 			<input type="submit" name="button" value="fetch html (button 2)"/>
 			<a class="jframe-submit_form" data-extra-data="{'link':'fetch html (link 1)'}">fetch html (link 1)</a>
@@ -15,19 +14,19 @@
 		</form>
 
 		<div style="position: relative; margin-top: 10px">
-			<div id="update" style="padding: 10px; width: 200px; border: 1px solid black; height: 100px; overflow:hidden;">
-				{% if post_vars %}
+			<div id="update" style="padding: 10px; width: 400px; border: 1px solid black; height: 150px; overflow:hidden;">
+				% if post_vars:
 					<div class="jframe_padded">
 						You submitted the following values:
 						<ul>
-							{% for post_var, val in post_vars %}
-							 <li>{{post_var}}: {{val}}</li>
-							{% endfor %}
+							% for post_var, val in post_vars:
+							 <li>${post_var}: ${val}</li>
+							% endfor
 						</ul>
 					</div>
-				{% else %}
+				% else:
 					this box should get new text when you click the input above.
-				{% endif %}
+				% endif
 			</div>
 		</div>
 
