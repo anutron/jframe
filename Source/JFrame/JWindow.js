@@ -71,6 +71,7 @@ script: JWindow.js
 
 		initialize: function(path, options) {
 			this.parent(options);
+			new ART.Keyboard(this, this.keyboardOptions);
 			this.addClass('jframe-shared');
 			this.toolbar = document.id(this.options.toolbar);
 			this.footerText = document.id(this.options.footerText);
@@ -101,7 +102,7 @@ script: JWindow.js
 			return this.element;
 		},
 
-		_setupHistory: function(path){
+		_setupHistory: function(){
 			this.history = new History({
 				onChange: function(hashpath){
 					if (hashpath) {
@@ -193,7 +194,7 @@ script: JWindow.js
 				this.footerText.empty();
 				if (data.footer) this.footerText.adopt(data.footer);
 			}
-			this._incrementHistory(data.responsePath);
+			this._incrementHistory(data);
 			if (this._jframe_view != data.view) {
 				if (this._jframe_view) {
 					this.removeClass(this._jframe_view);
@@ -269,7 +270,7 @@ script: JWindow.js
 		initialize: function(options) {
 			this.setOptions(options);
 			this.setHistory(this.options.history);
-			this._currentLocation = this.options.start;
+			this._currentLocation = this.options.start.replace('#', '');
 			this.attach();
 		},
 
@@ -292,10 +293,15 @@ script: JWindow.js
 			}
 		},
 
-		push: function(item, select, index) {
-			item = item.item || item;
-			this._currentLocation = item;
-			window.location.hash = item;
+		push: function(data) {
+			var uri = data.responsePath;
+			if (data.requestParams) {
+				uri = new URI(data.requestParams.uri);
+				uri.setData('___method___', data.requestParams.method);
+				uri = unescape(uri.toString());
+			}
+			this._currentLocation = uri;
+			window.location.hash = uri;
 			//here for API compatibility
 		},
 
@@ -352,7 +358,7 @@ script: JWindow.js
 			window.history.back();
 		},
 
-		next: function(e){
+		forward: function(e){
 			window.history.forward();
 		},
 
