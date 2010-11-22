@@ -22,3 +22,5 @@ ccs-show_history > jbrowser-show_history
 
 
 jframe target nixed
+
+frametips are gone
