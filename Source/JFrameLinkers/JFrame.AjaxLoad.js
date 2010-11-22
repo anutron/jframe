@@ -66,6 +66,7 @@ script: JFrame.AjaxLoad.js
 				suppressLoadComplete: true,
 				fullFrameLoad: false,
 				retainPath: true,
+				noScroll: true,
 				callback: function(data){
 					switch(action){
 						case 'replace':
