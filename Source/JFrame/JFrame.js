@@ -743,9 +743,12 @@ JFrame = new Class({
 				*/
 				if (this._request && this._request != request) this._request.cancel();
 				this._request = request;
-				this.getWindow().alertManager.getLayer('alerts').instances.each(function(alert){
-					alert.destroy();
-				});
+				var win = this.getWindow();
+				if (win && win.alertManager) {
+					win.alertManager.getLayer('alerts').instances.each(function(alert){
+						alert.destroy();
+					});
+				}
 			}.bind(this),
 			onSuccess: function(requestTxt){
 				//if there's a method called requestChecker defined in the options, run our response through it
