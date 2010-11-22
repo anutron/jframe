@@ -205,6 +205,10 @@ UI.Sheet.define('window.art button.art.wincontrol', {
 	button.glyph = ART.Glyphs.triangleLeft;
 	button['glyph-top'] = 5;
 	button['glyph-left'] = 6;
+	button['glyph-width'] = 9;
+	button['glyph-height'] = 9;
+	large['glyph-top'] = 7;
+	large['glyph-left'] = 7;
 	ART.Sheet.define('button.art.jframe-back', button);
 	ART.Sheet.define('button.art.jframe-back.large', large);
 	button.glyph = ART.Glyphs.triangleRight;
