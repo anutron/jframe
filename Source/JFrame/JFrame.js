@@ -256,9 +256,6 @@ JFrame = new Class({
 						url.get('host') != me.get('host') ||
 						url.get('port') != me.get('port')) {
 					// Open external URLs in a new window.
-					// TODO(todd) should also check that the URL begins with
-					// whatever our prefix is, but "prefix" isn't really known
-					// by this class with the current design.
 					elem.set('target', '_blank');
 				} else {
 					handler(e, elem, url, options);
