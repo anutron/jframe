@@ -30,7 +30,7 @@ JFrame.addGlobalRenderers({
 		//if the contents have an element with .prompt_popup *at the root*
 		//then display those contents in a prompt, submitting the form (if present)
 		//when the user clicks "ok"
-		var popup = content.elements.filter('.prompt_popup')[0];
+		var popup = new Element('div').adopt(content.elements).getElement('.prompt_popup');
 		if (!popup) return;
 		var target = new Element('div', {'class': 'jframe_prompt'}).hide().inject($(this));
 		var popupBehavior = new Behavior({

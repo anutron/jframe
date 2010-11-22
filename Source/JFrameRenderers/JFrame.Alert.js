@@ -28,7 +28,7 @@ JFrame.addGlobalRenderers({
 		var options = content.options;
 		//if the contents have an element with .alert_popup *at the root*
 		//then display those contents in an alert
-		var popup = content.elements.filter('.alert_popup')[0];
+		var popup = new Element('div').adopt(content.elements).getElement('.alert_popup');
 		if (!popup) return;
 		
 		//does the jframe still get to render?
