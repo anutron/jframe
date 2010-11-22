@@ -271,9 +271,13 @@ input[type=submit] {
 
 */
 .jframe-shared ul.tabs {
-	margin: none;
-	padding: none;
+	margin: 0;
+	padding: 0;
 }
+.jframe-shared ul.tab_sections {
+	margin: 0;
+}
+
 .jframe-shared .right_col pre {
 	overflow: visible;
 }
@@ -343,13 +347,13 @@ see: HtmlTable.js, HtmlTable.Zebra.js, HtmlTable.Select.js, HtmlTable.Sort.js in
 give it class "selectable" to allow the user to select rows
 give it class "sortable" to allow the user to sort the table
 */
-.jframe-shared table[data-filters*=HtmlTable] {
+table[data-filters*=HtmlTable] {
 	width: 100%;
 }
-.jframe-shared table[data-filters*=HtmlTable] thead {
+table[data-filters*=HtmlTable] thead {
 	background: url(/asset/jframe/th_back.png);
 }
-.jframe-shared table[data-filters*=HtmlTable] thead th {
+table[data-filters*=HtmlTable] thead th {
 	text-align: left;
 	white-space: nowrap;
 	padding: 0px 6px;
@@ -361,11 +365,11 @@ give it class "sortable" to allow the user to sort the table
 	font-weight: normal;
 	overflow: hidden;
 }
-.jframe-shared table[data-filters*=HtmlTable] th:last-child {
+table[data-filters*=HtmlTable] th:last-child {
 	border-right: none;
 }
 
-.jframe-shared table[data-filters*=HtmlTable] td {
+table[data-filters*=HtmlTable] td {
 	white-space: nowrap;
 	padding: 0px 8px;
 	height: 20px;
@@ -374,7 +378,7 @@ give it class "sortable" to allow the user to sort the table
 	border: none;
 	overflow: hidden;
 }
-.jframe-shared table[data-filters*=HtmlTable] tr.table-tr-odd td {
+table[data-filters*=HtmlTable] tr.table-tr-odd td {
 	background-color: #f3f3f3;
 }
 .jframe-shared table.jframe-bordered-table {
@@ -383,23 +387,23 @@ give it class "sortable" to allow the user to sort the table
 	border: 1px solid #888;
 }
 
-.jframe-shared table[data-filters*=HtmlTable].selectable tr:hover > td, .jframe-shared table[data-filters*=HtmlTable].selectable tr.table-tr-hovered td,
-	table[data-filters*=HtmlTable].multiselect tr:hover > td, .jframe-shared table[data-filters*=HtmlTable].multiselect tr.table-tr-hovered td,
-	table[data-filters*=HtmlTable].selectable tr:hover > td a, .jframe-shared table[data-filters*=HtmlTable].selectable tr.table-tr-hovered td a,
-	table[data-filters*=HtmlTable].multiselect tr:hover > td a, .jframe-shared table[data-filters*=HtmlTable].multiselect tr.table-tr-hovered td a {
+table[data-filters*=HtmlTable].selectable tr:hover > td, table[data-filters*=HtmlTable].selectable tr.table-tr-hovered td,
+	table[data-filters*=HtmlTable].multiselect tr:hover > td, table[data-filters*=HtmlTable].multiselect tr.table-tr-hovered td,
+	table[data-filters*=HtmlTable].selectable tr:hover > td a, table[data-filters*=HtmlTable].selectable tr.table-tr-hovered td a,
+	table[data-filters*=HtmlTable].multiselect tr:hover > td a, table[data-filters*=HtmlTable].multiselect tr.table-tr-hovered td a {
 	background-color: #d4e7f8;
 	color: #000;
 	cursor: pointer;
 }
 
-.jframe-shared table[data-filters*=HtmlTable] tr.selected td,
-	.jframe-shared table[data-filters*=HtmlTable] tr.table-tr-selected td,
-	.jframe-shared table[data-filters*=HtmlTable] tr.selected td a,
-	.jframe-shared table[data-filters*=HtmlTable] tr.table-tr-selected td a,
-	.jframe-shared table[data-filters*=HtmlTable] tr.selected:hover td,
-	.jframe-shared table[data-filters*=HtmlTable] tr.table-tr-selected:hover td,
-	.jframe-shared table[data-filters*=HtmlTable] tr.selected:hover td a,
-	.jframe-shared table[data-filters*=HtmlTable] tr.table-tr-selected:hover td a {
+table[data-filters*=HtmlTable] tr.selected td,
+	table[data-filters*=HtmlTable] tr.table-tr-selected td,
+	table[data-filters*=HtmlTable] tr.selected td a,
+	table[data-filters*=HtmlTable] tr.table-tr-selected td a,
+	table[data-filters*=HtmlTable] tr.selected:hover td,
+	table[data-filters*=HtmlTable] tr.table-tr-selected:hover td,
+	table[data-filters*=HtmlTable] tr.selected:hover td a,
+	table[data-filters*=HtmlTable] tr.table-tr-selected:hover td a {
 	background-color: #3875d7;
 	color: #fff;
 }
@@ -425,7 +429,7 @@ give it class "sortable" to allow the user to sort the table
 .jframe-shared .table-th-sort-rev span.table-th-sort-span {
 	background: url(/asset/jframe/bullet_arrow_up.png) -4px top no-repeat;
 }
-.jframe-shared table[data-filters*=HtmlTable].treeView tr a.expand {
+table[data-filters*=HtmlTable].treeView tr a.expand {
 	display: block;
 	float: left;
 	width: 10px;
@@ -437,10 +441,10 @@ give it class "sortable" to allow the user to sort the table
 	text-indent: -200px;
 	overflow: hidden;
 }
-.jframe-shared table[data-filters*=HtmlTable].treeView tr.table-expanded a.expand {
+table[data-filters*=HtmlTable].treeView tr.table-expanded a.expand {
 	background: url(/asset/jframe/divots.png) 0px -14px;
 }
-.jframe-shared table[data-filters*=HtmlTable].treeView tbody tr > td:first-child {
+table[data-filters*=HtmlTable].treeView tbody tr > td:first-child {
 	padding-right: 20px;
 }
 .jframe-shared .table-th-resizable.table-th-sort span.table-th-sort-span, .jframe-shared .table-th-resizable.table-th-sort-rev span.table-th-sort-span {
@@ -502,6 +506,7 @@ give it class "sortable" to allow the user to sort the table
 }
 .jframe-shared form.jframe-table_config ul {
 	padding: 2px;
+	margin: 0;
 	height: 125px;
 	min-width: 200px;
 	overflow: auto;
@@ -636,12 +641,12 @@ div.jframe_default h5 { font-size: 105%; margin-bottom: 0.3em; padding-top: 8px;
 	border-bottom: 1px solid #ccc;
 	padding: 3px;
 }
-.jframe-shared table[data-filters*=HtmlTable] tr.table-tr-selected td ul.context-menu li a {
+table[data-filters*=HtmlTable] tr.table-tr-selected td ul.context-menu li a {
 	color: #000;
 	background-color: #fff;
 	text-decoration: none;
 }
-.jframe-shared .context-menu li:hover, .jframe-shared table[data-filters*=HtmlTable] tr.table-tr-selected td ul.context-menu li:hover a, .jframe-shared ul.context-menu li:hover a {
+.jframe-shared .context-menu li:hover, table[data-filters*=HtmlTable] tr.table-tr-selected td ul.context-menu li:hover a, .jframe-shared ul.context-menu li:hover a {
 	text-decoration: none;
 	background-color: #333;
 	color: #fff;
@@ -1007,4 +1012,40 @@ ul.autocompleter-choices span.autocompleter-queried
 ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried
 {
 	color:					#9FCFFF;
+}
+
+/* flash messaging */
+.jframe-shared *[data-filters*=FlashMessage] {
+	display: none;
+}
+.growl_container {
+	position: absolute;
+	overflow: visible;
+	width: 100%;
+}
+.growl {
+	cursor: pointer;
+	position: absolute;
+	right: 0px;
+	width: 225px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	color: #FFF;
+	background: #333;
+	opacity: .75;
+	filter: alpha(opacity=75);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+	border: 1px solid #FFF;
+	padding: 8px;
+	margin: 8px;
+	font-size: 12px;
+	text-shadow: #000 2px 2px 2px;
+	-moz-box-shadow: 4px 4px 5px #888;
+	z-index: 100000;
+}
+
+.growl:hover {
+	opacity: 1;
+	filter: alpha(opacity=100);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 }
