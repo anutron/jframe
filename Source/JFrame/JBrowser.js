@@ -55,6 +55,18 @@ script: JBrowser.js
 				}
 			}
 			if (this.jbrowser.getState('focused')) this.jframe.focus();
+		},
+
+		_setupHistory: function(){},
+
+		_incrementHistory: function(data){
+			if (!data.suppressHistory && this.parentWidget.history) {
+				this.parentWidget.history.push({ path: data.responsePath, title: data.title || data.repsonsePath});
+			}
+		},
+		
+		setCaption: function(title){
+			this.parentWidget.setCaption(title);
 		}
 
 	});
@@ -83,7 +95,7 @@ script: JBrowser.js
 			var show = $pick(options.showNow, true);
 			options.showNow = false;
 			this.parent(options);
-
+			this.addClass('jframe-shared');
 			this.toolbar = new Element('div', {
 				'class':'jframe-window-toolbar',
 				events: {
@@ -105,7 +117,6 @@ script: JBrowser.js
 			jWindowOpts.parentWidget = this;
 			this.jWindow = new jbrowserWindow(path, jWindowOpts);
 			this.jWindow.jbrowser = this;
-			
 			this.jframe = this.jWindow.jframe;
 			
 			
@@ -113,6 +124,7 @@ script: JBrowser.js
 			
 			this._setupHistory(path);
 			this._setupJFrame();
+			this._addKeys();
 			if (show) {
 				this.options.showNow = true;
 				this.show();
@@ -137,6 +149,58 @@ script: JBrowser.js
 					this.element.setStyles(this._jbrowserMinMaxState);
 					this._jbrowserMinMaxState = null;
 				}.bind(this)
+			});
+		},
+		
+		_addKeys: function(){
+			this.keyboard.addShortcuts({
+				'Previous Window': {
+					keys: 'alt+left',
+					shortcut: 'alt + left',
+					handler: function(e){
+						ART.Popup.DefaultManager.cycle('back', 'default');
+						Keyboard.stop(e);
+						e.stop();
+					},
+					description: 'Bring the previous window to the foreground.'
+				},
+				'Next Window': {
+					keys: 'alt+right',
+					shortcut: 'alt + right',
+					handler: function(e){
+						ART.Popup.DefaultManager.cycle('forward', 'default');
+						Keyboard.stop(e);
+						e.stop();
+					},
+					description: 'Bring the next window to the foreground.'
+				},
+				'New Window': {
+					keys: 'alt+shift+n',
+					shortcut: 'alt + shift + n',
+					handler: function(e){
+						new JBrowser(this.jframe.currentPath, this.options).inject($('mt-content'));
+						Keyboard.stop(e);
+					}.bind(this),
+					description: 'Launch a new window for the current application (if it allows it).'
+				},
+				'Close Window': {
+					keys: 'alt+shift+w',
+					shortcut: 'alt + shift + w',
+					handler: function(e){
+						if (ART.Popup.DefaultManager.focused) ART.Popup.DefaultManager.focused.hide();
+						Keyboard.stop(e);
+					},
+					description: 'Close the current window.'
+				},
+				'Show/Hide Shortcuts': {
+					keys: 'alt+/',
+					shortcut: 'alt + /',
+					handler: function(e){
+						keyShower.toggle();
+						Keyboard.stop(e);
+					},
+					description: 'Show or hide the list of all active shortcuts.'
+				}
 			});
 		},
 		
@@ -165,23 +229,6 @@ script: JBrowser.js
 		},
 
 		_setupJFrame: function(path){
-			//adds mouseover/mouseout behaviors for all links that have the class
-			//.frame_tip; when the user mouses over such an object, the "status"
-			//area in the window footer displays the title of that element.
-			this.jframe.addFilters({
-				statusTips: function(container) {
-					container.addEvents({
-						'mouseover:relay(.frame_tip)': function(e, element){
-							var tipTitle = element.retrieve('tip:title', element.get('title') || '');
-							element.set('title', '');
-							this.setFooter(tipTitle);
-						}.bind(this),
-						'mouseout:relay(.frame_tip)': function(e, element){
-							this.setFooter('');
-						}.bind(this)
-					});
-				}.bind(this)
-			});
 			this.addEvents({
 				focus: function(){
 					this.jframe.focus();
@@ -196,6 +243,11 @@ script: JBrowser.js
 					this.jframe.behavior.hide();
 				}
 			});
+		},
+
+		load: function(options) {
+			this.jframe.load(options);
+			return this;
 		},
 
 		resize: function(w, h) {
