@@ -4,20 +4,21 @@
 		<title>Submit Form on Change</title>
 	</head>
 	<body>
-		{% if post_vars %}
+		% if post_vars:
 			<div class="jframe_padded">
 				You submitted the following values:
 				<ul>
-					{% for post_var, val in post_vars %}
-					 <li>{{post_var}}: {{val}}</li>
-					{% endfor %}
+					% for post_var, val in post_vars:
+					 <li>${post_var}: ${val}</li>
+					% endfor
 				</ul>
 			</div>
-		{% else %}
+			<hr/>
+		% endif
 		<p>
 			The form below will submit as soon as you select a value.
 		</p>
-		<form action="/test/?project=jframe&path=/JWindow_Tests/submit.form.on.change.html" method="post" style="margin: 6px 0px 0px;" data-filters="SubmitOnChange">
+		<form action="/test/?project=jframe&path=/JWindow_Tests/submit.form.on.change.mako" method="post" style="margin: 6px 0px 0px;" data-filters="SubmitOnChange">
 			<select name="select_list">
 				<option value="option 1">option 1</option>
 				<option value="option 2">option 2</option>
@@ -28,7 +29,7 @@
 		
 		<hr/>
 		<p>This form works exactly as the one above, but the SubmitOnChange data filter is on the select, rather than the form.</p>
-		<form action="/test/?project=jframe&path=/JWindow_Tests/submit.form.on.change.html" method="post" style="margin: 6px 0px 0px;">
+		<form action="/test/?project=jframe&path=/JWindow_Tests/submit.form.on.change.mako" method="post" style="margin: 6px 0px 0px;">
 			<select name="select_list" data-filters="SubmitOnChange">
 				<option value="option 1">option 1</option>
 				<option value="option 2">option 2</option>
@@ -37,8 +38,5 @@
 			<input type="text" name="textinput" value="If you change me, I don't submit the form.">
 			<input type="submit" class="jframe-hidden" name="submit"/>
 		</form>
-		
-		
-		{% endif %}
 	</body>
 </html>
