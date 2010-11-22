@@ -43,6 +43,7 @@ requires:
  - /Behavior.DataGroupToggle
  - /Behavior.FilterInput
  - /Behavior.FitText
+ - /Behavior.FlashMessage
  - /Behavior.HtmlTableCheckSelected
  - /Behavior.HtmlTableChromeHack
  - /Behavior.HtmlTableKeyboard
@@ -171,12 +172,12 @@ JFrame = new Class({
 		configureRequest - configures a passed in request to be have its response rendered within JFrame..
 		request - (* request object *) request object to be configured
 	*/
-	configureRequest: function(request){
-		this._setRequestOptions(request, {
+	configureRequest: function(request, options){
+		this._setRequestOptions(request, $merge({
 			onSuccess: function(nodes, elements, text){
-				this._requestSuccessHandler(request, text);
+				this._requestSuccessHandler(request, text, options);
 			}.bind(this)
-		});
+		}, options));
 	},
 
 
@@ -742,6 +743,9 @@ JFrame = new Class({
 				*/
 				if (this._request && this._request != request) this._request.cancel();
 				this._request = request;
+				this.getWindow().alertManager.getLayer('alerts').instances.each(function(alert){
+					alert.destroy();
+				});
 			}.bind(this),
 			onSuccess: function(requestTxt){
 				//if there's a method called requestChecker defined in the options, run our response through it
@@ -788,20 +792,22 @@ JFrame = new Class({
 		}
 		var responsePath = request.getHeader('X-Hue-JFrame-Path');
 		var redirected = responsePath && responsePath != this.currentPath;
-
 		if (redirected) this.fireEvent('redirect', [this.currentPath, responsePath]);
 		
 		this.renderContent($merge({
 			content: html,
 			responsePath: responsePath || request.options.url,
 			error: error,
-			blankWindowWithError: blankWindowWithError
+			blankWindowWithError: blankWindowWithError,
+			getRequest: $lambda(request)
 		}, options || {}));
-		var flash = request.getHeader('X-Hue-Flash-Messages');
+		var flash = request.getHeader('X-Hue-Flash-Messages') || request.getHeader('X-Flash-Messages');
 		if (flash) {
 			var data = eval(flash);
 			data.each(function(msg) {
-				FlashMessage.growl(msg);
+				FlashMessage.flash({
+					message: msg
+				});
 			});
 		}
 		if (redirected) this.fireEvent('redirectAfterRender', [this.currentPath, responsePath]);
@@ -961,7 +967,6 @@ JFrame = new Class({
 		if (!options.noScroll) this.scroller.toTop();
 		if (target == this.content) this._sweep(target);
 
-
 		//if we're injecting into the main content body apply the view classes and remove the old one
 		if (target == this.content) {
 			if (this.view) this.content.removeClass(this.view.view);
@@ -983,11 +988,12 @@ JFrame = new Class({
 		var toolbar = target.getElements('.toolbar');
 		var footer = target.getElements('.footer');
 
+
 		//define the callback data
 		var data = {
 			content: options.content,
 			elements: content.elements,
-			requestOptions: content.options,
+			requestOptions: options,
 			responsePath: options.responsePath,
 			title: content.title || options.title || options.responsePath,
 			userData: options.userData,
@@ -998,6 +1004,21 @@ JFrame = new Class({
 			footer: footer,
 			suppressHistory: options.suppressHistory
 		};
+
+		var request = options.getRequest();
+		if (request.options.method != "get") {
+			var responsePath = options.responsePath;
+			if (!options.responsePath) {
+				responsePath = new URI(request.options.formAction);
+				responsePath.setData(request.options.formData, true);
+				responsePath = responsePath.toString();
+			}
+			data.requestParams = {
+				method: request.options.method,
+				uri: responsePath
+			};
+		}
+
 
 		// Let observers know
 		if (!options.suppressLoadComplete) this.fireEvent('loadComplete', data);
