@@ -42,6 +42,24 @@ Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, m
 	var formRequest = element.get('formRequest');
 	//tell it not to update anything
 	formRequest.request.options.update = null;
+	var options = {};
+	['append', 'replace', 'target', 'after', 'before'].each(function(action){
+		var selector = element.get('data', 'ajax-' + action);
+		if (selector) {
+			var target = methods.getContentElement().getElement(selector);
+			if (target) {
+				options.target = target;
+				options.spinnerTarget = target;
+				options.noScroll = true;
+			}
+		}
+	});
 	//configure its request to use JFrame's response handler
-	methods.configureRequest(formRequest.request);
+	methods.configureRequest(formRequest.request, options);
+	formRequest.addEvent('send', function(form, query){
+		formRequest.request.setOptions({
+			formAction: form.get('action'),
+			formData: query
+		});
+	});
 });
