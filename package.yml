@@ -11,7 +11,6 @@ sources: [
   Source/JFrameRenderers/JFrame.Prompt.js,
   Source/JFrameRenderers/JFrame.PartialRefresh.js,
   Source/JFrameRenderers/PartialUpdate.js,
-  Source/JFrame/FlashMessage.js,
   Source/JFrame/JBrowser.js,
   Source/JFrame/JFrame.Error.js,
   Source/JFrame/JFrame.js,
@@ -37,6 +36,7 @@ sources: [
   Source/BehaviorFilters/Behavior.DataGroupToggle.js,
   Source/BehaviorFilters/Behavior.FilterInput.js,
   Source/BehaviorFilters/Behavior.FitText.js,
+  Source/BehaviorFilters/Behavior.FlashMessage.js,
   Source/BehaviorFilters/Behavior.HtmlTableCheckSelected.js,
   Source/BehaviorFilters/Behavior.HtmlTableChromeHack.js,
   Source/BehaviorFilters/Behavior.HtmlTableKeyboard.js,
@@ -57,5 +57,6 @@ sources: [
   Source/BehaviorFilters/Behavior.Timer.js,
   Source/UI/ART.SideBySideSelect.js,
   Source/UI/ContextMenu.js,
+  Source/UI/FlashMessage.js,
 ]
 version: Unknown
