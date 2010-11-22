@@ -52,10 +52,9 @@ Behavior.addGlobalFilters({
 				other.dissolve();
 			}
 		});
-		if (ot) {
-			this.markForCleanup(element, function(){
-				ot.destroy();
-			});
-		}
+		this.markForCleanup(element, function(){
+			var ot = input.retrieve('OverText');
+			if (ot) ot.destroy();
+		});
 	}
 });
