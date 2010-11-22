@@ -56,6 +56,13 @@
     {"id":31,"timezone":"America/New_York","name":"Washington, DC","geo/lat":38.8964,"geo/long":-77.0447}
   ]
   columns = ['id', 'timezone', 'name', 'geo/lat', 'geo/long']
+
+  sort_order = get_var('sortOrder')
+  if sort_order is None or len(sort_order) == 0:
+    sort_order = columns[:]
+  else:
+    sort_order = [columns[int(i)] for i in sort_order.split(',')]
+
   active_columns = columns[:]
   if get_var('show_columns') is not None:
     active_columns = []
@@ -68,49 +75,56 @@
   <head>
     <title>Configurable Columns</title>
   </head>
-  <body data-filters="CollapsingElements">
-    <form action="${request_path}" method="GET" class="jframe-hidden collapsible jframe-table_config">
-      <ul>
-        % for i, option in enumerate(columns):
-          <%
-            checked = ""
-            if option in active_columns:
-              checked = 'checked="checked"'
-          %>
-          <li><label><input type="checkbox" name="show_columns" value="${i}" ${checked}/> ${option}</label></li>
-        % endfor
-      </ul>
-      <a class="jframe-checkAll" data-filters="ArtButton" data-check-group=".jframe-table_config input">checkAll</a>
-      <a class="jframe-checkNone" data-filters="ArtButton" data-check-group=".jframe-table_config input">checkNone</a>
-      <input type="submit" value="Apply" data-filters="ArtButton"/>
-    </form>
-    <table data-filters="HtmlTable">
-      <thead>
-        <tr>
-          % for i, col in enumerate(active_columns):
-            % if i == 0:
-              <th>
-                <a class="collapser jframe-table_config_link jframe-left"></a>
-                ${col}
-              </th>
-            % else:
-              <th>${col}</th>
-            % endif
+  <body>
+    <div data-filters="CollapsingElements">
+      <form action="/test/" method="GET" class="jframe-hidden collapsible jframe-table_config">
+        <input type="hidden" name="sortOrder" value="${get_var('sortOrder', '')}"/>
+        <input type="hidden" name="project" value="jframe"/>
+        <input type="hidden" name="path" value="/JWindow_Tests/html-table.configurable.columns.mako"/>
+        <ul data-filters="Sortable, MultiChecks" data-sort-state="[name=sortOrder]" 
+        data-sort-property="value"
+        data-sort-property-child="input">
+          % for i, option in enumerate(sort_order):
+            <%
+              checked = ""
+              if option in active_columns:
+                checked = 'checked="checked"'
+            %>
+            <li class="jframe-sort_handle"><label><input type="checkbox" name="show_columns" value="${columns.index(option)}" ${checked}/> ${option}</label></li>
           % endfor
-        </tr>
-      </thead>
-      <tbody>
-        % for d in data:
+        </ul>
+        <a class="jframe-checkAll" data-filters="ArtButton" data-check-group=".jframe-table_config input">checkAll</a>
+        <a class="jframe-checkNone" data-filters="ArtButton" data-check-group=".jframe-table_config input">checkNone</a>
+        <input type="submit" value="Apply" data-filters="ArtButton"/>
+      </form>
+      <table data-filters="HtmlTable">
+        <thead>
           <tr>
-          % for name in active_columns:
-              <td>
-                ${d.get(name)}
-              </td>
-          % endfor
+            % for i, col in enumerate(active_columns):
+              % if i == 0:
+                <th>
+                  <a class="collapser jframe-table_config_link jframe-left"></a>
+                  ${col}
+                </th>
+              % else:
+                <th>${col}</th>
+              % endif
+            % endfor
           </tr>
-        % endfor
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          % for d in data:
+            <tr>
+            % for name in active_columns:
+                <td>
+                  ${d.get(name)}
+                </td>
+            % endfor
+            </tr>
+          % endfor
+        </tbody>
+      </table>
+    </div>
     
   </body>
 </head>
