@@ -26,7 +26,7 @@ script: Behavior.SideBySideSelect.js
 Behavior.addGlobalFilters({
 
 	SideBySideSelect: function(element, events) {
-		if (element.get('tag') != 'select' && element.get('multiple')){
+		if (element.get('tag') == 'select' && !element.get('multiple')){
 			dbug.warn("Side_by_side_select element %o does not contain multiple=true.", element);
 			return;
 		}
