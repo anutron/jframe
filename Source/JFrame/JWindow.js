@@ -136,6 +136,10 @@ script: JWindow.js
 			if (this.footerText) this.jframe.applyDelegates(this.footerText);
 			this.jframe.addEvent('refresh', this._storeScroll.bind(this));
 			new ART.Keyboard(this);
+		_rewritePath: function(path){
+			this.history.rewrite({
+				responsePath: path
+			});
 		},
 
 		getSize: function(){
@@ -293,13 +297,23 @@ script: JWindow.js
 			}
 		},
 
+		rewrite: function(data){
+			this.back();
+			this.push(data);
+		},
+
 		push: function(data) {
 			var uri = data.responsePath;
 			if (data.requestParams) {
 				uri = new URI(data.requestParams.uri);
 				uri.setData('___method___', data.requestParams.method);
-				uri = unescape(uri.toString());
+				var postKeys = [];
+				for (key in data.requestParams.formData){
+					postKeys.push(key);
+				}
+				uri.setData('___postKeys___', postKeys.join(',,'));
 			}
+			uri = unescape(uri.toString());
 			this._currentLocation = uri;
 			window.location.hash = uri;
 			//here for API compatibility

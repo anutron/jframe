@@ -204,7 +204,7 @@ script: JFrame.PartialRefresh.js
 			(i.e. it has no partial-container).
 			*******************************/
 			//store the path as the current one
-			this.currentPath = options.responsePath || this.currentPath;
+			this.setPath(options.responsePath || this.currentPath);
 
 			if (ENABLE_DEBUG_TIMERS) dbug.time('update');
 			updaters.each(function(updaterObj){

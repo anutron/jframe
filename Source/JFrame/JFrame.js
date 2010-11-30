@@ -285,6 +285,20 @@ JFrame = new Class({
 			})
 		);
 		req.send();
+	//updates the current path with the specified value
+	setPath: function(path){
+		this.currentPath = path;
+	},
+
+	//updates the current path with the specified value and fires the
+	//rewritePath event; this is used to tell the container that this
+	//path replaces the current one, but it's not an increment of the
+	//history, rather an update to the current location state
+	rewritePath: function(path){
+		this.setPath(path);
+		this.fireEvent('rewritePath', path);
+	},
+
 	},
 
 	disableSpinnerUsage: function(){
@@ -951,7 +965,7 @@ JFrame = new Class({
 	_defaultRenderer: function(content){
 		var options = content.options;
 		//store the path as the current one
-		if (!options.retainPath) this.currentPath = options.responsePath || this.currentPath;
+		if (!options.retainPath) this.setPath(options.responsePath || this.currentPath);
 
 		if (options.filter) {
 			if (!content.elements.length) return content.elements;

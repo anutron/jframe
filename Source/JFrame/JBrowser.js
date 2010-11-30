@@ -58,6 +58,9 @@ script: JBrowser.js
 		},
 
 		_setupHistory: function(){},
+		_rewritePath: function(path){
+			this.history.getSelected().path = path;
+		},
 
 		_incrementHistory: function(data){
 			if (!data.suppressHistory && this.parentWidget.history) {

@@ -27,15 +27,15 @@ script: JFrame.LivePath.js
 	JFrame.addGlobalLinkers({
 
 		'[data-livepath-toggle]': function(event, link){
-			this.currentPath = updateLivePath(link, this.currentPath);
+			this.rewritePath(updateLivePath(link, this.currentPath));
 		},
 		//these are a bit silly, but mootools 1.2 selector engine doesn't support
 		//complex selectors for element.match, so we have to do a bit of repetition here
 		'[data-livepath-add]': function(event, link){
-			this.currentPath = updateLivePath(link, this.currentPath);
+			this.rewritePath(updateLivePath(link, this.currentPath));
 		},
 		'[data-livepath-remove]': function(event, link){
-			this.currentPath = updateLivePath(link, this.currentPath);
+			this.rewritePath(updateLivePath(link, this.currentPath));
 		}
 
 	});
@@ -46,7 +46,6 @@ script: JFrame.LivePath.js
 			var okToAdd = action == "toggle" || action == "add";
 			for (path in paths){
 				var state = uri.getData(path);
-				if (window.paused) debugger;
 				if (!state) {
 					uri.setData(path, paths[path]);
 				} else if ($type(state) == "string") {
