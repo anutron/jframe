@@ -1049,3 +1049,16 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried
 	filter: alpha(opacity=100);
 	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 }
+
+.highlight-partial-updates .partial-refresh-transitionable {
+	-webkit-transition: color 1s ease-in-out;
+	-moz-transition: color 1s ease-in-out;
+	-o-transition: color 1s ease-in-out;
+	transition: color 1s ease-in-out;
+}
+.highlight-partial-updates .partial-refresh-updated, .highlight-partial-updates .partial-refresh-updated a {
+	color: #238500 !important;
+}
+.highlight-partial-updates tr.table-tr-selected .partial-refresh-updated, .highlight-partial-updates tr.table-tr-selected .partial-refresh-updated a {
+	color: #F5FC2B !important;
+}
