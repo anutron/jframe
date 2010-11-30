@@ -67,13 +67,9 @@
 
   # Start with init and create the tree
   # Note that on linux, kthreadd is also a child of pid 0
-  foo = []
-  for something, child in children.iteritems():
-    commands = []
-    for x in child:
-      commands.append(x.command)
-    foo.append(commands)
   top_list = filter(lambda x: 'launchd' in x.command, children[0])
+  if (len(top_list) != 1):
+    top_list = filter(lambda x: 'initd' in x.command, children[0])
   assert len(top_list) == 1
   top = top_list[0]
   fill(top, "/")
