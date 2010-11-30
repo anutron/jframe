@@ -48,9 +48,16 @@ Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, m
 		if (selector) {
 			var target = methods.getContentElement().getElement(selector);
 			if (target) {
-				options.target = target;
-				options.spinnerTarget = target;
-				options.noScroll = true;
+				$extend(options, {
+					target: target,
+					spinnerTarget: target,
+					noScroll: true,
+					onlyProcessPartials: true,
+					ignoreAutoRefresh: true,
+					suppressLoadComplete: true,
+					fullFrameLoad: false,
+					retainPath: true
+				});
 			}
 		}
 	});
