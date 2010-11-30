@@ -272,6 +272,10 @@ JFrame = new Class({
 	 *   options: see renderContent's options
 	 */
 	load: function(options){
+		//we have to introduce a delay here because the instance of JFrame isn't instantiated yet
+		//and there is no window object when you call getWindow, which is required for showing
+		//an alert in the checkForPostAndLoad method
+
 		options = $merge({
 			//by default, requests reload the entire jframe
 			fullFrameLoad: true
@@ -284,7 +288,9 @@ JFrame = new Class({
 				url: new URI(options.requestPath).toString()
 			})
 		);
-		req.send();
+		this._checkForPostAndLoad.delay(1, this, [options, req]);
+	},
+
 	//updates the current path with the specified value
 	setPath: function(path){
 		this.currentPath = path;
@@ -299,6 +305,49 @@ JFrame = new Class({
 		this.fireEvent('rewritePath', path);
 	},
 
+	_checkForPostAndLoad: function(options, req) {
+		//get the method from the uri
+		var uri = new URI(options.requestPath);
+		var method = options.method || uri.getData('___method___');
+		//if it's there and it isn't a get, prompt the user to resubmit
+		if (method && method != "get") {
+			//ask the user if they want to re-post the request
+			this.confirm('Confirm', 'To display this view, the form that was submitted when it was originally displayed will have to be submitted again. Do you wish to resubmit it?', function(){
+				//get the data from the uri (the get params)
+				var data = uri.getData();
+				//get the keys of what got posted; this allows for the reposting of a form that had
+				//get params in the url and then post params in the form
+				var postKeys = data['___postKeys___'];
+				var postData = {};
+				//loop through the post keys and assign their values to the postData, removing them from the get data
+				if (postKeys) {
+					postKeys.split(",,").each(function(key){
+						postData[key] = data[key];
+						delete data[key];
+					});
+					//update the request to use the specified method, the url and post params
+					req.setOptions({
+						url: uri.setData(data).toString(),
+						data: postData,
+						method: method
+					});
+				}
+				//send the request
+				req.send();
+			}, {
+				//if they cancel, show a message that says why the page is essentially empty
+				onCancel: function(){
+					this._empty();
+					this.content.adopt(new Element('p', {
+							text: 'This view was created by the submission of a form. Refresh to re-submit.'
+						})
+					);
+				}.bind(this)
+			});
+		} else {
+			//else load the request
+			req.send();
+		}
 	},
 
 	disableSpinnerUsage: function(){
@@ -955,6 +1004,19 @@ JFrame = new Class({
 	*/
 	_renderers: {},
 	
+	_empty: function(target, options){
+		target = target || (options && options.target && $$(options.target)[0]) || this.content;
+		this._resetOverflow(target);
+		this._sweep(target);
+		//if we're injecting into the main content body, cleanup and scrollto the top
+		if (options && !options.noScroll) this.scroller.toTop();
+		if (target == this.content) {
+			if (this.view) this.content.removeClass(this.view.view);
+		}
+		target.empty();
+		if (target == this.content) this.fireEvent('empty');
+	},
+	
 	/*
 		the default renderer, if no other renderers apply
 		this is the default behavior for jframe which fills the content of the window and updates
@@ -974,16 +1036,11 @@ JFrame = new Class({
 		}
 
 		//grab the target
-		var target = options.target ? $$(options.target)[0] || this.content : this.content;
-		this._resetOverflow(target);
-
-		//if we're injecting into the main content body, cleanup and scrollto the top
-		if (!options.noScroll) this.scroller.toTop();
-		if (target == this.content) this._sweep(target);
+		var target = (options && options.target && $$(options.target)[0]) || this.content;
+		this._empty(target, options);
 
 		//if we're injecting into the main content body apply the view classes and remove the old one
 		if (target == this.content) {
-			if (this.view) this.content.removeClass(this.view.view);
 			if (content.viewElement) {
 				this.view = {
 					view: content.view,
@@ -1029,6 +1086,7 @@ JFrame = new Class({
 			}
 			data.requestParams = {
 				method: request.options.method,
+				formData: request.options.formData,
 				uri: responsePath
 			};
 		}

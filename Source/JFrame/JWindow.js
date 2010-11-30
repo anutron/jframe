@@ -105,11 +105,7 @@ script: JWindow.js
 		_setupHistory: function(){
 			this.history = new History({
 				onChange: function(hashpath){
-					if (hashpath) {
-						this.load({
-							requestPath: hashpath
-						});
-					}
+					if (hashpath) this.load({ requestPath: hashpath });
 				}.bind(this)
 			});
 		},
@@ -122,6 +118,7 @@ script: JWindow.js
 					//do not restore scroll offsets when jframe is redirected
 					this._scrolled = null;
 				}.bind(this),
+				onEmpty: this._emptyToolbar.bind(this),
 				size: {
 					width: size.x,
 					height: size.y
@@ -134,8 +131,12 @@ script: JWindow.js
 
 			if (this.toolbar) this.jframe.applyDelegates(this.toolbar);
 			if (this.footerText) this.jframe.applyDelegates(this.footerText);
-			this.jframe.addEvent('refresh', this._storeScroll.bind(this));
-			new ART.Keyboard(this);
+			this.jframe.addEvents({
+				refresh: this._storeScroll.bind(this),
+				rewritePath: this._rewritePath.bind(this)
+			});
+		},
+
 		_rewritePath: function(path){
 			this.history.rewrite({
 				responsePath: path
@@ -186,11 +187,15 @@ script: JWindow.js
 			}
 		},
 
+		_emptyToolbar: function(){
+			this.jframe.behavior.cleanup(this.toolbar);
+			this.toolbar.empty();
+		},
+
 		_jframeLoaded: function(data) {
 			this.setCaption(this.options.windowTitler(data.title || data.repsonsePath));
 			if (this.toolbar) {
-				this.jframe.behavior.cleanup(this.toolbar);
-				this.toolbar.empty();
+				this._emptyToolbar();
 				if (data.toolbar) this.toolbar.adopt(data.toolbar);
 			}
 			if (this.footerText) {
