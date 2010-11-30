@@ -24,8 +24,6 @@ script: JFrame.PartialRefresh.js
 // limitations under the License.
 (function(){
 
-	var ENABLE_DEBUG_TIMERS = false; //left here for convenience
-
 	JFrame.addGlobalRenderers({
 
 		/*
@@ -98,8 +96,6 @@ script: JFrame.PartialRefresh.js
 		*/
 
 		partialRefresh: function(content){
-			if (ENABLE_DEBUG_TIMERS) dbug.timeEnd('partial refresh');
-			if (ENABLE_DEBUG_TIMERS) dbug.time('partial refresh');
 			var options = content.options || {};
 			//if the request options include the ignorePartialRequest flag, exit
 			if (options.ignorePartialRefresh) return;
@@ -110,7 +106,6 @@ script: JFrame.PartialRefresh.js
 			//find all the containers in the response that have data-partial-container-id
 			var partialContainers = elements.getElements('[data-partial-container-id]');
 
-			if (ENABLE_DEBUG_TIMERS) dbug.time('create');
 			//and either fetch or create instances of PartialUpdate for them
 			var updaters = partialContainers.map(function(container){
 				return {
@@ -121,20 +116,16 @@ script: JFrame.PartialRefresh.js
 						}.bind(this),
 						//before individual elements are inserted in the DOM, run them through the jframe filters
 						onBeforeUpdate: function(checked){
-							if (ENABLE_DEBUG_TIMERS) dbug.time('update:filters');
 							this.applyFilters(checked.target);
-							if (ENABLE_DEBUG_TIMERS) dbug.timeEnd('update:filters');
 						}.bind(this)
 					}),
 					responseContainer: container
 				};
 			}, this);
-			if (ENABLE_DEBUG_TIMERS) dbug.timeEnd('create');
 
 			//find stand-alone partials; these have no containers
 			var standAlones = elements.getElements('[data-single-partial-id]'),
 			    tmpTarget = new Element('div');
-			if (ENABLE_DEBUG_TIMERS) dbug.time('stand alone');
 			
 			for (var i = 0; i < standAlones.length; i++){
 				var element = standAlones[i];
@@ -148,9 +139,7 @@ script: JFrame.PartialRefresh.js
 						partialIdProperty: 'data-single-partial-id',
 						updateStateOnStartup: false,
 						onBeforeUpdate: function(element){
-							if (ENABLE_DEBUG_TIMERS) dbug.time('update:filters');
 							this.applyFilters(tmpTarget.adopt(element));
-							if (ENABLE_DEBUG_TIMERS) dbug.timeEnd('update:filters');
 						}.bind(this)
 					});
 				}
@@ -159,15 +148,12 @@ script: JFrame.PartialRefresh.js
 					responseContainer: elements
 				});
 			}
-			if (ENABLE_DEBUG_TIMERS) dbug.timeEnd('stand alone');
 
 			//this method just updates the state of each updater to match that of the response
 			var updateState = function(){
-				if (ENABLE_DEBUG_TIMERS) dbug.time('update state');
 				updaters.each(function(updaterObj){
 					updaterObj.updater.updateState(updaterObj.responseContainer);
 				});
-				if (ENABLE_DEBUG_TIMERS) dbug.timeEnd('update state');
 			};
 
 			//for requests that want to handle the element injection themselves (ajaxload, for example)
@@ -206,19 +192,14 @@ script: JFrame.PartialRefresh.js
 			//store the path as the current one
 			this.setPath(options.responsePath || this.currentPath);
 
-			if (ENABLE_DEBUG_TIMERS) dbug.time('update');
 			updaters.each(function(updaterObj){
 				updaterObj.updater.update(updaterObj.responseContainer);
 			});
-			if (ENABLE_DEBUG_TIMERS) dbug.timeEnd('update');
-			if (ENABLE_DEBUG_TIMERS) dbug.time('apply filters to content');
 			this.applyFilters(new Element('div'), content);
-			if (ENABLE_DEBUG_TIMERS) dbug.timeEnd('apply filters to content');
 
 			//we've updated the display, so tell filters that are waiting that they may need to update their display, too
 			this.behavior.fireEvent('show');
 			//prevent other renderers from handling the response
-			if (ENABLE_DEBUG_TIMERS) dbug.timeEnd('partial refresh');
 			return true;
 		}
 
