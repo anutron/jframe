@@ -139,7 +139,7 @@ JFrame = new Class({
 			}
 		});
 		if(this.options.size) this.behavior.resize(this.options.size.width, this.options.size.height);
-		['attachKeys', 'detachKeys', 'addShortcut', 'addShortcuts', 'removeShortcut', 'removeShortcuts',
+		['attachKeys', 'detachKeys', 'addShortcut', 'addShortcuts', 'removeShortcut', 'removeShortcuts', 'destroy',
 		 'applyDelegates', 'getScroller', 'getContentElement', 'invokeLinker', 'configureRequest', 'getBehaviorState'].each(function(method){
 			this.behavior.passMethod(method, this[method].bind(this));
 		}, this);
@@ -713,8 +713,10 @@ JFrame = new Class({
 		destroy: removes the jframe element and cleans up any events that may be attached
 	*/
 
-	destroy: function(){
-		this._sweep(this.element);
+	destroy: function(element){
+		element = element || this.element;
+		this._sweep(element);
+		element.destroy();
 	},
 
 /****************************************************************************************
@@ -949,17 +951,17 @@ JFrame = new Class({
 		target - (*element*) the element to garbage collect;
 	*/
 	_sweep: function(target){
-		if (target == this.element) {
+		this.behavior.cleanup(target);
+		if (target == this.content) {
 			this.marked.each(function(fn) {
 				dbug.conditional(fn.bind(this), function(e) {
 					dbug.error('sweeper failed, error: ', e);
 				});
 			});
 			this.marked.empty();
+			//if there are any child widgets that were not destroyed, destroy them
+			if (this._childWidgets.length) this._childWidgets.each(function(w) { w.eject(); });
 		}
-		this.behavior.cleanup(target);
-		//if there are any child widgets that were not destroyed, destroy them
-		if (this._childWidgets.length) this._childWidgets.each(function(w) { w.eject(); });
 	},
 
 	/*
@@ -1008,11 +1010,11 @@ JFrame = new Class({
 	
 	_empty: function(target, options){
 		target = target || (options && options.target && $$(options.target)[0]) || this.content;
-		this._resetOverflow(target);
 		this._sweep(target);
-		//if we're injecting into the main content body, cleanup and scrollto the top
-		if (options && !options.noScroll) this.scroller.toTop();
 		if (target == this.content) {
+			this._resetOverflow(target);
+			//if we're injecting into the main content body, cleanup and scrollto the top
+			if (options && !options.noScroll) this.scroller.toTop();
 			if (this.view) this.content.removeClass(this.view.view);
 		}
 		target.empty();

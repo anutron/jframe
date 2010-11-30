@@ -23,28 +23,30 @@ script: Behavior.HtmlTableLiveTreeKeyboard.js
 */
 (function(){
 
-var checkLinkerForLivePath = function(anchor, methods){
+var checkLinkerForLivePath = function(anchor, behaviorAPI){
 	['[data-livepath-toggle]', '[data-livepath-add]', '[data-livepath-replace]'].some(function(selector){
 		if (anchor.match(selector)) {
-			methods.invokeLinker(selector, anchor, { stop: $empty, preventDefault: $empty, stopPropagation: $empty});
+			behaviorAPI.invokeLinker(selector, anchor, { stop: $empty, preventDefault: $empty, stopPropagation: $empty});
 			return true;
 		}
 	});
 };
 
-Behavior.addGlobalPlugin('HtmlTable', 'HtmlTableLiveTreeKeyboard', function(element, methods){
+Behavior.addGlobalPlugin('HtmlTable', 'HtmlTableLiveTreeKeyboard', function(element, behaviorAPI){
 	if (!element.hasClass('treeView')) return;
 	var table = element.retrieve('HtmlTable');
 	table.addEvent('onHideRow', function(row){
-		if (row.get('data-partial-line-id')) row.destroy();
+		if (row.get('data-partial-line-id')) {
+			behaviorAPI.destroy(row);
+		}
 	});
 	table.addEvent('expandSection', function(row){
 		var anchor = row.getElement('.expand');
-		if (anchor) methods.callClick({ stop: $empty, preventDefault: $empty, stopPropagation: $empty}, anchor, true);
+		if (anchor) behaviorAPI.callClick({ stop: $empty, preventDefault: $empty, stopPropagation: $empty}, anchor, true);
 	}.bind(this));
 	table.addEvent('closeSection', function(row){
 		var anchor = row.getElement('.expand');
-		if (anchor) checkLinkerForLivePath(anchor, methods);
+		if (anchor) checkLinkerForLivePath(anchor, behaviorAPI);
 	});
 	$(table).addEvent('click:relay(.expand)', function(event, link){
 		event.stop();
