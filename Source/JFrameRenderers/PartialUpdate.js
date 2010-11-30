@@ -298,8 +298,7 @@ script: PartialUpdate.js
 				}
 			}
 			for (id in linesToDestroy) {
-				this.fireEvent('elementDestroy', line);
-				line.destroy();
+				this._clean(linesToDestroy[id]);
 			}
 			//dbug.timeEnd('clean partials');
 		},
