@@ -949,12 +949,14 @@ JFrame = new Class({
 		target - (*element*) the element to garbage collect;
 	*/
 	_sweep: function(target){
-		this.marked.each(function(fn) {
-			dbug.conditional(fn.bind(this), function(e) {
-				dbug.error('sweeper failed, error: ', e);
+		if (target == this.element) {
+			this.marked.each(function(fn) {
+				dbug.conditional(fn.bind(this), function(e) {
+					dbug.error('sweeper failed, error: ', e);
+				});
 			});
-		});
-		this.marked.empty();
+			this.marked.empty();
+		}
 		this.behavior.cleanup(target);
 		//if there are any child widgets that were not destroyed, destroy them
 		if (this._childWidgets.length) this._childWidgets.each(function(w) { w.eject(); });
