@@ -115,13 +115,13 @@ var setupAutoRefresh = function(content) {
 	//in the AjaxLoad jframe linker), that's still a request, but it's not a request for the entire
 	//page so has no refresh handling of its own
 	var clearer = function(requestPath, userData, options){
+		this.removeEvent('request', clearer);
 		if (!options.fullFrameLoad) {
 			setupAutoRefresh.call(this, content);
 		} else {
 			$clear(timer);
-			this.removeEvent('request', clearer);
 		}
-	};
+	}.bind(this);
 
 	this.addEvent('request', clearer);
 	this.markForCleanup(function(){
