@@ -72,6 +72,7 @@ script: JWindow.js
 		initialize: function(path, options) {
 			this.parent(options);
 			new ART.Keyboard(this, this.keyboardOptions);
+			this.keyboard.activate();
 			this.addClass('jframe-shared');
 			this.toolbar = document.id(this.options.toolbar);
 			this.footerText = document.id(this.options.footerText);
