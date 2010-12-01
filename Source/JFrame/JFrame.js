@@ -952,7 +952,7 @@ JFrame = new Class({
 	*/
 	_sweep: function(target){
 		this.behavior.cleanup(target);
-		if (target == this.content) {
+		if (target == this.content || target.hasChild(this.content)) {
 			this.marked.each(function(fn) {
 				dbug.conditional(fn.bind(this), function(e) {
 					dbug.error('sweeper failed, error: ', e);
