@@ -1,0 +1,6 @@
+js-references:
+  - "More-Behaviors/Behavior.FormValidator"
+  - "JFrame/Behavior.JFrameFormValidator"
+  - "JFrame/Behavior.FormValidatorScroller"
+  - "More/Form.Validator"
+  - "More/Form.Validator.Inline"

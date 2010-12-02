@@ -1,0 +1,5 @@
+js-references:
+  - "More/HtmlTable"
+  - "More/HtmlTable.Select"
+  - "More-Behaviors/Behavior.HtmlTable"
+  - "JFrame/Behavior.HtmlTableCheckSelected"

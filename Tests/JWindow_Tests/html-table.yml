@@ -1,0 +1,11 @@
+js-references:
+  - "More/HtmlTable"
+  - "More/HtmlTable.Select"
+  - "More/HtmlTable.Sort"
+  - "More/HtmlTable.Zebra"
+  - "More/HtmlTable.Resize"
+  - "More-Behaviors/Behavior.HtmlTable"
+  - "JFrame/Behavior.HtmlTableChromeHack"
+  - "JFrame/Behavior.HtmlTableKeyboard"
+  - "JFrame/Behavior.HtmlTableRestore"
+  - "JFrame/Behavior.HtmlTableUpdate"

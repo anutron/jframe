@@ -1,0 +1,5 @@
+js-references:
+  - "More/HtmlTable"
+  - "More/HtmlTable.Tree"
+  - "More-Behaviors/Behavior.HtmlTable"
+  - "JFrame/Behavior.HtmlTableLiveTreeKeyboard"

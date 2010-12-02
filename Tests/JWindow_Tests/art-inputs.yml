@@ -1,0 +1,6 @@
+js-references:
+  - "Widgets/Behavior.ArtInput"
+  - "Widgets/ART.Input"
+  - "Widgets/ART.Radio"
+  - "Widgets/ART.Check"
+  - "Widgets/ART.Search"

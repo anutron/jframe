@@ -1,0 +1,5 @@
+js-references:
+  - "More-Behaviors/Behavior.Sortable"
+  - "JFrame/Behavior.MultiChecks"
+  - "JFrame/Behavior.CollapsingElements"
+  - "JFrame/JFrame.CheckAllOrNone"
