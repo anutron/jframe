@@ -135,7 +135,9 @@
     <meta http-equiv="refresh" content="5" />
   </head>
   <body>
-    <!-- test_runner_no_wrapper -->
+    % if depth > 1:
+      <!-- test_runner_no_wrapper -->
+    % endif
     <div class="jframe_padded highlight-partial-updates"> 
       <input value="you can put some text in here to verify that the whole view doesn't refresh" style="width: 500px;"/>
       <table data-filters="HtmlTable" class="selectable treeView" style="border: 1px solid #999; width: 98%">
