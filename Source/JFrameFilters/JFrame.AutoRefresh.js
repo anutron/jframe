@@ -87,10 +87,11 @@ var setupAutoRefresh = function(content) {
 			this.load({
 				requestPath: url,
 				autorefreshed: true,
+				noScroll: true,
 				requestChecker: requestChecker
 			});
 		} else {
-			this.refresh({ autorefreshed: true, requestChecker: requestChecker });
+			this.refresh({ noScroll: true, autorefreshed: true, requestChecker: requestChecker });
 		}
 	}.bind(this);
 
