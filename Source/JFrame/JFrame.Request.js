@@ -38,7 +38,7 @@ script: JFrame.Request.js
 			onFailure: function() {
 				var msg;
 				if(this.status == 0) {
-					msg = "The Hue server can not be reached. (Is the server running ?)";
+					msg = "The server can not be reached. (Is the server running ?)";
 				} else if (Browser.Engine.trident && (this.status == 12030 || this.status == 12031)) {
 					
 					//In IE, the attempt to get the profile upon logout often results in a status
@@ -57,6 +57,7 @@ script: JFrame.Request.js
 		},
 
 		success: function(text, xml) {
+			//TODO work this reference to Hue out
 			var middleware_header = this.getHeader('X-Hue-Middleware-Response');
 			if (middleware_header) {
 				if (middleware_header == "EXCEPTION") {

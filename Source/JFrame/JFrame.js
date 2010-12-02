@@ -75,8 +75,6 @@ JFrame = new Class({
 
 	Implements: [ART.WindowTools, ART.Window.AlertTools],
 
-	ns: 'hue',
-
 	name: 'jframe',
 
 	options: {
@@ -840,7 +838,7 @@ JFrame = new Class({
 				this.spinner = null;
 			}
 		}.bind(request));
-		//custom header for Hue
+		//custom header for Hue (backwards compat) - TODO move this out
 		request.setHeader('X-Hue-JFrame', 'true');
 	},
 
@@ -855,6 +853,7 @@ JFrame = new Class({
 			error = true;
 			if (!this.loadedOnce) blankWindowWithError = true;
 		}
+		//TODO work this reference to Hue out
 		var responsePath = request.getHeader('X-Hue-JFrame-Path');
 		var redirected = responsePath && responsePath != this.currentPath;
 		if (redirected) this.fireEvent('redirect', [this.currentPath, responsePath]);
@@ -866,6 +865,7 @@ JFrame = new Class({
 			blankWindowWithError: blankWindowWithError,
 			getRequest: $lambda(request)
 		}, options || {}));
+		//TODO work this reference to Hue out
 		var flash = request.getHeader('X-Hue-Flash-Messages') || request.getHeader('X-Flash-Messages');
 		if (flash) {
 			var data = eval(flash);
