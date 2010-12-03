@@ -424,10 +424,10 @@ JFrame = new Class({
 	toolbars:
 		The content of a JFrame request is searched for elements with the class "toolbar" and "footer".
 		These elements are referenced in the data passed to the loadComplete callback as the toolbar and footer
-		for the current view. This allows you to do special things to the navigation. By default, JBrowser
-		injects the contents of this toolbar into the area above the content and the footer content into
-		the footer. By simply putting links and other elements into a div with the class "toolbar" it
-		will be added to the header (and the same for the footer).
+		for the current view. This allows you to do special things to the navigation. By default,
+		JFrame.Browser injects the contents of this toolbar into the area above the content and 
+		the footer content into the footer. By simply putting links and other elements into a div
+		with the class "toolbar" it will be added to the header (and the same for the footer).
 		You must include the toolbar / footer in every response for it to remain there.
 	*/
 	renderContent: function(options){
@@ -1025,7 +1025,7 @@ JFrame = new Class({
 		the default renderer, if no other renderers apply
 		this is the default behavior for jframe which fills the content of the window and updates
 		the history (if history is enabled). It also picks out the view if there is one defined
-		as well as assigns the toolbar to the callback object for JBrowser to do with it what it will.
+		as well as assigns the toolbar to the callback object for JFrame.Browser to do with it what it will.
 		Finally, it calls the callback in the options (if specified) and fires the loadComplete event.
 	*/
 	_defaultRenderer: function(content){

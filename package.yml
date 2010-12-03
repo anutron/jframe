@@ -11,7 +11,7 @@ sources: [
   Source/JFrameRenderers/JFrame.Prompt.js,
   Source/JFrameRenderers/JFrame.PartialRefresh.js,
   Source/JFrameRenderers/PartialUpdate.js,
-  Source/JFrame/JBrowser.js,
+  Source/JFrame/JFrame.Browser.js,
   Source/JFrame/JFrame.Error.js,
   Source/JFrame/JFrame.js,
   Source/JFrame/JFrame.Keys.js,

@@ -15,8 +15,8 @@
 // limitations under the License.
 /*
 ---
-description: A JBrowser is a window that encapsulates a JFrame and a linked HistoryMenu.
-provides: [JBrowser]
+description: JFrame.Browser is a window that encapsulates a JFrame and a linked HistoryMenu.
+provides: [JFrame.Browser, JBrowser]
 requires: 
  - /JFrame.Window
  - Widgets/ART.Browser
@@ -24,13 +24,13 @@ requires:
  - /JFrame.ToggleHistory
  - /JFrame.Request
 
-script: JBrowser.js
+script: JFrame.Browser.js
 
 ...
 */
 (function(){
 
-	var jbrowserWindow = new Class({
+	var jframeWindow = new Class({
 
 		Extends: JFrame.Window,
 
@@ -41,20 +41,20 @@ script: JBrowser.js
 		_jframeLoaded: function(data) {
 			if (!Browser.Engine.trident) {
 				(function(){
-					$(this.jbrowser).setStyle('visibility', 'visible');
-					if (this.jbrowser.history) $(this.jbrowser.history).setStyle('visibility', 'visible');
+					$(this.jframeBrowser).setStyle('visibility', 'visible');
+					if (this.jframeBrowser.history) $(this.jframeBrowser.history).setStyle('visibility', 'visible');
 				}).delay(20, this);
 			}
 			this.parent(data);
 			if (this._jframe_view != data.view) {
 				if (this._jframe_view) {
-					this.jbrowser.contents.removeClass(this._jframe_view);
+					this.jframeBrowser.contents.removeClass(this._jframe_view);
 				}
 				if (data.view) {
-					this.jbrowser.contents.addClass(data.view);
+					this.jframeBrowser.contents.addClass(data.view);
 				}
 			}
-			if (this.jbrowser.getState('focused')) this.jframe.focus();
+			if (this.jframeBrowser.getState('focused')) this.jframe.focus();
 		},
 
 		_setupHistory: function(){},
@@ -74,7 +74,7 @@ script: JBrowser.js
 
 	});
 
-	var jbrowser = {
+	var jframeBrowser = {
 
 		options: {
 			//the onLoad event fires when new content loads
@@ -115,11 +115,11 @@ script: JBrowser.js
 				jframeOptions: this.options.jframeOptions,
 				toolbar: this.toolbar,
 				footerText: this.footerText,
-				_jbrowser: true
+				_jframeBrowser: true
 			});
 			jWindowOpts.parentWidget = this;
-			this.jframeWindow = new jbrowserWindow(path, jWindowOpts);
-			this.jframeWindow.jbrowser = this;
+			this.jframeWindow = new jframeWindow(path, jWindowOpts);
+			this.jframeWindow.jframeBrowser = this;
 			this.jframe = this.jframeWindow.jframe;
 			
 			
@@ -141,7 +141,7 @@ script: JBrowser.js
 
 			this.addEvents({
 				maximize: function(){
-					if (!this._jbrowserMinMaxState) this._jbrowserMinMaxState = this.element.getStyles('top', 'left');
+					if (!this._jframeBrowserMinMaxState) this._jframeBrowserMinMaxState = this.element.getStyles('top', 'left');
 					this.element.setStyles({
 						top: 0,
 						left: 0
@@ -149,8 +149,8 @@ script: JBrowser.js
 				}.bind(this),
 				restore: function(){
 					//restore
-					this.element.setStyles(this._jbrowserMinMaxState);
-					this._jbrowserMinMaxState = null;
+					this.element.setStyles(this._jframeBrowserMinMaxState);
+					this._jframeBrowserMinMaxState = null;
 				}.bind(this)
 			});
 		},
@@ -181,7 +181,7 @@ script: JBrowser.js
 					keys: 'alt+shift+n',
 					shortcut: 'alt + shift + n',
 					handler: function(e){
-						new JBrowser(this.jframe.currentPath, this.options).inject($('mt-content'));
+						new JFrame.Browser(this.jframe.currentPath, this.options).inject($('mt-content'));
 						Keyboard.stop(e);
 					}.bind(this),
 					description: 'Launch a new window for the current application (if it allows it).'
@@ -280,12 +280,12 @@ script: JBrowser.js
 		
 		resetMinMaxState: function(){
 			this.parent.apply(this, arguments);
-			this._jbrowserMinMaxState = null;
+			this._jframeBrowserMinMaxState = null;
 		}
 
 	};
 
-	this.JBrowser = new Class(
+	this.JFrameBrowser = new Class(
 		$merge({
 			Extends: ART.Browser,
 			options: {
@@ -294,27 +294,28 @@ script: JBrowser.js
 				// 	CCS.Desktop.showHelp(this, help ? help.get('href') : null);
 				// }
 			}
-		}, jbrowser)
+		}, jframeBrowser)
 	);
-	JBrowser.Solid = new Class(
+	JFrame.Browser.Solid = new Class(
 		$merge({
 			Extends: ART.SolidWindow
-		}, jbrowser)
+		}, jframeBrowser)
 	);
 	//a window alert w/ a jframe
-	JBrowser.Confirm = new Class(
+	JFrame.Browser.Confirm = new Class(
 		$merge({
 			Extends: ART.Confirm,
 			displayHistory: false
-		}, jbrowser)
+		}, jframeBrowser)
 	);
-	//shortcut for JBrowser.Confirm
-	JBrowser.confirm = function(caption, content, callback, options) {
-		return new JBrowser.Confirm(options.path,
+	//shortcut for JFrame.Browser.Confirm
+	JFrame.Browser.confirm = function(caption, content, callback, options) {
+		return new JFrame.Browser.Confirm(options.path,
 			$extend(options || {}, {
 				caption: caption,
 				onConfirm: callback || $empty
 			})
 		);
 	};
+	this.JBrowser = JFrame.Browser; //legacy
 })();

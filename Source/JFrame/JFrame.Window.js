@@ -76,12 +76,12 @@ script: JFrame.Window.js
 			this.addClass('jframe-shared');
 			this.toolbar = document.id(this.options.toolbar);
 			this.footerText = document.id(this.options.footerText);
-			if (!this.options._jbrowser) {
+			if (!this.options._jframeBrowser) {
 				this.getWindow = $lambda(this);
 				this.getWindowElement = this._getContent.bind(this);
 			}
 			this._makeJFrame(path, options);
-			if (!this.options._jbrowser) {
+			if (!this.options._jframeBrowser) {
 				this.jframe.getContentElement = this._getContent.bind(this);
 				this.jframe.getWindow = $lambda(this);
 				this.contents = this.element;
