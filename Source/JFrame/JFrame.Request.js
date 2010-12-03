@@ -39,14 +39,6 @@ script: JFrame.Request.js
 				var msg;
 				if(this.status == 0) {
 					msg = "The server can not be reached. (Is the server running ?)";
-				} else if (Browser.Engine.trident && (this.status == 12030 || this.status == 12031)) {
-					
-					//In IE, the attempt to get the profile upon logout often results in a status
-					//error 12030 or 12031.  The request completes successfully, just that IE is 
-					//unhappy with the response.  This condition catches that condition and passes it
-					//to handleLoginRequired(), which is what should happen.
-					this.handleLoginRequired();
-					return;
 				} else {
 					msg = "Error " + this.status + " retrieving <a target='_blank' href='" + this.options.url + "'>link</a>";
 				}
@@ -54,29 +46,6 @@ script: JFrame.Request.js
 					message: msg
 				});
 			}
-		},
-
-		success: function(text, xml) {
-			//TODO work this reference to Hue out
-			var middleware_header = this.getHeader('X-Hue-Middleware-Response');
-			if (middleware_header) {
-				if (middleware_header == "EXCEPTION") {
-					this.handleException(text, xml);
-				} else {
-					alert('Bad middleware header: ' + middleware_header);
-				}
-			} else {
-				this.previous(text, xml);
-			}
-		},
-
-		/**
-		 * Handle the case when the server side has thrown back an error.
-		 */
-		handleException: function(text, xml) {
-			var data = JSON.decode(text, true);
-			this.fireEvent('jframeError', data);
-			this.fireEvent('exception', [this.xhr, data]);
 		},
 
 		/**
