@@ -22,43 +22,53 @@ requires: [More/Element.Delegation]
 script: MultiChecks.js
 ...
 */
-var MultiChecks = new Class({
+(function(){
 
-	initialize: function(container) {
-		this.element = $(container);
-	},
+	var checkInput = function(input, checked) {
+		input.set('checked', checked).fireEvent('change');
+	};
 
-	attach: function(detach){
-		var method = detach ? 'removeEvent' : 'addEvent';
-		return this[method]('click:relay(input[type=checkbox])', this.clickHandler);
-	},
+	this.MultiChecks = new Class({
 
-	detach: function(){
-		return this.attach(true);
-	},
+		initialize: function(container) {
+			this.element = $(container);
+			this.bound_clickHandler = this.clickHandler.bind(this);
+			this.attach();
+		},
 
-	clickHandler: function(e, input){
-		//if there's a previously clicked input and the shift button is held
-		if (this._prev && e.shift) {
-			var active, check;
-			//get the state of the input, if it's checked, we're selecting things
-			//otherwise we're deselecting them
-			check = input.get('checked');
-			//get all the checkboxes in the element
-			element.getElements('input[type=checkbox]').each(function(el){
-				//if it's the element we checked, or it's the previous one checked
-				if (el == input || el == this._prev) {
-					//then check it and toggle our start state
-					checkInput(el, check);
-					active = !active;
-					return;
-				}
-				//if we're active, check the input
-				if (active) checkInput(el, check);
-			}, this);
+		attach: function(detach){
+			var method = detach ? 'removeEvent' : 'addEvent';
+			return this.element[method]('click:relay(input[type=checkbox])', this.bound_clickHandler);
+		},
+
+		detach: function(){
+			return this.attach(true);
+		},
+
+		clickHandler: function(e, input){
+			//if there's a previously clicked input and the shift button is held
+			if (this._prev && e.shift) {
+				var active, check;
+				//get the state of the input, if it's checked, we're selecting things
+				//otherwise we're deselecting them
+				check = input.get('checked');
+				//get all the checkboxes in the element
+				this.element.getElements('input[type=checkbox]').each(function(el){
+					//if it's the element we checked, or it's the previous one checked
+					if (el == input || el == this._prev) {
+						//then check it and toggle our start state
+						checkInput(el, check);
+						active = !active;
+						return;
+					}
+					//if we're active, check the input
+					if (active) checkInput(el, check);
+				}, this);
+			}
+			//store the clicked element as the new one.
+			this._prev = input;
 		}
-		//store the clicked element as the new one.
-		this._prev = input;
-	}
 
-});
+	});
+
+})();

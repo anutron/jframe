@@ -18,25 +18,17 @@
 ---
 description: Allows users to hold down shift to select multiple check boxes.
 provides: [Behavior.MultiChecks]
-requires: [Widgets/Behavior]
+requires: [Widgets/Behavior, /MultiChecks]
 script: Behavior.MultiChecks.js
 ...
 */
-(function(){
-	var checkInput = function(input, checked) {
-		input.set('checked', checked).fireEvent('change');
-	};
-	
-	Behavior.addGlobalFilters({
+Behavior.addGlobalFilters({
 
-		MultiChecks: function(element) {
-			var mc = new MultiChecks(element);
-			this.markForCleanup(element, function(){
-				mc.detach();
-			});
-		}
+	MultiChecks: function(element) {
+		var mc = new MultiChecks(element);
+		this.markForCleanup(element, function(){
+			mc.detach();
+		});
+	}
 
-	});
-
-})();
-
+});
