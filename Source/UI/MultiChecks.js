@@ -18,7 +18,7 @@
 ---
 description: Allows users to hold down shift to select multiple check boxes.
 provides: [MultiChecks]
-requires: [Element.Delegation]
+requires: [More/Element.Delegation]
 script: MultiChecks.js
 ...
 */
