@@ -16,7 +16,7 @@ sources: [
   Source/JFrame/JFrame.js,
   Source/JFrame/JFrame.Keys.js,
   Source/JFrame/JFrame.Request.js,
-  Source/JFrame/JWindow.js,
+  Source/JFrame/JFrame.Window.js,
   Source/JFrame/MooTools.Config.js,
   Source/JFrameLinkers/JFrame.AjaxLoad.js,
   Source/JFrameLinkers/JFrame.CheckAllOrNone.js,

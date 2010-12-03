@@ -18,7 +18,7 @@
 description: A JBrowser is a window that encapsulates a JFrame and a linked HistoryMenu.
 provides: [JBrowser]
 requires: 
- - /JWindow
+ - /JFrame.Window
  - Widgets/ART.Browser
  - Widgets/ART.SolidWindow
  - /JFrame.ToggleHistory
@@ -32,7 +32,7 @@ script: JBrowser.js
 
 	var jbrowserWindow = new Class({
 
-		Extends: JWindow,
+		Extends: JFrame.Window,
 
 		_getContent: function(){
 			return this.parentWidget.content;
@@ -118,9 +118,9 @@ script: JBrowser.js
 				_jbrowser: true
 			});
 			jWindowOpts.parentWidget = this;
-			this.jWindow = new jbrowserWindow(path, jWindowOpts);
-			this.jWindow.jbrowser = this;
-			this.jframe = this.jWindow.jframe;
+			this.jframeWindow = new jbrowserWindow(path, jWindowOpts);
+			this.jframeWindow.jbrowser = this;
+			this.jframe = this.jframeWindow.jframe;
 			
 			
 			this.jframe.resize(this.contentSize.x, this.contentSize.y);
@@ -222,7 +222,7 @@ script: JBrowser.js
 				$(this.history).addEvent('click', function(e) { e.stopPropagation(); });
 				this.history.addEvents({
 					refresh: function(){
-						this.jWindow.refresh();
+						this.jframeWindow.refresh();
 					}.bind(this),
 					select: function(path, title){
 						if (path != this.jframe.currentPath) this.load({requestPath: path, suppressHistory: true });

@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 	<head>
-		<title>JWindow</title>
+		<title>JFrame.Window</title>
 		<link rel="stylesheet" href="/static/css/reset.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 		<link rel="stylesheet" href="/static/css/tests.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 		<link rel="stylesheet" href="/asset/jframe/shared.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
-		<script src="/depender/build?require=JFrame/JWindow,Core/DomReady"></script>
+		<script src="/depender/build?require=JFrame/JFrame.Window,Core/DomReady"></script>
 		<style>
 		#toolbar {
 			width: 100%;
@@ -28,7 +28,7 @@
 				var path = '/';
 				var hash = window.location.hash;
 				if (hash) path = hash.substring(1);
-				var jwin = new JWindow(path, {
+				var jwin = new JFrame.Window(path, {
 					element: document.body,
 					toolbar: document.id('toolbar')
 				});

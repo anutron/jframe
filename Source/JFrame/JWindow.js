@@ -16,7 +16,7 @@
 /*
 ---
 description: Wrapper for JFrame for full screen behavior.
-provides: [JWindow]
+provides: [JFrame.Window]
 requires: [/JFrame, /JFrame.Error]
 requires:
  - Widgets/ART.Widget
@@ -45,11 +45,11 @@ requires:
  - /JFrame.Refresh
  - /JFrame.RefreshWithParams
  - /JFrame.SubmitLink
-script: JWindow.js
+script: JFrame.Window.js
 ...
 */
 (function(){
-	this.JWindow = new Class({
+	JFrame.Window = new Class({
 
 		Extends: ART.Widget,
 

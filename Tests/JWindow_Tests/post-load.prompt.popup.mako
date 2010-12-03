@@ -17,7 +17,7 @@
 		<!-- test_runner_no_wrapper -->
 		<div class="prompt_popup">
 				I'm a post-load prompt. Enter a value please.
-				<form action="/test/?project=jframe&path=/JWindow_Tests/post-load.prompt.popup.mako" method="post" style="margin: 6px 0px 0px;">
+				<form action="/test/?project=jframe&path=/JFrame.Window_Tests/post-load.prompt.popup.mako" method="post" style="margin: 6px 0px 0px;">
 					<input type="text" name="prompt_value"/>
 					<input type="submit" class="jframe-hidden" name="submit"/>
 				</form>
