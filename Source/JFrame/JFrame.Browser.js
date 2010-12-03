@@ -98,6 +98,10 @@ script: JFrame.Browser.js
 			var show = $pick(options.showNow, true);
 			options.showNow = false;
 			this.parent(options);
+			$(this.element).addEvent('contextmenu', function(e){
+				if (!window.dbug || !dbug.enabled) e.preventDefault();
+			});
+
 			this.addClass('jframe-shared');
 			this.toolbar = new Element('div', {
 				'class':'jframe-window-toolbar',
@@ -317,5 +321,4 @@ script: JFrame.Browser.js
 			})
 		);
 	};
-	this.JBrowser = JFrame.Browser; //legacy
 })();
