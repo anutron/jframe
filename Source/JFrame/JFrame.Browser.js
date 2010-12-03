@@ -285,7 +285,7 @@ script: JFrame.Browser.js
 
 	};
 
-	this.JFrameBrowser = new Class(
+	JFrame.Browser = new Class(
 		$merge({
 			Extends: ART.Browser,
 			options: {
