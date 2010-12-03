@@ -224,10 +224,6 @@ if (Browser.Engine.trident) {
 }
 
 window.addEvent('domready', function(){
-	$(document.body).addEvent('contextmenu', function(e){
-		if (!dbug.enabled) e.preventDefault();
-	});
-	
 	//given an element, determine if it's cool to double click and select text within it
 	var canSelectOnDblClick = function(elem) {
 		//if it's a textarea or input, go for it
