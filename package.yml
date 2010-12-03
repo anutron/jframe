@@ -60,5 +60,6 @@ sources: [
   Source/UI/ART.SideBySideSelect.js,
   Source/UI/ContextMenu.js,
   Source/UI/FlashMessage.js,
+  Source/UI/MultiChecks.js,
 ]
 version: Unknown
