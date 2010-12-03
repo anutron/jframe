@@ -29,11 +29,11 @@ script: Behavior.FitText.js
 		implements the FitText filter on an element; attaches to Behavior for events on resize
 		filter - the Behavior filter instance
 		element - the element to instantiate FitText against
-		methods - the Behavior methods object passed into the filter
+		behaviorAPI - the Behavior methods object passed into the filter
 		garbageElement - (optional) if the element passed to the filter is not the one having 
 		     FitText applied, pass in the filter element for garbage collection marking
 	*/
-	var fitIt = function(filter, element, methods, garbageElement){
+	var fitIt = function(filter, element, behaviorAPI, garbageElement){
 		if (element.get('tag') == 'td' || element.getParent('table')) {
 			fixTable(element.getParent('table'));
 			if (element.get('tag') == 'td') element.setStyles(tdStyles);
@@ -71,9 +71,9 @@ script: Behavior.FitText.js
 				//rerun this after a while, as some filters muck about w/ the DOM
 				//I'm not crazy about this solution, but it'll have to do for now
 				fitTextFit.delay(10); 
-				methods.addEvent('show', fitTextFit);
+				behaviorAPI.addEvent('show', fitTextFit);
 				filter.markForCleanup(garbageElement || element, function(){
-					methods.removeEvent('show', fitTextFit);
+					behaviorAPI.removeEvent('show', fitTextFit);
 				});
 			}
 		};
@@ -99,24 +99,24 @@ script: Behavior.FitText.js
 			elements cannot have child elements (only text)
 		*/
 
-		FitText: function(element, methods) {
-			fitIt(this, element, methods);
+		FitText: function(element, behaviorAPI) {
+			fitIt(this, element, behaviorAPI);
 		},
 
 		/*
 			finds all elements wth data-fit-text properties - these properties must be selectors
 			for the elements to apply the FitText class to.
 		*/
-		'FitText-Children': function(element, methods){
+		'FitText-Children': function(element, behaviorAPI){
 			var selector = element.get('data', 'fit-text');
 			element.getElements(selector).each(function(el){
-				fitIt(this, el, methods, element);
+				fitIt(this, el, behaviorAPI, element);
 			}, this);
 		}
 
 	});
 
-	Behavior.addGlobalPlugin('HtmlTable', 'FitTextResize', function(element, methods) {
+	Behavior.addGlobalPlugin('HtmlTable', 'FitTextResize', function(element) {
 		if(element.hasClass('resizable')) {
 			htmlTable = element.retrieve('HtmlTable');
 			htmlTable.addEvent('columnResize', function() {

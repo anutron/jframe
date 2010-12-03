@@ -21,7 +21,7 @@ requires: [Widgets/Behavior.HtmlTable, /Behavior.ContextMenu]
 script: Behavior.HtmlTableMultiSelectMenu.js
 ...
 */
-Behavior.addGlobalPlugin('HtmlTable', 'HtmlTableMutiSelect', function(element, methods){
+Behavior.addGlobalPlugin('HtmlTable', 'HtmlTableMutiSelect', function(element, behaviorAPI){
 	var table = element.retrieve('HtmlTable');
 	var previousSelected;
 	//check if the table has a context menu for bulk edits

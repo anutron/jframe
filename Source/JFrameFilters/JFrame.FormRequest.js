@@ -37,7 +37,7 @@ JFrame.addGlobalFilters({
 });
 
 //this runs AFTER Behavior.FormRequest
-Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, methods){
+Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, behaviorAPI){
 	//get the Form.Request instance
 	var formRequest = element.get('formRequest');
 	//tell it not to update anything
@@ -46,7 +46,7 @@ Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, m
 	['append', 'replace', 'target', 'after', 'before'].each(function(action){
 		var selector = element.get('data', 'ajax-' + action);
 		if (selector) {
-			var target = methods.getContentElement().getElement(selector);
+			var target = behaviorAPI.getContentElement().getElement(selector);
 			if (target) {
 				$extend(options, {
 					target: target,
@@ -62,7 +62,7 @@ Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, m
 		}
 	});
 	//configure its request to use JFrame's response handler
-	methods.configureRequest(formRequest.request, options);
+	behaviorAPI.configureRequest(formRequest.request, options);
 	formRequest.addEvent('send', function(form, query){
 		formRequest.request.setOptions({
 			formAction: form.get('action'),

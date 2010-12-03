@@ -26,7 +26,7 @@ script: Behavior.Timer.js
 
 Behavior.addGlobalFilters({
 
-	Timer: function(element, methods){
+	Timer: function(element){
 		var start = element.getData('start-time');
 		var showSeconds = element.hasClass('showSeconds');
 		if (start) start = Date.parse(start);

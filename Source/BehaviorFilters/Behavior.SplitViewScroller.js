@@ -22,7 +22,7 @@ script: Behavior.SplitViewScroller.js
 ...
 */
 
-Behavior.addGlobalPlugin('SplitView', 'SplitViewScroller', function(element, methods) {
+Behavior.addGlobalPlugin('SplitView', 'SplitViewScroller', function(element) {
 	var splitview = element.retrieve('SplitView');
 	var el = $(splitview);
 	var sides = splitview.getSides();

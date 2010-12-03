@@ -23,7 +23,7 @@ script: Behavior.PostEditor.js
 */
 
 Behavior.addGlobalFilters({
-	PostEditor: function(element, methods) {
+	PostEditor: function(element) {
 		var postEditor = new PostEditor(element);
 	}
 });

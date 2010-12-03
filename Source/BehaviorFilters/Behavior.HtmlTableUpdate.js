@@ -22,7 +22,7 @@ script: Behavior.HtmlTableUpdate.js
 ...
 */
 
-Behavior.addGlobalPlugin('HtmlTable', 'HtmlTableUpdate', function(element, methods){
+Behavior.addGlobalPlugin('HtmlTable', 'HtmlTableUpdate', function(element, behaviorAPI){
 	var table = element.retrieve('HtmlTable');
 	var refresh = function(data, options){
 		var refresh;
@@ -34,8 +34,8 @@ Behavior.addGlobalPlugin('HtmlTable', 'HtmlTableUpdate', function(element, metho
 		if (refresh) table.refresh();
 		$(table).getElements('.table-expanded a.expand').addClass('jframe_ignore');
 	};
-	methods.addEvent('update', refresh);
+	behaviorAPI.addEvent('update', refresh);
 	this.markForCleanup(element, function(){
-		methods.removeEvent('update', refresh);
+		behaviorAPI.removeEvent('update', refresh);
 	});
 });

@@ -25,7 +25,7 @@ script: Behavior.Collapsible.js
 
 Behavior.addGlobalFilters({
 
-	CollapsingElements: function(element, methods) {
+	CollapsingElements: function(element) {
 		element.addEvent('click:relay(.collapser)', function(event, clicked) {
 			event.preventDefault();
 			var togglers = element.getElements('.collapser');

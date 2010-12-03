@@ -23,7 +23,7 @@ script: Behavior.HtmlTableChromeHack.js
 */
 
 if (Browser.Engine.webkit) {
-	Behavior.addGlobalPlugin('HtmlTable', 'HtmlTableChromeHack', function(element, methods) {
+	Behavior.addGlobalPlugin('HtmlTable', 'HtmlTableChromeHack', function(element, behaviorAPI) {
 		var width = element.style.width;
 		element.setStyle('width', '99%');
 		(function() {

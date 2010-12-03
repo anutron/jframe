@@ -64,11 +64,11 @@ var JframeContextMenu = new Class({
 Behavior.addGlobalFilters({
 
 	//intercept right click behaviors
-	ContextMenu: function(element, methods){
+	ContextMenu: function(element, behaviorAPI){
 		//create an instance of JFrame.ContextMenu for each delegate
 		var menu = new JframeContextMenu(element, {
-			applyDelegates: methods.applyDelegates, //pass a function that wraps this jframe instance
-			container: methods.getContentElement() //inject the menu into the container outside the jframe
+			applyDelegates: behaviorAPI.applyDelegates, //pass a function that wraps this jframe instance
+			container: behaviorAPI.getContentElement() //inject the menu into the container outside the jframe
 		});
 		//detatch these whenever we unload jframe
 		this.markForCleanup(element, function(){

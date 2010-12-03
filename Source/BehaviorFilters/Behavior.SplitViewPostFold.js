@@ -21,17 +21,17 @@ requires: [Widgets/Behavior.SplitView]
 script: Behavior.SplitViewPostFold.js
 ...
 */
-Behavior.addGlobalPlugin('SplitView', 'SplitViewPostFoldRefresh', function(element, methods){
+Behavior.addGlobalPlugin('SplitView', 'SplitViewPostFoldRefresh', function(element, behaviorAPI){
 	var splitview = element.retrieve('SplitView');
 	if (!splitview) {
-		methods.warn("warning, couldn't find splitview instance for %o", element);
+		behaviorAPI.warn("warning, couldn't find splitview instance for %o", element);
 		return;
 	}
 	splitview.addEvent('postFold', function(data, event, link){
 		if (!document.id(document.body).hasChild(link)) return;
 		if (data.partialRefresh) {
 			if ($type(data.partialRefresh) == "string") link = new Element('a', { href: data.partialRefresh });
-			methods.invokeLinker('.jframe-fake_refresh', link, event);
+			behaviorAPI.invokeLinker('.jframe-fake_refresh', link, event);
 		}
 	});
 });

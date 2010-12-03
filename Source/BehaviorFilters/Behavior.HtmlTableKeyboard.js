@@ -22,14 +22,14 @@ script: Behavior.HtmlTableKeyboard.js
 ...
 */
 
-Behavior.addGlobalPlugin('HtmlTable', 'HtmlTableJFrame', function(element, methods){
+Behavior.addGlobalPlugin('HtmlTable', 'HtmlTableJFrame', function(element, behaviorAPI){
 	var table = element.retrieve('HtmlTable');
 	if (table.keyboard) {
 		table.keyboard.relinquish();
-		methods.registerKeyboard(table.keyboard);
+		behaviorAPI.registerKeyboard(table.keyboard);
 		table.keyboard.activate();
 		this.markForCleanup(element, function(){
-			methods.unregisterKeyboard(table.keyboard);
+			behaviorAPI.unregisterKeyboard(table.keyboard);
 		});
 		// I don't think we need this anymore, but I'm leaving it; it's not clear why
 		// it was even added in the first place...

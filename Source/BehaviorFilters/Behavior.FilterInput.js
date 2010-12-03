@@ -30,8 +30,8 @@ Behavior.addGlobalFilters({
 		TODO:  Deal with other types of data to filter relationships.  (sibling, child, etc.)
 	*/
 
-	FilterInput: function(element, methods){
-		var container = methods.getContentElement();
+	FilterInput: function(element, behaviorAPI){
+		var container = behaviorAPI.getContentElement();
 		//this method will find all the elements and check them for the value
 		var selector = element.get('data', 'filter-elements');
 		if (!selector) {

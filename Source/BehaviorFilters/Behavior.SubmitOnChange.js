@@ -57,7 +57,7 @@ Behavior.addGlobalFilters({
 		now.
 	*/
 
-	SubmitOnChange: function(element, methods) {
+	SubmitOnChange: function(element) {
 		if (['input', 'select', 'textarea'].contains(element.get('tag'))) {
 			setupInput.call(this, element, element.getParent('form'), element);
 		} else {

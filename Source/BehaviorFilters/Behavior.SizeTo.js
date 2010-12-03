@@ -38,7 +38,7 @@ Behavior.addGlobalFilters({
 
 		Both values are not required, although one is.
 	*/
-	SizeTo: function(element, methods) {
+	SizeTo: function(element, behaviorAPI) {
 		var sizeTo = {
 			x: element.get('data', 'size-to-width'),
 			y: element.get('data', 'size-to-height')
@@ -61,11 +61,11 @@ Behavior.addGlobalFilters({
 			}
 		};
 
-		size = methods.getContainerSize();
+		size = behaviorAPI.getContainerSize();
 		resize(size.x, size.y);
-		methods.addEvent('resize', resize);
+		behaviorAPI.addEvent('resize', resize);
 		this.markForCleanup(element, function(){
-			methods.removeEvent('resize', resize);
+			behaviorAPI.removeEvent('resize', resize);
 		});
 	}
 

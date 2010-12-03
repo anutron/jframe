@@ -50,7 +50,7 @@ var createTip = function(link, point) {
 
 Behavior.addGlobalFilters({
 
-	PointyTip: function(element, methods){
+	PointyTip: function(element){
 		var point = element.get('data', 'tip-direction', false, 12);
 		var tip = createTip(element, point);
 		//destroy the tips on cleanup
@@ -60,7 +60,7 @@ Behavior.addGlobalFilters({
 	},
 
 	//display help tips for users
-	HelpTip: function(element, methods) {
+	HelpTip: function(element) {
 		var help = element.hide();
 		var link = createLink(help);
 		//for each point, create a new instance of Tips.Pointy (clientcide plugin)
@@ -71,7 +71,7 @@ Behavior.addGlobalFilters({
 		});
 	},
 
-	InfoTip: function(element, methods) {
+	InfoTip: function(element) {
 		var info = element.hide();
 		var link = createLink(info);
 		var tip = createTip(link.link, link.point);

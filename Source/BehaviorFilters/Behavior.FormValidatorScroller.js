@@ -22,13 +22,13 @@ script: Behavior.FormValidatorScroller.js
 ...
 */
 
-Behavior.addGlobalPlugin('FormValidator', 'FormValidatorScroller', function(element, methods){
+Behavior.addGlobalPlugin('FormValidator', 'FormValidatorScroller', function(element, behaviorAPI){
 	var validator = element.retrieve('validator');
 	validator.setOptions({
 		onShow: function(input, advice, className) {
 			//scroll to errors within the jframe
 			/*JFrame Reference */
-			methods.getScroller().toElement(input);
+			behaviorAPI.getScroller().toElement(input);
 		},
 		//not the window
 		scrollToErrorsOnSubmit: false

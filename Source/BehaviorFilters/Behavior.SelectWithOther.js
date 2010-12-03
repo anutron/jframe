@@ -23,7 +23,7 @@ script: Behavior.SelectWithOther.js
 */
 
 Behavior.addGlobalFilters({
-	SelectWithOther: function(element, methods) {
+	SelectWithOther: function(element) {
 		//get the 'other' input / container
 		var other = element.getElement(element.get('data', 'other-input') || 'input');
 		var input = other;
