@@ -71,6 +71,10 @@ script: JFrame.Window.js
 
 		initialize: function(path, options) {
 			this.parent(options);
+			$(this.element).addEvent('contextmenu', function(e){
+				if (!window.dbug || !dbug.enabled) e.preventDefault();
+			});
+
 			new ART.Keyboard(this, this.keyboardOptions);
 			this.keyboard.activate();
 			this.addClass('jframe-shared');
