@@ -18,11 +18,10 @@
 description: JFrame.Browser is a window that encapsulates a JFrame and a linked HistoryMenu.
 provides: [JFrame.Browser, JBrowser]
 requires: 
- - /JFrame.Window
+ - /JFrame.Container
  - Widgets/ART.Browser
  - Widgets/ART.SolidWindow
  - /JFrame.ToggleHistory
- - /JFrame.Request
 
 script: JFrame.Browser.js
 
@@ -30,46 +29,36 @@ script: JFrame.Browser.js
 */
 (function(){
 
-	var jframeWindow = new Class({
+	var jbrowserContainer = new Class({
 
-		Extends: JFrame.Window,
+		Extends: JFrame.Container,
 
 		_getContent: function(){
 			return this.parentWidget.content;
 		},
 
-		_jframeLoaded: function(data) {
-			if (!Browser.Engine.trident) {
-				(function(){
-					$(this.jframeBrowser).setStyle('visibility', 'visible');
-					if (this.jframeBrowser.history) $(this.jframeBrowser.history).setStyle('visibility', 'visible');
-				}).delay(20, this);
-			}
-			this.parent(data);
-			if (this._jframe_view != data.view) {
-				if (this._jframe_view) {
-					this.jframeBrowser.contents.removeClass(this._jframe_view);
-				}
-				if (data.view) {
-					this.jframeBrowser.contents.addClass(data.view);
-				}
-			}
-			if (this.jframeBrowser.getState('focused')) this.jframe.focus();
+		_makeJFrame: function(path, options){
+			this.parent(path, options);
+			this.jframe.addEvents({
+				rewritePath: this._rewritePath.bind(this)
+			});
 		},
 
-		_setupHistory: function(){},
 		_rewritePath: function(path){
 			this.history.getSelected().path = path;
 		},
 
-		_incrementHistory: function(data){
-			if (!data.suppressHistory && this.parentWidget.history) {
-				this.parentWidget.history.push({ path: data.responsePath, title: data.title || data.repsonsePath});
+		_jframeLoaded: function(data){
+			this.parent(data);
+			if (!Browser.Engine.trident) {
+				(function(){
+					$(this.parentWidget).setStyle('visibility', 'visible');
+					if (this.parentWidget.history) $(this.parentWidget.history).setStyle('visibility', 'visible');
+				}).delay(20, this);
 			}
-		},
-		
-		setCaption: function(title){
-			this.parentWidget.setCaption(title);
+			this.parentWidget._incrementHistory(data);
+			this.parentWidget.setCaption(this.parentWidget.options.windowTitler(data.title || data.repsonsePath));
+			if (this.getState('focused')) this.focus();
 		}
 
 	});
@@ -114,21 +103,18 @@ script: JFrame.Browser.js
 				}
 			}).inject(this.header);
 			
-			var jWindowOpts = $merge({
+			var jframeContainerOpts = $merge({
 				windowTitler: this.options.windowTitler,
 				jframeOptions: this.options.jframeOptions,
 				toolbar: this.toolbar,
-				footerText: this.footerText,
-				_jframeBrowser: true
+				footerText: this.footerText
 			});
-			jWindowOpts.parentWidget = this;
-			this.jframeWindow = new jframeWindow(path, jWindowOpts);
-			this.jframeWindow.jframeBrowser = this;
-			this.jframe = this.jframeWindow.jframe;
-			
-			
+			jframeContainerOpts.parentWidget = this;
+			this.jframeContainer = new jbrowserContainer(path, jframeContainerOpts);
+			this.jframe = this.jframeContainer.jframe;
+
 			this.jframe.resize(this.contentSize.x, this.contentSize.y);
-			
+
 			this._setupHistory(path);
 			this._setupJFrame();
 			this._addKeys();
@@ -158,7 +144,7 @@ script: JFrame.Browser.js
 				}.bind(this)
 			});
 		},
-		
+
 		_addKeys: function(){
 			this.keyboard.addShortcuts({
 				'Previous Window': {
@@ -198,19 +184,10 @@ script: JFrame.Browser.js
 						Keyboard.stop(e);
 					},
 					description: 'Close the current window.'
-				},
-				'Show/Hide Shortcuts': {
-					keys: 'alt+/',
-					shortcut: 'alt + /',
-					handler: function(e){
-						keyShower.toggle();
-						Keyboard.stop(e);
-					},
-					description: 'Show or hide the list of all active shortcuts.'
 				}
 			});
 		},
-		
+
 		draw: function(){
 			this.parent.apply(this, arguments);
 			var cur = this.jframe.currentSize;
@@ -218,7 +195,13 @@ script: JFrame.Browser.js
 				this.jframe.resize(this.contentSize.x, this.contentSize.y);
 			}
 		},
-		
+
+		_incrementHistory: function(data){
+			if (!data.suppressHistory && this.history) {
+				this.history.push({ path: data.responsePath, title: data.title || data.repsonsePath});
+			}
+		},
+
 		_setupHistory: function(path){
 			if (this.history) {
 				if (!this.options.displayHistory) this.hideHistory();
@@ -226,7 +209,7 @@ script: JFrame.Browser.js
 				$(this.history).addEvent('click', function(e) { e.stopPropagation(); });
 				this.history.addEvents({
 					refresh: function(){
-						this.jframeWindow.refresh();
+						this.jframeContainer.refresh();
 					}.bind(this),
 					select: function(path, title){
 						if (path != this.jframe.currentPath) this.load({requestPath: path, suppressHistory: true });

@@ -510,6 +510,10 @@ JFrame = new Class({
 		return this.scroller;
 	},
 
+	getView: function(){
+		return this.view.view;
+	},
+
 	filters: {},
 
 	/*
