@@ -90,11 +90,8 @@ JFrame.Container = new Class({
 	},
 
 	_makeJFrame: function(path, options){
-		this.jframe = new JFrame(path,
-			$merge(options, {
-				spinnerTarget: this._getContent()
-			})
-		);
+		if (!options.spinnerTarget) options.spinnerTarget = this._getContent();
+		this.jframe = new JFrame(path, options);
 		this.jframe.inject(this, this._getContent())
 			.addEvents({
 				refresh: this._storeScroll.bind(this),
