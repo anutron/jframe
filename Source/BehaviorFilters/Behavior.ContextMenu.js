@@ -72,6 +72,7 @@ Behavior.addGlobalFilters({
 		});
 		//detatch these whenever we unload jframe
 		this.markForCleanup(element, function(){
+				menu.hide();
 				menu.detach();
 		});
 	}
