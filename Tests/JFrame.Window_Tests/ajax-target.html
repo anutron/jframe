@@ -35,7 +35,6 @@
 			</div>
 			<hr/>
 
-
 			<a href="/test/?project=jframe&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1&no_wrapper=true" data-ajax-target=".ajax_filter" data-ajax-filter="textarea">This link loads the same url as the others, but only the textarea is inserted into the box below</a>
 			<div style="border: 1px solid #000; padding: 10px; margin: 10px 0px; max-height: 100px; overflow:auto;">
 				<div class="ajax_filter">
@@ -50,7 +49,7 @@
 			<form action="/test/?project=jframe&path=/JFrame.Window_Tests/post-load.prompt.popup.mako" method="post" style="margin: 6px 0px 0px;" data-ajax-target=".ajax_form_target">
 				<input type="hidden" name="no_wrapper" value="true"/>
 				enter a value: <input type="text" name="prompt_value"/>
-				<input type="submit" class="jframe-hidden" name="submit"/>
+				<input type="submit" name="submit"/>
 			</form>
 			<div style="border: 1px solid #000; padding: 10px; margin: 10px 0px; max-height: 100px; overflow:auto;">
 				<div class="ajax_form_target">

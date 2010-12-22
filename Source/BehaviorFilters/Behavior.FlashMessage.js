@@ -25,7 +25,7 @@ script: Behavior.FlashMessage.js
 Behavior.addGlobalFilters({
 	FlashMessage: function(element) {
 		FlashMessage.flash({
-			message:element.get('html')
+			message: element.get('html')
 		});
 		element.destroy();
 	}

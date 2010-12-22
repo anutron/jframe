@@ -13,7 +13,7 @@ count = int(get_var('count', 0))
   <body>
     <div class="jframe_padded highlight-partial-updates">
       <h2 data-single-partial-id="0">The current time: ${datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</h2>
-      <a class="ccs-fake_refresh">fake refresh</a>
+      <a class="jframe-fake_refresh">fake refresh</a>
       <a data-filters="ArtButton" data-single-partial-id="1">current time: ${datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</a>
       <br/>
       <textarea type="text">you can change this</textarea>
