@@ -36,6 +36,7 @@ var FlashMessage = {
 	flash: function(options){
 		options = $merge({
 			message: null,
+			container: null,
 			noCleanup: false,
 			duration: 4500,
 			minimumTime: 2000,
@@ -43,7 +44,6 @@ var FlashMessage = {
 			offset: 10,
 			margin: 12
 		}, options);
-		var container = new Element('div', { 'class': 'growl_container' }).inject(options.target);
 		var b = options.offset; // offset for get satifaction 
 	
 		var growls = $$('.growl');
@@ -93,7 +93,7 @@ var FlashMessage = {
 				right : 0,
 				bottom: b
 			}
-		}).inject(container);
+		}).inject(options.target);
 		//set a timeout to hide the message
 		if (!options.noCleanup) timeout = cleanup.delay(options.duration);
 		//return the cleanup function so that the code that called this method can optionally
