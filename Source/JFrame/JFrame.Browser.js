@@ -29,6 +29,36 @@ script: JFrame.Browser.js
 */
 (function(){
 
+
+	var PassEvents = new Class({
+
+		passEvent: function(name, target){
+			return this.addEvent(name, function(){
+				target.fireEvent(name, arguments);
+			});
+		},
+
+		passEvents: function(obj){
+			for (name in obj){
+				this.passEvent(name, obj[name]);
+			}
+		},
+
+		inheritEvent: function(name, target){
+			return target.addEvent(name, function(){
+				this.fireEvent(name, arguments);
+			}.bind(this));
+		},
+
+		inheritEvents: function(obj){
+			for (name in obj){
+				this.inheritEvent(name, obj[name]);
+			}
+		}
+
+	});
+
+
 	var jbrowserContainer = new Class({
 
 		Extends: JFrame.Container,
@@ -64,6 +94,8 @@ script: JFrame.Browser.js
 	});
 
 	var jframeBrowser = {
+
+		Implements: PassEvents,
 
 		options: {
 			//the onLoad event fires when new content loads
@@ -233,6 +265,9 @@ script: JFrame.Browser.js
 					this.jframe.behavior.hide();
 				}
 			});
+			this.inheritEvents({
+				load: this.jframeContainer
+			});
 		},
 
 		load: function(options) {
@@ -274,13 +309,7 @@ script: JFrame.Browser.js
 
 	JFrame.Browser = new Class(
 		$merge({
-			Extends: ART.Browser,
-			options: {
-				// help: function(){
-				// 	var help = $(this).getElement('a[target=Help].help');
-				// 	CCS.Desktop.showHelp(this, help ? help.get('href') : null);
-				// }
-			}
+			Extends: ART.Browser
 		}, jframeBrowser)
 	);
 	JFrame.Browser.Solid = new Class(
