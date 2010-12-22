@@ -22,42 +22,13 @@ requires:
  - Widgets/ART.Browser
  - Widgets/ART.SolidWindow
  - /JFrame.ToggleHistory
+ - /Events.Relay
 
 script: JFrame.Browser.js
 
 ...
 */
 (function(){
-
-
-	var PassEvents = new Class({
-
-		passEvent: function(name, target){
-			return this.addEvent(name, function(){
-				target.fireEvent(name, arguments);
-			});
-		},
-
-		passEvents: function(obj){
-			for (name in obj){
-				this.passEvent(name, obj[name]);
-			}
-		},
-
-		inheritEvent: function(name, target){
-			return target.addEvent(name, function(){
-				this.fireEvent(name, arguments);
-			}.bind(this));
-		},
-
-		inheritEvents: function(obj){
-			for (name in obj){
-				this.inheritEvent(name, obj[name]);
-			}
-		}
-
-	});
-
 
 	var jbrowserContainer = new Class({
 
@@ -95,7 +66,7 @@ script: JFrame.Browser.js
 
 	var jframeBrowser = {
 
-		Implements: PassEvents,
+		Implements: Events.Relay,
 
 		options: {
 			//the onLoad event fires when new content loads

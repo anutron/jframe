@@ -62,5 +62,6 @@ sources: [
   Source/UI/ContextMenu.js,
   Source/UI/FlashMessage.js,
   Source/UI/MultiChecks.js,
+  Source/Utilities/Events.Relay.js,
 ]
 version: Unknown
