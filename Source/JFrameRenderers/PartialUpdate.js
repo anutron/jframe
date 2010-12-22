@@ -396,6 +396,7 @@ script: PartialUpdate.js
 
 		_clean: function(element){
 			this.fireEvent('elementDestroy', element);
+			element.dispose();
 			if (!this._gcTimer) this._gcTimer = this._gc.periodical(100, this);
 			this._toGC.push({
 				element: element
