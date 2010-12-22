@@ -35,8 +35,8 @@ var setupInput = function(input, cleanupElement){
 			else form.fireEvent('submit');
 		},
 		click: function(event) {
-				var form = input.getParent('form');
-				if ((input.get('type') == 'checkbox') && Browser.Engine.name == "trident") form.fireEvent('submit', event);
+			var form = input.getParent('form');
+			if ((input.get('type') == 'checkbox') && Browser.Engine.name == "trident") form.fireEvent('submit', event);
 		},
 		keydown: function(e) {
 			var form = input.getParent('form');
