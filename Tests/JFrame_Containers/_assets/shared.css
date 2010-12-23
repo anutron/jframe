@@ -43,7 +43,7 @@ div.mask {
 }
 
 .spinner-img {
-	background: url(/asset/jframe/spinner.gif) no-repeat;
+	background: url(/asset/jframe_containers/spinner.gif) no-repeat;
 	width: 16px;
 	height: 16px;
 	margin: 0 auto;
@@ -89,7 +89,7 @@ div.mask {
 }
 .validation-advice {
 	color: #a00;
-	background: url(/asset/jframe/error.png) left center no-repeat;
+	background: url(/asset/jframe_containers/error.png) left center no-repeat;
 	padding-left: 18px;
 	font-size: 12px;
 	font-weight: normal;
@@ -253,7 +253,7 @@ input[type=submit] {
 	width: 11px;
 	height: 11px;
 	display: block;
-	background: url(/asset/jframe/divots.png) -11px -11px no-repeat;
+	background: url(/asset/jframe_containers/divots.png) -11px -11px no-repeat;
 }
 /* tabbed layout */
 /* .jframe-tabs, a ul; container for the tabs 
@@ -293,7 +293,7 @@ input[type=submit] {
 	cursor: pointer;
 	height: 19px;
 	line-height: 19px;
-	background: url(/asset/jframe/tabs.png);
+	background: url(/asset/jframe_containers/tabs.png);
 	margin-right: 8px !important;
 	color: #444;
 }
@@ -301,7 +301,7 @@ input[type=submit] {
 .tabs li span {
 	height: 18px;
 	display: block;
-	background: url(/asset/jframe/tabs.png) right top;
+	background: url(/asset/jframe_containers/tabs.png) right top;
 	position: relative;
 	left: 6px;
 	padding: 1px 6px 0px 0px;
@@ -312,17 +312,17 @@ input[type=submit] {
 }
 .jframe-shared .tabs li.tabSelected {
 	color: #000;
-	background: url(/asset/jframe/tabs.png) left 38px;
+	background: url(/asset/jframe_containers/tabs.png) left 38px;
 }
 .jframe-shared .tabs li.tabSelected span {
-	background: url(/asset/jframe/tabs.png) right 38px;
+	background: url(/asset/jframe_containers/tabs.png) right 38px;
 }
 .jframe-shared .tabs li:hover {
 	color: #000;
-	background: url(/asset/jframe/tabs.png) left 19px;
+	background: url(/asset/jframe_containers/tabs.png) left 19px;
 }
 .jframe-shared .tabs li:hover span {
-	background: url(/asset/jframe/tabs.png) right 19px;
+	background: url(/asset/jframe_containers/tabs.png) right 19px;
 }
 
 /* stripy table */
@@ -351,7 +351,7 @@ table[data-filters*=HtmlTable] {
 	width: 100%;
 }
 table[data-filters*=HtmlTable] thead {
-	background: url(/asset/jframe/th_back.png);
+	background: url(/asset/jframe_containers/th_back.png);
 }
 table[data-filters*=HtmlTable] thead th {
 	text-align: left;
@@ -424,17 +424,17 @@ table[data-filters*=HtmlTable] tr.selected td,
 	top: 0px;
 }
 .jframe-shared .table-th-sort span.table-th-sort-span {
-	background: url(/asset/jframe/bullet_arrow_down.png) -4px top no-repeat;
+	background: url(/asset/jframe_containers/bullet_arrow_down.png) -4px top no-repeat;
 }
 .jframe-shared .table-th-sort-rev span.table-th-sort-span {
-	background: url(/asset/jframe/bullet_arrow_up.png) -4px top no-repeat;
+	background: url(/asset/jframe_containers/bullet_arrow_up.png) -4px top no-repeat;
 }
 table[data-filters*=HtmlTable].treeView tr a.expand {
 	display: block;
 	float: left;
 	width: 10px;
 	height: 10px;
-	background: url(/asset/jframe/divots.png);
+	background: url(/asset/jframe_containers/divots.png);
 	position: relative;
 	top: 4px;
 	left: -4px;
@@ -442,7 +442,7 @@ table[data-filters*=HtmlTable].treeView tr a.expand {
 	overflow: hidden;
 }
 table[data-filters*=HtmlTable].treeView tr.table-expanded a.expand {
-	background: url(/asset/jframe/divots.png) 0px -14px;
+	background: url(/asset/jframe_containers/divots.png) 0px -14px;
 }
 table[data-filters*=HtmlTable].treeView tbody tr > td:first-child {
 	padding-right: 20px;
@@ -472,7 +472,7 @@ table[data-filters*=HtmlTable].treeView tbody tr > td:first-child {
 	width: 16px;
 	height: 16px;
 	padding: 0px 4px;
-	background: no-repeat 50% 50% url(/asset/jframe/small_cog.png);
+	background: no-repeat 50% 50% url(/asset/jframe_containers/small_cog.png);
 	position: relative;
 }
 .jframe-shared form.jframe-table_config {
@@ -491,7 +491,7 @@ table[data-filters*=HtmlTable].treeView tbody tr > td:first-child {
 	position: absolute;
 	bottom: 2px;
 	right: 2px;
-	background: url(/asset/jframe/resize-handle.png);
+	background: url(/asset/jframe_containers/resize-handle.png);
 	text-indent: -200px;
 	overflow: hidden;
 	width: 7px;
@@ -537,7 +537,7 @@ table[data-filters*=HtmlTable].treeView tbody tr > td:first-child {
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	margin-bottom: 2px;
-	background: #fff url(/asset/jframe/sortable-handle.png) 5px 50% no-repeat;
+	background: #fff url(/asset/jframe_containers/sortable-handle.png) 5px 50% no-repeat;
 }
 .jframe-shared form.jframe-table_config li input {
 	margin-right: 6px;
@@ -709,10 +709,10 @@ Takes a multi-select box and makes it so you can click to move elements from a s
 	margin: 5px auto;
 }
 .sideBySideSelect .spacer .moveRight {
-	background: url(/asset/jframe/arrow_right.png) no-repeat;
+	background: url(/asset/jframe_containers/arrow_right.png) no-repeat;
 }
 .sideBySideSelect .spacer .moveLeft {
-	background: url(/asset/jframe/arrow_left.png) no-repeat;
+	background: url(/asset/jframe_containers/arrow_left.png) no-repeat;
 }
 
 /* help text links */
@@ -728,13 +728,13 @@ Takes a multi-select box and makes it so you can click to move elements from a s
 	position: relative;
 	width: 14px;
 	height: 14px;
-	background: url(/asset/jframe/help.png);
+	background: url(/asset/jframe_containers/help.png);
 	text-indent: -200px;
 	overflow: hidden;
 }
 
 [data-filters*=InfoTip] {
-	background: url(/asset/jframe/info.png);
+	background: url(/asset/jframe_containers/info.png);
 }
 
 [data-filters*=ArtInput] {
@@ -896,7 +896,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 	overflow: hidden;
 	margin: auto 0 auto 0;
 	
-	background: url(/asset/jframe/mr_stripes.gif) repeat-x 0 1px;
+	background: url(/asset/jframe_containers/mr_stripes.gif) repeat-x 0 1px;
 	height: 16px;
 	font-size: 11px;
 }
@@ -924,7 +924,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: #fff url(/asset/jframe/mr_stripes.gif) repeat-x 0 -14px;
+	background: #fff url(/asset/jframe_containers/mr_stripes.gif) repeat-x 0 -14px;
 }
 
 /*Animate the tGraph bar 'value' on load*/
