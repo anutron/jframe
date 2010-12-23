@@ -31,8 +31,8 @@ JFrame.addGlobalFilters({
 		if (!win.history) return;
 		var defaultState = this.getWindow().options.displayHistory;
 		var history = win.history;
-		var hiding = container.get('html').contains('jbrowser-hide_history');
-		var showing = container.get('html').contains('jbrowser-show_history');
+		var hiding = container.get('html').contains('jframe-hide_history');
+		var showing = container.get('html').contains('jframe-show_history');
 		if (showing || (defaultState && !hiding)) win.showHistory();
 		else win.hideHistory();
 	}
