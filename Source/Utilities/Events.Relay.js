@@ -72,7 +72,7 @@ Events.Relay = new Class({
 	},
 
 	relayEvents: function(obj){
-		for (name in obj){
+		for (var name in obj){
 			this.relayEvent(name, obj[name]);
 		}
 	},
@@ -84,7 +84,7 @@ Events.Relay = new Class({
 	},
 
 	inheritEvents: function(obj){
-		for (name in obj){
+		for (var name in obj){
 			this.inheritEvent(name, obj[name]);
 		}
 	}
