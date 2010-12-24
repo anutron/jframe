@@ -153,7 +153,12 @@ JFrame = new Class({
 				this.callClick.apply(this, arguments);
 			}.bind(this)
 		});
-		this.addEvent('resize', this.behavior.resize.bind(this.behavior));
+		this.addEvents({
+			resize: this.behavior.resize.bind(this.behavior),
+			rewritePath: function(uri) {
+				this.behavior.fireEvent('rewritePath', uri);
+			}.bind(this)
+		});
 		this.addBehaviors(this.options.behaviors);
 
 		this.element.addClass('jframe_wrapper').addClass('jframe-shared').setStyle('overflow', 'auto');

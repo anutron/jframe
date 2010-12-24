@@ -30,7 +30,13 @@ JFrame.addGlobalFilters({
 		//get all forms in the response
 		container.getElements('form').each(function(form){
 			//set their action url and add the FormRequest filter
-			form.set('action', new URI(form.get('action'), {base: this.currentPath})).addDataFilter("FormRequest");
+			if (form.get('action')) {
+				form.set('action', new URI(form.get('action'), {base: this.currentPath}));
+			} else {
+				form.set('action', new URI(this.currentPath));
+				form.set('data', 'live-path', true);
+			}
+			form.addDataFilter("FormRequest");
 		}, this);
 	}
 
@@ -63,10 +69,18 @@ Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, b
 	});
 	//configure its request to use JFrame's response handler
 	behaviorAPI.configureRequest(formRequest.request, options);
+	//if the element does not initially have an action, update its action to the new path, on rewritePath
+	var pathUpdate = function(uri) {
+		element.set('action', uri);
+	};
+	if (element.get('data', 'live-path')) methods.addEvent('rewritePath', pathUpdate);
 	formRequest.addEvent('send', function(form, query){
 		formRequest.request.setOptions({
 			formAction: form.get('action'),
 			formData: query
 		});
+	});
+	this.markForCleanup(element, function() {
+		methods.removeEvent('rewritePath', pathUpdate);
 	});
 });
