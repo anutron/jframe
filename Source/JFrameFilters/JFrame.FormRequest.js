@@ -73,7 +73,7 @@ Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, b
 	var pathUpdate = function(uri) {
 		element.set('action', uri);
 	};
-	if (element.get('data', 'live-path')) methods.addEvent('rewritePath', pathUpdate);
+	if (element.get('data', 'live-path')) behaviorAPI.addEvent('rewritePath', pathUpdate);
 	formRequest.addEvent('send', function(form, query){
 		formRequest.request.setOptions({
 			formAction: form.get('action'),
@@ -81,6 +81,6 @@ Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, b
 		});
 	});
 	this.markForCleanup(element, function() {
-		methods.removeEvent('rewritePath', pathUpdate);
+		behaviorAPI.removeEvent('rewritePath', pathUpdate);
 	});
 });
