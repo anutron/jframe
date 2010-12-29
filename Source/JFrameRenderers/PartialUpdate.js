@@ -467,8 +467,8 @@ script: PartialUpdate.js
 
 		updateState: function(container){
 			var partial = container.getElement('[' + this.options.partialIdProperty + '=' + this.partialId + ']');
-			var html = partial && partial.innerHTML;
-			this.html = html;
+			this.html = partial && partial.innerHTML;
+			this.element = partial;
 		},
 
 		_cleanUpdateFlag: function(){
