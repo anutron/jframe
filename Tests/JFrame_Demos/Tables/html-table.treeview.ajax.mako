@@ -114,7 +114,7 @@
   depth=request.GET.get('depth', 0)
 
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!DOCTYPE html>
 <html>
   <head>
     <title>HtmlTable Treeview w/ Ajax</title>
