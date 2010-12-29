@@ -30,6 +30,7 @@ sources: [
   Source/JFrameLinkers/JFrame.PromptAndPost.js,
   Source/JFrameLinkers/JFrame.Refresh.js,
   Source/JFrameLinkers/JFrame.RefreshWithParams.js,
+  Source/JFrameLinkers/JFrame.SplitViewLinkers.js,
   Source/JFrameLinkers/JFrame.SubmitLink.js,
   Source/BehaviorFilters/Behavior.Autocomplete.js,
   Source/BehaviorFilters/Behavior.CollapsingElements.js,

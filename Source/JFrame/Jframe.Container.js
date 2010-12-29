@@ -46,6 +46,7 @@ requires:
  - /JFrame.Refresh
  - /JFrame.RefreshWithParams
  - /JFrame.SubmitLink
+ - /JFrame.SplitViewLinkers
 script: JFrame.Container.js
 ...
 */
