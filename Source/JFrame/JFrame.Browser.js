@@ -38,17 +38,6 @@ script: JFrame.Browser.js
 			return this.parentWidget.content;
 		},
 
-		_makeJFrame: function(path, options){
-			this.parent(path, options);
-			this.jframe.addEvents({
-				rewritePath: this._rewritePath.bind(this)
-			});
-		},
-
-		_rewritePath: function(path){
-			this.history.getSelected().path = path;
-		},
-
 		_jframeLoaded: function(data){
 			this.parent(data);
 			if (!Browser.Engine.trident) {
@@ -218,7 +207,14 @@ script: JFrame.Browser.js
 						if (path != this.jframe.currentPath) this.load({requestPath: path, suppressHistory: true });
 					}.bind(this)
 				});
+				this.jframe.addEvents({
+					rewritePath: this._rewritePath.bind(this)
+				});
 			}
+		},
+
+		_rewritePath: function(path){
+			this.history.getSelected().path = path;
 		},
 
 		_setupJFrame: function(path){
