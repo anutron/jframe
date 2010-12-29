@@ -23,12 +23,11 @@ script: Behavior.SplitViewScroller.js
 */
 
 Behavior.addGlobalPlugin('SplitView', 'SplitViewScroller', function(element) {
-	var splitview = element.retrieve('SplitView');
-	var el = $(splitview);
+	var splitview = element.retrieve('widget');
 	var sides = splitview.getSides();
 	var tabAnchorScroller = function(e, link){
 		var name = link.get('href').split('#')[1];
-		var anchor = el.getElement('[name=' + name + ']');
+		var anchor = element.getElement('[name=' + name + ']');
 		if (!anchor) {
 			dbug.warn('warning, link name "%s" found no corresponding anchor', name);
 			return;
@@ -47,8 +46,8 @@ Behavior.addGlobalPlugin('SplitView', 'SplitViewScroller', function(element) {
 			e.stop();
 		}
 	};
-	el.addEvent('click:relay([href*=#])', tabAnchorScroller);
+	element.addEvent('click:relay([href*=#])', tabAnchorScroller);
 	this.markForCleanup(element, function() {
-		el.removeEvent('click:relay([href*=#]', tabAnchorScroller);
+		element.removeEvent('click:relay([href*=#]', tabAnchorScroller);
 	});
 });
