@@ -152,7 +152,8 @@ JFrame = new Class({
 			}.bind(this),
 			callClick: function(){
 				this.callClick.apply(this, arguments);
-			}.bind(this)
+			}.bind(this),
+			warn: dbug.warn.bind(dbug)
 		});
 		this.addEvents({
 			resize: this.behavior.resize.bind(this.behavior),
