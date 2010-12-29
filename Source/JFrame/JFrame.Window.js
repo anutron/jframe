@@ -80,12 +80,14 @@ script: JFrame.Window.js
 			this.parent(path, opt);
 
 			this.jframe.addEvents({
-				rewritePath: this._rewritePath.bind(this),
-				load: function(data){
-					this.setCaption(this.options.windowTitler(data.title || data.repsonsePath));
-					this._incrementHistory(data);
-				}.bind(this)
+				loadComplete: this._jframeLoaded.bind(this),
+				rewritePath: this._rewritePath.bind(this)
 			});
+		},
+
+		_jframeLoaded: function(data){
+			this.setCaption(this.options.windowTitler(data.title || data.repsonsePath));
+			this._incrementHistory(data);
 		},
 
 		_rewritePath: function(path){
