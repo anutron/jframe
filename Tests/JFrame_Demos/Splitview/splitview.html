@@ -6,16 +6,19 @@
 	<body>
 		<!-- test_runner_no_wrapper -->
 			<div class="resizable" data-filters="SplitView">
-				<div class="left_col jframe_padded">
-					this is the left column.<br/>
-					<a data-splitview-resize="{'left':0}">hide the left side</a><br/>
-					<a data-splitview-toggle="{'side': 'right', 'hideSplitter': true}">toggle the right side (hide splitter)</a>
-					
+				<div class="left_col">
+					<div class="jframe_padded">
+						this is the left column.<br/>
+						<a data-splitview-resize="{'left':0}">hide the left side</a><br/>
+						<a data-splitview-toggle="{'side': 'right', 'hideSplitter': true}">toggle the right side (hide splitter)</a>
+					</div>
 				</div>
-				<div class="right_col jframe_padded">
-					and this is the right,<br/>
-					you can resize us by dragging the middle bar around.<br/>
-					<a data-splitview-toggle="{'side': 'left'}">toggle the left side</a>
+				<div class="right_col">
+					<div class="jframe_padded">
+						and this is the right,<br/>
+						you can resize us by dragging the middle bar around.<br/>
+						<a data-splitview-toggle="{'side': 'left'}">toggle the left side</a>
+					</div>
 				</div>
 			</div>
 	</body>
