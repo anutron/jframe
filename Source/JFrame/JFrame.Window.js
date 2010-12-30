@@ -86,6 +86,7 @@ script: JFrame.Window.js
 		},
 
 		_jframeLoaded: function(data){
+			this.parent(data);
 			this.setCaption(this.options.windowTitler(data.title || data.repsonsePath));
 			this._incrementHistory(data);
 		},
