@@ -29,12 +29,30 @@ var urlRE = /^url=/;
 JFrame.addGlobalFilters({
 
 	autorefresh: function(container, content){
-		$clear(refreshTable.get(this));
+		this.removeClass('auto-refresh-paused');
+		var refresher = refreshTable.get(this);
+		if (refresher) $clear(refresher.timer);
 		//get the first input.autorefresh and use its value as the duration before
 		//it auto refreshes the input. if span.sec_to_autorefresh is present, fill its
 		//contents with the number of seconds until a refresh.
 		var ignoreAutoRefresh = content && content.options && content.options.ignoreAutoRefresh;
 		if (!ignoreAutoRefresh && content && content.meta) setupAutoRefresh.call(this, content);
+	}
+
+});
+
+JFrame.addGlobalLinkers({
+
+	'.jframe-pause_refresh': function(event, link){
+		var refresher = refreshTable.get(this);
+		if (refresher ) $clear(refresher.timer);
+		this.addClass('auto-refresh-paused');
+	},
+
+	'.jframe-resume_refresh': function(event, link){
+		var refresher = refreshTable.get(this);
+		if (refresher) refresher.resume();
+		this.removeClass('auto-refresh-paused');
 	}
 
 });
@@ -50,7 +68,7 @@ var setupAutoRefresh = function(content) {
 			sec = parts[0].toInt();
 			if (parts[1]) url = unescape(parts[1].replace(urlRE, ''));
 		}
-	}, this);
+	});
 	//if there's no refresh variable, exit
 	if (!sec) return;
 	//determin the timestamp for when we should refresh
@@ -97,18 +115,25 @@ var setupAutoRefresh = function(content) {
 
 	//this timer goes off ever .25 seconds and checks to see if we've reached our
 	//target refresh time
-	var timer = (function(){
-		if (diff < 1) {
-			if (span) span.set('html', 0);
-			load();
-			$clear(timer);
-		} else {
-			update();
-		}
-	}).periodical(250, this);
-
+	var timer,
+	startTimer = function(){
+		console.log('starting timer');
+		timer = (function(){
+			if (diff < 1) {
+				if (span) span.set('html', 0);
+				load();
+				$clear(timer);
+			} else {
+				update();
+			}
+		}).periodical(250);
+	};
+	startTimer();
 	//this stores the timer in a universal table object.
-	refreshTable.set(this, timer);
+	refreshTable.set(this, {
+		resume: startTimer,
+		timer: timer
+	});
 
 	//when a new request is generated (i.e. the user clicks a link, or refresh, or autorefresh)
 	//check to see if the options for the request have the fullFrameLoad flag set to true; if not
