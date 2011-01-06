@@ -5,7 +5,7 @@
 	</head>
 	<body>
 		<div class="jframe_padded">
-			<a href="/test/?project=jframe&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1&no_wrapper=true" data-ajax-target=".ajax_target">Load some content into the div below</a>
+			<a href="/test/?project=jframe_demos&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1&no_wrapper=true" data-ajax-target=".ajax_target">Load some content into the div below</a>
 			<div style="border: 1px solid #000; padding: 10px; margin: 10px 0px; max-height: 100px; overflow:auto;">
 				<div class="ajax_target">
 				This content is replaced whenever you click the link above.
@@ -15,38 +15,38 @@
 				Note that once you load content into the div above, hitting refresh destroys that content.
 			</p>
 			<hr/>
-			<a href="/test/?project=jframe&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1&no_wrapper=true" data-ajax-replace=".ajax_replace div">Replace the blue box below.</a>
+			<a href="/test/?project=jframe_demos&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1&no_wrapper=true" data-ajax-replace=".ajax_replace div">Replace the blue box below.</a>
 			<div style="border: 1px solid #000; padding: 10px; margin: 10px 0px; max-height: 100px; overflow:auto;" class="ajax_replace">
 				<div style="padding: 10px; background: #99f;">This gets replaced by the response</div>
 			</div>
-			<a href="/test/?project=jframe&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1&no_wrapper=true" data-ajax-append=".ajax_append div">Add the response after the blue box below.</a>
+			<a href="/test/?project=jframe_demos&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1&no_wrapper=true" data-ajax-append=".ajax_append div">Add the response after the blue box below.</a>
 			<div style="border: 1px solid #000; padding: 10px; margin: 10px 0px; max-height: 100px; overflow:auto;" class="ajax_append">
 				<div style="padding: 10px; background: #99f;">The response gets appended after this box</div>
 			</div>
 			<hr/>
-			<a href="/test/?project=jframe&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1&no_wrapper=true" data-ajax-after=".ajax_after"><em>Also</em> adds the response after the blue box below.</a>
+			<a href="/test/?project=jframe_demos&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1&no_wrapper=true" data-ajax-after=".ajax_after"><em>Also</em> adds the response after the blue box below.</a>
 			<div style="border: 1px solid #000; padding: 10px; margin: 10px 0px; max-height: 100px; overflow:auto;">
 				<div style="padding: 10px; background: #99f;" class="ajax_after">The response gets appended after this box</div>
 			</div>
 			<hr/>
-			<a href="/test/?project=jframe&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1&no_wrapper=true" data-ajax-before=".ajax_before">Add the response <em>before</em> the blue box below.</a>
+			<a href="/test/?project=jframe_demos&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1&no_wrapper=true" data-ajax-before=".ajax_before">Add the response <em>before</em> the blue box below.</a>
 			<div style="border: 1px solid #000; padding: 10px; margin: 10px 0px; max-height: 100px; overflow:auto;">
 				<div style="padding: 10px; background: #99f;" class="ajax_before">The response gets prepended <em>before</em> this box</div>
 			</div>
 			<hr/>
 
-			<a href="/test/?project=jframe&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1&no_wrapper=true" data-ajax-target=".ajax_filter" data-ajax-filter="textarea">This link loads the same url as the others, but only the textarea is inserted into the box below</a>
+			<a href="/test/?project=jframe_demos&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1&no_wrapper=true" data-ajax-target=".ajax_filter" data-ajax-filter="textarea">This link loads the same url as the others, but only the textarea is inserted into the box below</a>
 			<div style="border: 1px solid #000; padding: 10px; margin: 10px 0px; max-height: 100px; overflow:auto;">
 				<div class="ajax_filter">
 					This box is replaced with a textarea when you click the 
 				</div>
 			</div>
 			<hr/>
-			<a href="/test/?project=jframe&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1" data-ajax-target=".nothing_here">This is also an ajax link, but it's target is not found, so it falls back to being a regular link.</a>
+			<a href="/test/?project=jframe_demos&path=/JFrame.Window_Tests/partial_refresh.mako&delay=1" data-ajax-target=".nothing_here">This is also an ajax link, but it's target is not found, so it falls back to being a regular link.</a>
 			<hr/>
 			
 			<p>This form submits to the box below it:</p>
-			<form action="/test/?project=jframe&path=/JFrame.Window_Tests/post-load.prompt.popup.mako" method="post" style="margin: 6px 0px 0px;" data-ajax-target=".ajax_form_target">
+			<form action="/test/?project=jframe_demos&path=/JFrame.Window_Tests/post-load.prompt.popup.mako" method="post" style="margin: 6px 0px 0px;" data-ajax-target=".ajax_form_target">
 				<input type="hidden" name="no_wrapper" value="true"/>
 				enter a value: <input type="text" name="prompt_value"/>
 				<input type="submit" name="submit"/>

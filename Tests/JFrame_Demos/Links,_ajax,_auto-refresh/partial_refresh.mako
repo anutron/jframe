@@ -8,7 +8,7 @@ count = int(get_var('count', 0))
 <html>
   <head>
     <title>Partial Refresh</title>
-    <meta http-equiv="refresh" content="2;/test/?project=jframe&path=/JFrame.Window_Tests/partial_refresh.mako&count=${count + 1}" />
+    <meta http-equiv="refresh" content="2;/test/?project=jframe_demos&path=/JFrame.Window_Tests/partial_refresh.mako&count=${count + 1}" />
   </head>
   <body>
     <div class="jframe_padded highlight-partial-updates">

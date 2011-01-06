@@ -6,7 +6,7 @@
 	<body>
 		<p>Click either submit button to update the box below. The box should have an ajax spinner and then update with the content in the button.</p>
 
-		<form action="/test/?project=jframe&path=/JFrame.Window_Tests/submit.link.mako" method="post" style="margin: 6px 0px 0px;">
+		<form action="/test/?project=jframe_demos&path=/JFrame.Window_Tests/submit.link.mako" method="post" style="margin: 6px 0px 0px;">
 			<input type="submit" name="button" value="fetch html (button 1)"/>
 			<input type="submit" name="button" value="fetch html (button 2)"/>
 			<a class="jframe-submit_form" data-extra-data="{'link':'fetch html (link 1)'}">fetch html (link 1)</a>
