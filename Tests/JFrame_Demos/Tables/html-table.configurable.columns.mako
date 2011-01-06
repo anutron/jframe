@@ -77,10 +77,10 @@
   </head>
   <body>
     <div data-filters="CollapsingElements">
-      <form action="/test/" method="GET" class="jframe-hidden collapsible jframe-table_config">
+      <form action="" method="GET" class="jframe-hidden collapsible jframe-table_config">
         <input type="hidden" name="sortOrder" value="${get_var('sortOrder', '')}"/>
         <input type="hidden" name="project" value="jframe"/>
-        <input type="hidden" name="path" value="/JFrame.Window_Tests/html-table.configurable.columns.mako"/>
+        <input type="hidden" name="path" value="/Tables/html-table.configurable.columns.mako"/>
         <ul data-filters="Sortable, MultiChecks" data-sort-state="[name=sortOrder]" 
         data-sort-property="value"
         data-sort-property-child="input">
