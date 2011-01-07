@@ -31,12 +31,17 @@ Behavior.addGlobalFilters({
 		var showSeconds = element.hasClass('showSeconds');
 		if (start) start = Date.parse(start);
 		else start = new Date();
+		var prev_value = '';
 		var timer = (function(){
 			var now = new Date();
 			var diff = start.diff(now, 'second');
-			if (diff > 60 || !showSeconds) element.set('html', start.timeDiffInWords());
-			else element.set('html', diff + ' sec');
-		}).periodical(100);
+			if (diff > 60 || !showSeconds) new_value = start.timeDiffInWords();
+			else new_value = diff + ' sec';
+			if (new_value != prev_value) {
+				element.set('html', new_value);
+				prev_value = new_value;
+			}
+		}).periodical(250);
 		this.markForCleanup(element, function(){
 			$clear(timer);
 		});
