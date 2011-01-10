@@ -40,6 +40,17 @@ script: JFrame.LivePath.js
 
 	});
 
+	var getDataObject = function(dataString) {
+		var dataObject;
+		if (dataString == "true") {
+			dataObject = {};
+			dataObject[link.get('name')] = link.get('value');
+		} else {
+			dataObject = dataString.parseQueryString();
+		}
+		return dataObject;
+	};
+
 	var updateLivePath = function(link, currentPath){
 		var setData = function(uri, paths, action){
 			var okToRemove = action == "toggle" || action == "remove";
@@ -67,13 +78,13 @@ script: JFrame.LivePath.js
 		    remove = link.get('data', 'livepath-remove'),
 		    uri = new URI(currentPath);
 		if (toggle) {
-			toggle = toggle.parseQueryString();
+			toggle = getDataObject(toggle);
 			setData(uri, toggle, 'toggle');
 		} else if (add) {
-			add = add.parseQueryString();
+			add = getDataObject(add);
 			setData(uri, add, 'add');
 		} else if (remove) {
-			remove = remove.parseQueryString();
+			remove = getDataObject(remove);
 			setData(uri, remove, 'toggle');
 		}
 		return uri.toString();
