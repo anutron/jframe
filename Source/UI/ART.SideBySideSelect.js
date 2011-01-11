@@ -286,6 +286,8 @@ ART.SideBySideSelect = new Class({
 		this[where + 'Container'].scrollTo(0, 999999);
 		this._options[name].set('selected', where == 'selected');
 		this.fireEvent(where == 'selected' ? 'select' : 'deselect', [name, row]);
+		this.selected.updateZebras();
+		this.deselected.updateZebras();
 		this._rangeStart = null;
 		return row;
 	},
