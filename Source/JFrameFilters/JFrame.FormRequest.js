@@ -50,9 +50,16 @@ Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, b
 	formRequest.request.options.update = null;
 	var options = {};
 	['append', 'replace', 'target', 'after', 'before'].each(function(action){
-		var selector = element.get('data', 'ajax-' + action);
+		var selector = element.getData('ajax-' + action);
 		if (selector) {
-			var target = behaviorAPI.getContentElement().getElement(selector);
+			var target;
+			if (selector == "parent") {
+				target = element.getParent();
+			} else if (selector =="self") {
+				target = element;
+			} else {
+				target = behaviorAPI.getContentElement().getElement(selector);
+			}
 			if (target) {
 				$extend(options, {
 					target: target,
@@ -67,6 +74,7 @@ Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, b
 			}
 		}
 	});
+	if (element.getData('ajax-filter')) options.filter = element.getData('ajax-filter');
 	//configure its request to use JFrame's response handler
 	behaviorAPI.configureRequest(formRequest.request, options);
 	//if the element does not initially have an action, update its action to the new path, on rewritePath
