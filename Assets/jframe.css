@@ -458,7 +458,7 @@ table[data-filters*=HtmlTable].treeView tbody tr > td:first-child {
 	background: no-repeat 50% 50% url(art/small_cog.png);
 	position: relative;
 }
-.jframe-shared form.jframe-table_config {
+.jframe-shared .jframe-table_config {
 	position: absolute;
 	background: #fff;
 	border: 1px solid #777;
@@ -481,13 +481,13 @@ table[data-filters*=HtmlTable].treeView tbody tr > td:first-child {
 	height: 7px;
 	cursor: se-resize;
 }
-.jframe-shared form.jframe-table_config label {
+.jframe-shared .jframe-table_config label {
 	display: block;
 }
-.jframe-shared form.jframe-table_config label:hover {
+.jframe-shared .jframe-table_config label:hover {
 	color: #36f;
 }
-.jframe-shared form.jframe-table_config ul {
+.jframe-shared .jframe-table_config ul {
 	padding: 2px;
 	margin: 0;
 	height: 125px;
@@ -510,7 +510,7 @@ table[data-filters*=HtmlTable].treeView tbody tr > td:first-child {
 .jframe-shared *[data-filters*=Sortable] .clone {
 	z-index: 1;
 }
-.jframe-shared form.jframe-table_config li, .jframe-shared .jframe-sort_handle {
+.jframe-shared .jframe-table_config li, .jframe-shared .jframe-sort_handle {
 	user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
@@ -522,10 +522,10 @@ table[data-filters*=HtmlTable].treeView tbody tr > td:first-child {
 	margin-bottom: 2px;
 	background: #fff url(art/sortable-handle.png) 5px 50% no-repeat;
 }
-.jframe-shared form.jframe-table_config li input {
+.jframe-shared .jframe-table_config li input {
 	margin-right: 6px;
 }
-.jframe-shared form.jframe-table_config .art {
+.jframe-shared .jframe-table_config .art {
 	margin: 4px;
 }
 
