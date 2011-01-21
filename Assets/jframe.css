@@ -859,6 +859,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 /* @group CSS Components */
 
+/* @group CSS Components */
+
 /*Forces something display:block to flow within text */
 .jframe-shared .txtIcon { display: inline-block !important; }
 
@@ -938,7 +940,63 @@ OTHER DEALINGS IN THE SOFTWARE.
 .jframe-shared .txtIcon.tGraph b,
 .jframe-shared .txtIcon .tGraph b { padding: 0 1ex; }
 
+/* vertical implementation */
+
+.jframe-shared .tGraph.vertical {
+	background: url(art/mr_stripes_vertical.gif) repeat-y 0px 1px;
+	display: inline-block;
+	width: 15px;
+	height: 100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+/*	padding-top: 2px;
+*/}
+.jframe-shared .tGraph.vertical span {
+	width: 14px;
+	height: 100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+/*	margin-top: -2px;
+*/}
+.jframe-shared .tGraph.vertical b {
+	height: 100%;
+	overflow:hidden;
+	text-indent: -10000px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.jframe-shared .tGraph.vertical i {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #fff url(art/mr_stripes_vertical.gif) repeat-y -15px 0;
+}
+
+/*Animate the tGraph bar 'value' on load*/
+
+.jframe-shared.loading .tGraph:not(.v) i,
+.jframe-shared .loading .tGraph:not(.v) i{ height:0 !important; }
+
+/*Coloring*/
+
+.jframe-shared .tGraph.vertical.priorityLow { background-position: -41px 0; }
+.jframe-shared .tGraph.vertical.priorityLow i { background-position: -28px 0; }
+.jframe-shared .tGraph.vertical.priorityLow span { border-color: #5b932f; text-shadow: #5b932f .75px 1px 1px; }
+
+.jframe-shared .tGraph.vertical.priorityHigh { background-position: -69px 0; }
+.jframe-shared .tGraph.vertical.priorityHigh i { background-position: -56px 0; }
+.jframe-shared .tGraph.vertical.priorityHigh span { border-color: #a33537; text-shadow: #bd4747 .75px 1px 1px; }
+
 /* @end tGraph */
+
 
 
 
