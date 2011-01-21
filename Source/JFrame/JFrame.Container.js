@@ -15,8 +15,7 @@
 // limitations under the License.
 /*
 ---
-description: Base wrapper for JFrame.Window and JFrame.Browser to subclass. Wraps a JFrame providing common functionality and state 
-             for when JFrame is integrated into a container class.
+description: Base wrapper for JFrame.Window and JFrame.Browser to subclass. Wraps a JFrame providing common functionality and state for when JFrame is integrated into a container class.
 provides: [JFrame.Container]
 requires: [/JFrame, /JFrame.Error]
 requires:
@@ -92,7 +91,7 @@ JFrame.Container = new Class({
 
 	_makeJFrame: function(path, options){
 		if (!options.spinnerTarget) options.spinnerTarget = this._getContent();
-		this.jframe = new JFrame(path, options);
+		this.jframe = new JFrame(path, options.jframeOptions);
 		this.jframe.inject(this, this._getContent())
 			.addEvents({
 				refresh: this._storeScroll.bind(this),
