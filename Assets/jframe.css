@@ -333,10 +333,10 @@ give it class "sortable" to allow the user to sort the table
 table[data-filters*=HtmlTable] {
 	width: 100%;
 }
-table[data-filters*=HtmlTable] thead {
+table[data-filters*=HtmlTable] thead, table[data-filters*=HtmlTable] tfoot {
 	background: url(art/th_back.png);
 }
-table[data-filters*=HtmlTable] thead th {
+table[data-filters*=HtmlTable] thead th, table[data-filters*=HtmlTable] tfoot th {
 	text-align: left;
 	white-space: nowrap;
 	padding: 0px 6px;
