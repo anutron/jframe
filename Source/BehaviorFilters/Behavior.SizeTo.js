@@ -38,7 +38,7 @@ Behavior.addGlobalFilters({
 
 		Both values are not required, although one is.
 	*/
-	SizeTo: function(element, behaviorAPI) {
+	SizeTo: function(element, BehaviorAPI) {
 		var sizeTo = {
 			x: element.get('data', 'size-to-width'),
 			y: element.get('data', 'size-to-height')
@@ -50,6 +50,7 @@ Behavior.addGlobalFilters({
 		resize = function(x, y){
 			if (sizeTo.x) element.setStyle('width', calcSize(x, sizeTo.x));
 			if (sizeTo.y) element.setStyle('height', calcSize(y, sizeTo.y));
+			if (sizeTo.x || sizeTo.y) BehaviorAPI.fireEvent('sizeTo', element);
 		};
 		var calcSize = function(value, sizeTo) {
 			if (sizeTo.contains("%")) {
@@ -61,11 +62,11 @@ Behavior.addGlobalFilters({
 			}
 		};
 
-		size = behaviorAPI.getContainerSize();
+		size = BehaviorAPI.getContainerSize();
 		resize(size.x, size.y);
-		behaviorAPI.addEvent('resize', resize);
+		BehaviorAPI.addEvent('resize', resize);
 		this.markForCleanup(element, function(){
-			behaviorAPI.removeEvent('resize', resize);
+			BehaviorAPI.removeEvent('resize', resize);
 		});
 	}
 
