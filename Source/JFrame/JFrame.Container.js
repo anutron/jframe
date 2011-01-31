@@ -151,16 +151,7 @@ JFrame.Container = new Class({
 			this._emptyFooter();
 			if (data.footer) this.footerText.adopt(data.footer);
 		}
-		//if there's a view, and it's not the current one, store it and change the state/class
-		if (this._jframe_view != data.view) {
-			if (this._jframe_view) {
-				this.removeClass(this._jframe_view);
-			}
-			if (data.view) {
-				this.addClass(data.view);
-				this._jframe_view = data.view;
-			}
-		}
+		this._applyView(data);
 		this.fireEvent('load', data.view);
 		/*
 			I hate this delay, but the browser apparently needs it to render the HTML. You can't set the scroll offset of something
@@ -168,6 +159,22 @@ JFrame.Container = new Class({
 			slower computers.
 		*/
 		this._restoreScroll.delay(50, this);
+	},
+
+	_applyView: function(data, target){
+		target = target || this;
+		var previous_view = $type(target) == 'element' ? target.retrieve('_jframe_view') : target._jframe_view;
+		//if there's a view, and it's not the current one, store it and change the state/class
+		if (previous_view != data.view) {
+			if (previous_view) {
+				target.removeClass(previous_view);
+			}
+			if (data.view) {
+				target.addClass(data.view);
+				if ($type(target) == 'element') element.store('_jframe_view', data.view);
+				else target._jframe_view = data.view;
+			}
+		}
 	},
 
 	//returns the elements whose scroll offset we want to store

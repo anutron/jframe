@@ -89,6 +89,7 @@ script: JFrame.Window.js
 			this.parent(data);
 			this.setCaption(this.options.windowTitler(data.title || data.repsonsePath));
 			this._incrementHistory(data);
+			this._applyView(data, this.parentWidget);
 		},
 
 		_rewritePath: function(path){

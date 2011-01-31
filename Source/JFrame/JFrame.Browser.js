@@ -47,6 +47,11 @@ script: JFrame.Browser.js
 				}).delay(20, this);
 			}
 			this.parentWidget._incrementHistory(data);
+			//pull the view out of the jframe and apply it to the entire window
+			this._applyView(data, this.parentWidget);
+			//this is here for backwards compat; some css rules refer to .jframe_element .view .foo
+			//and so we need a child of the window to have the class in addition to the window itself
+			this._applyView(data, this.parentWidget.contents);
 			this.parentWidget.setCaption(this.parentWidget.options.windowTitler(data.title || data.repsonsePath));
 			if (this.getState('focused')) this.focus();
 		}
