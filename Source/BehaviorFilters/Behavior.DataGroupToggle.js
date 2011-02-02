@@ -25,7 +25,7 @@ script: Behavior.DataGroupToggle.js
 
 Behavior.addGlobalFilters({
 	DataGroupToggle: function(element, behaviorAPI){
-		container = behaviorAPI.getContentElement();
+		var container = behaviorAPI.getContentElement();
 		var selectHandler = function(event) {
 			var selected = element.getSelected()[0];
 			var toggleData = selected.get('data', 'group-toggle', true);
