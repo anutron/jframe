@@ -538,6 +538,9 @@ table[data-filters*=HtmlTable].treeView tbody tr > td:first-child {
 .jframe-shared div.jframe_contents {
 	min-height: 100%;
 }
+.jframe-shared div.jframe_contents .toolbar {
+	display: none;
+}
 div.jframe_default h1, div.jframe_default h2, div.jframe_default h3, div.jframe_default h4, div.jframe_default h5 {
 	padding: 0;
 	margin: 0;
