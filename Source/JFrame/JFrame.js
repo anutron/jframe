@@ -17,7 +17,7 @@
 ---
 description: An IFrame implementation in JavaScript with integration with Behavior.js
 provides: [JFrame]
-requires: 
+requires:
  - Core/Request
  - More/Element.Delegation
  - More/Elements.From
@@ -92,7 +92,7 @@ JFrame = new Class({
 		redirectAfterRender: empty(redirectedTo, originalRequestedURL), //after content is rendered
 		size: {
 			width: ,
-			height: 
+			height:
 		},
 
 		**/
@@ -172,7 +172,7 @@ JFrame = new Class({
 		if (this.options.size) this.resize(this.options.size.width, this.options.size.height);
 		this.load({requestPath: path});
 	},
-	
+
 	/*
 		configureRequest - configures a passed in request to be have its response rendered within JFrame..
 		request - (* request object *) request object to be configured
@@ -197,7 +197,7 @@ JFrame = new Class({
 	delegatedTo: [],
 
 /*
-	
+
 	the JFrame callClick event invokes the click handler for links/elements, matching against any JFrameLinkers and,
 	if none are found, running the default click handler (which is to load the link's href, if defined, into the JFrame).
 	event - (*object*) the event object that was fired; a click, usually
@@ -218,7 +218,7 @@ JFrame = new Class({
 		//make sure we only apply this once per target
 		if (this.delegatedTo.contains(target)) return;
 		this.delegatedTo.push(target);
-		
+
 		var handler = function(e, elem, url, options){
 			if (elem.get('tag') == 'a') e.preventDefault();
 			if (!this._checkLinkers(e, elem)) {
@@ -317,7 +317,7 @@ JFrame = new Class({
 		//if it's there and it isn't a get, prompt the user to resubmit
 		if (method && method != "get") {
 			//ask the user if they want to re-post the request
-			this.confirm('Confirm', 'To display this view, the form that was submitted when it was originally displayed will have to be submitted again. Do you wish to resubmit it?', function(){
+			var doPost = function() {
 				//get the data from the uri (the get params)
 				var data = uri.getData();
 				//get the keys of what got posted; this allows for the reposting of a form that had
@@ -339,16 +339,23 @@ JFrame = new Class({
 				}
 				//send the request
 				req.send();
-			}, {
-				//if they cancel, show a message that says why the page is essentially empty
-				onCancel: function(){
-					this._empty();
-					this.content.adopt(new Element('p', {
-							text: 'This view was created by the submission of a form. Refresh to re-submit.'
-						})
-					);
-				}.bind(this)
-			});
+			};
+			if (options.skipPostConfirmation) {
+				// The caller has already shown user a confirmation dialog box.
+				// Go directly to POST.
+				doPost();
+			} else {
+				this.confirm('Confirm', 'To display this view, the form that was submitted when it was originally displayed will have to be submitted again. Do you wish to resubmit it?', doPost, {
+					//if they cancel, show a message that says why the page is essentially empty
+					onCancel: function(){
+						this._empty();
+						this.content.adopt(new Element('p', {
+								text: 'This view was created by the submission of a form. Refresh to re-submit.'
+							})
+						);
+					}.bind(this)
+				});
+			}
 		} else {
 			//else load the request
 			req.send();
@@ -408,7 +415,7 @@ JFrame = new Class({
 		toolbar: the toolbar elements (see below),
 		footer: the footer elements (see below)
 		everything else: used to pass along options to filters, renderers, etc.
-		
+
 	views:
 		The content of a JFrame request is searched for the first element with the class "view".
 		If found, the id of this element is treated as the current view. This id is stripped (all
@@ -417,22 +424,22 @@ JFrame = new Class({
 		the id of the element) as well as the viewElement. This allows your code to attach logic
 		based on the view (a 'controler'). Just wrap your response in a div with the class "view" and
 		an id and you can switch on that in the event handler you attach.
-		
+
 		example html response:
 		<div id="jobbrowser_job_list" class="view">
 			<!-- the html for your view -->
 		</div>
-		
+
 		in your script:
 		myJframe.addEvent('loadComplete', function(data) {
 			if (data.view == 'jobbrowser_job_list') new JobBrowser.JobView(data.viewElement);
 		})
-	
+
 	toolbars:
 		The content of a JFrame request is searched for elements with the class "toolbar" and "footer".
 		These elements are referenced in the data passed to the loadComplete callback as the toolbar and footer
 		for the current view. This allows you to do special things to the navigation. By default,
-		JFrame.Browser injects the contents of this toolbar into the area above the content and 
+		JFrame.Browser injects the contents of this toolbar into the area above the content and
 		the footer content into the footer. By simply putting links and other elements into a div
 		with the class "toolbar" it will be added to the header (and the same for the footer).
 		You must include the toolbar / footer in every response for it to remain there.
@@ -475,7 +482,7 @@ JFrame = new Class({
 			view - (*string*; optional) if defined, the view of the content
 			viewElement - (*element*; optional) if defined, the element for the view
 			behavior - (*behavior object*; optional) if defined, the behavior instance to use
-		
+
 	*/
 
 	fill: function(target, content, behavior){
@@ -504,7 +511,7 @@ JFrame = new Class({
 		};
 		this.fireEvent('resize', [x, y]);
 	},
-	
+
 	getCurrentSize: function(){
 		return this.currentSize;
 	},
@@ -554,7 +561,7 @@ JFrame = new Class({
 	addBehavior: function(name, fn, overwrite){
 		this.behavior.addFilter(name, fn, overwrite);
 	},
-	
+
 	/*
 		add a group of behavior filters
 		obj - (*object*) an object of key/value pairs of name/functions for filters (see addBehavior)
@@ -613,7 +620,7 @@ JFrame = new Class({
 		container - (*element*) applies all the filters on this instance of jFrame to the contents of the container.
 		content - (*object*) optional object containing various metadata about the content; js tags, meta tags, title, view, etc. See the "notes" section of the renderContent method comments in this file.
 		behavior - (*behavior object*) optional behavior instance to be used for application of behaviors
-			
+
 	*/
 
 	applyFilters: function(container, content, behavior){
@@ -652,9 +659,9 @@ JFrame = new Class({
 		is handled by jFrame and loads new content. If there is a match, the matcher's function handles the event.
 		selector - (*string*) a css selector that the link is tested against.
 		fn - (*function*) callback that handles links that match the selector
-		
+
 		example:
-		
+
 		//when any link with the class .alert is clicked, alert its href:
 		myjFrame.addLinker('.alert', function(event, link) {
 			event.preventDefault();
@@ -697,9 +704,9 @@ JFrame = new Class({
 		addRenderer: adds an renderer to this instance
 		name - (*string*) a unique name for this renderer
 		fn - (*function*) method, passed the contents (see renderer method above), that may handle those contents if it chooses
-		
+
 		To remove an renderer, overwrite it thusly:
-		
+
 		myJFrame.addRenderer('rendererToRemove', $empty);
 	*/
 
@@ -868,7 +875,7 @@ JFrame = new Class({
 		var responsePath = request.getHeader('X-Hue-JFrame-Path');
 		var redirected = responsePath && responsePath != this.currentPath;
 		if (redirected) this.fireEvent('redirect', [this.currentPath, responsePath]);
-		
+
 		this.renderContent($merge({
 			content: html,
 			responsePath: responsePath || request.options.url,
@@ -924,11 +931,11 @@ JFrame = new Class({
 		}
 		return linked;
 	},
-	
+
 	/*
 		default error handler for jframe
 	*/
-	
+
 	error: function(message){
 		this.fireEvent('loadError');
 	},
@@ -939,9 +946,9 @@ JFrame = new Class({
 		The method defined is passed the container and can then apply its own logic to the contents
 		of that container. The name specified is not used, except that you can overwrite a filter
 		by using the same name.
-		
+
 		example: images links with class "alert" shall allert their source url:
-		
+
 			myjFrame.addFilter('alerts', function(container){
 				var alerter = function(){
 					alert(img.get('alt'));
@@ -949,7 +956,7 @@ JFrame = new Class({
 				var imgs = container.getElements('img');
 				imgs.addEvent('click', alerter);
 				//this could be accomplished with delegation too of course; just an example
-				
+
 				//you can mark a function for execution when the jframe contents are cleaned up when new content is loaded:
 				this.markForCleanup(function(){
 					imgs.removeEvent('click', alerter);
@@ -987,7 +994,7 @@ JFrame = new Class({
 			title - (*string*) the title of the content
 			view - (*string*; optional) if defined, the view of the content
 			viewElement - (*element*; optional) if defined, the element for the view
-		
+
 		Iterates over all the renderers for this instance (including global renderers on the JFrame prototype, which
 		includes the default renderer). Each renderer may inspect the content and elect to handle it instead of the
 		default handler. If it handles it and wishes to prevent the default handler, the renderer returns *true*,
@@ -1018,7 +1025,7 @@ JFrame = new Class({
 		a key/value set of renderers; see _applyRenderers above
 	*/
 	_renderers: {},
-	
+
 	_empty: function(target, options){
 		target = target || (options && options.target && $$(options.target)[0]) || this.content;
 		this._sweep(target);
@@ -1031,7 +1038,7 @@ JFrame = new Class({
 		target.empty();
 		if (target == this.content) this.fireEvent('empty');
 	},
-	
+
 	/*
 		the default renderer, if no other renderers apply
 		this is the default behavior for jframe which fills the content of the window and updates

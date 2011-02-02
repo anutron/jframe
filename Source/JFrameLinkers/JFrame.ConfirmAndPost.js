@@ -39,7 +39,8 @@ JFrame.addGlobalLinkers({
 			this.load({
 				requestPath: link.get('href').split('?')[0],
 				data: new URI(link.get('href')).get('data'),
-				method: 'post'
+				method: 'post',
+				skipPostConfirmation: true
 			});
 		}.bind(this));
 	}

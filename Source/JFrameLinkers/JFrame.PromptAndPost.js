@@ -42,7 +42,8 @@ JFrame.addGlobalLinkers({
 				}, {
 					resizable: true
 				});
-			}.bind(this)
+			}.bind(this),
+			skipPostConfirmation: true
 		});
 	}
 
