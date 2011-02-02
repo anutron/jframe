@@ -171,7 +171,7 @@ JFrame.Container = new Class({
 			}
 			if (data.view) {
 				target.addClass(data.view);
-				if ($type(target) == 'element') element.store('_jframe_view', data.view);
+				if ($type(target) == 'element') target.store('_jframe_view', data.view);
 				else target._jframe_view = data.view;
 			}
 		}
