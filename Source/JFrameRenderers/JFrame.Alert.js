@@ -80,10 +80,14 @@ JFrame.addGlobalRenderers({
 				}
 				alert.addEvent('destroy', function() {popupBehavior.cleanup(target);});
 				alert.position().show();
-				
+
 				//if jframe is rendering we remove this event which we're going to add a few lines down
-				if (jframe_renders) this.removeEvent('afterRenderer', alerter);
-				if (options.callback) options.callback(data);
+				if (jframe_renders) {
+					this.removeEvent('afterRenderer', alerter);
+				} else if (options.callback) {
+					var data = this.getCallbackData(content, target);
+					options.callback(data, "alert");
+				}
 			}
 		}.bind(this);
 

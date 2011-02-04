@@ -32,6 +32,8 @@ JFrame.addGlobalRenderers({
 		//when the user clicks "ok"
 		var popup = new Element('div').adopt(content.elements).getElement('.prompt_popup');
 		if (!popup) return;
+		popup = popup.clone();
+
 		var target = new Element('div', {'class': 'jframe_prompt'}).hide().inject($(this));
 		var popupBehavior = new Behavior({
 			onError: function(){
@@ -87,7 +89,11 @@ JFrame.addGlobalRenderers({
 			});
 
 		}
-		if (options.callback) options.callback(data);
+
+		if (options.callback) {
+			var data = this.getCallbackData(content, target);
+			options.callback(data, "prompt");
+		}
 
 		return true;
 	}

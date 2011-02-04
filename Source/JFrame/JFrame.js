@@ -1083,6 +1083,18 @@ JFrame = new Class({
 
 
 		//define the callback data
+		var data = this.getCallbackData(content, target);
+		data.toolbar = toolbar;
+		data.footer = footer;
+
+		// Let observers know
+		if (!options.suppressLoadComplete) this.fireEvent('loadComplete', data);
+		if (options.callback) options.callback(data, "_defaultRenderer");
+	},
+
+	getCallbackData: function(content, target) {
+		var options = content.options;
+
 		var data = {
 			content: options.content,
 			elements: content.elements,
@@ -1093,8 +1105,6 @@ JFrame = new Class({
 			view: content.view,
 			viewElement: content.viewElement,
 			target: target,
-			toolbar: toolbar,
-			footer: footer,
 			suppressHistory: options.suppressHistory
 		};
 
@@ -1113,10 +1123,7 @@ JFrame = new Class({
 			};
 		}
 
-
-		// Let observers know
-		if (!options.suppressLoadComplete) this.fireEvent('loadComplete', data);
-		if (options.callback) options.callback(data);
+		return data;
 	},
 
 	_resetOverflow: function(target) {

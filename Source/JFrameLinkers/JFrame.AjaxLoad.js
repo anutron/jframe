@@ -67,7 +67,11 @@ script: JFrame.AjaxLoad.js
 				fullFrameLoad: false,
 				retainPath: true,
 				noScroll: true,
-				callback: function(data){
+				callback: function(data, caller){
+					if (caller !== "_defaultRenderer") {
+						// Only perform ajax replace for the default renderer.
+						return;
+					}
 					switch(action){
 						case 'replace':
 							//reverse the elements and inject them
