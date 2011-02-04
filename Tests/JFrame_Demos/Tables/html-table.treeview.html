@@ -2,12 +2,24 @@
 <html>
 	<head>
 		<title>HtmlTable Tree View</title>
+        <style type="text/css">
+        table tr.selected td, table tr.table-tr-selected td, table tr.selected td a, table tr.table-tr-selected td a {
+               background-color: #3875d7;
+               color: #fff;
+        }
+         </style>
 	</head>
 	<body>
 	<h1 class="jframe-hidden">HtmlTable Tree View</h1>
 	<div class="jframe_padded">
 		
 		<p>The table below will appear to be a tree view table immediately, even before scripts are loaded. It will become interactive once the scripts have loaded. You should be able to click a section's expand arrow to expand it. Keys should work - up and down to navigate, shift + up and down to multiselect, left and right to collapse and expand sections.</p>
+          
+        <p>Use <code>&lt;tr class="table-tr-selected"&gt;</code> to
+            select a row by default. The table should have a class
+            <code>selectable</code>. For example, the row containing
+            <b>San Francisco</b> should be selected by default.</p>
+
 		<table id="tree2" data-filters="HtmlTable" class="selectable treeView multiselect jframe-bordered-table">
 			<thead>
 				<tr>
@@ -226,7 +238,7 @@
 									<td>Jul 10, 2010 1:39pm</td>
 									<td>--</td>
 								</tr>
-						<tr class="table-depth-0">
+						<tr class="table-depth-0 table-tr-selected">
 							<td>
 								Foo.txt
 							</td>
