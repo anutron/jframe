@@ -26,16 +26,20 @@ script: JFrame.SplitViewLinkers.js
 
 (function(){
 
-var getWidget = function(link) {
+var getWidget = function(link, container) {
 	var splitview = link.getParent('.splitview');
-	if (!splitview) return;
+	if (!splitview) {
+		var target = link.getData('splitview-target');
+		if (target) splitview = container.getElement(target);
+		if (!splitview) return;
+	}
 	return splitview.get('widget');
 };
 JFrame.addGlobalLinkers({
 
 	'[data-splitview-resize]': function(e, link){
 		if ($(e.target).get('tag') == 'a') e.preventDefault();
-		var widget = getWidget(link);
+		var widget = getWidget(link, $(this));
 		if (!widget) return;
 		var resize = link.get('data', 'splitview-resize', true);
 		if (!resize) return;
@@ -44,16 +48,16 @@ JFrame.addGlobalLinkers({
 		for (key in resize) {
 			if (sides.contains(key)) side = key;
 		}
-		widget.fold(side, resize[side], resize.hideSplitter).chain(partialPostFold.bind(this, [resize, e, link]));
+		widget.fold(side, resize[side], resize.hideSplitter, resize.noFx).chain(partialPostFold.bind(this, [resize, e, link]));
 	},
 
 	'[data-splitview-toggle]': function(e, link){
 		if ($(e.target).get('tag') == 'a') e.preventDefault();
-		var widget = getWidget(link);
+		var widget = getWidget(link, $(this));
 		if (!widget) return;
 		var resize = link.get('data', 'splitview-toggle', true);
 		if (!resize) return;
-		widget.toggle(resize.side, resize.hideSplitter).chain(partialPostFold.bind(this, [resize, e, link]));
+		widget.toggle(resize.side, resize.hideSplitter, resize.noFx).chain(partialPostFold.bind(this, [resize, e, link]));
 	}
 
 });
