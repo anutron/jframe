@@ -202,13 +202,18 @@ UI.Sheet.define('window.art button.art.wincontrol', {
 	};
 	ART.Sheet.define('button.art.jframe-refresh', button);
 	ART.Sheet.define('button.art.jframe-refresh.large', large);
-	button.glyph = ART.Glyphs.triangleLeft;
+	['cog', 'wrench', 'help', 'search', 'smallCross', 'smallMinus', 'checkMark'].each(function(glyph){
+		button.glyph = ART.Glyphs[glyph];
+		ART.Sheet.define('button.art.jframe-' + glyph, button);
+		ART.Sheet.define('button.art.jframe-' + glyph + '.large', large);
+	});
 	button['glyph-top'] = 5;
 	button['glyph-left'] = 6;
 	button['glyph-width'] = 9;
 	button['glyph-height'] = 9;
 	large['glyph-top'] = 7;
 	large['glyph-left'] = 7;
+	button.glyph = ART.Glyphs.triangleLeft;
 	ART.Sheet.define('button.art.jframe-back', button);
 	ART.Sheet.define('button.art.jframe-back.large', large);
 	button.glyph = ART.Glyphs.triangleRight;
