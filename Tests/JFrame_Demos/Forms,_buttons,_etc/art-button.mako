@@ -5,6 +5,9 @@
 	</head>
 	<body>
 		<div class="jframe_padded">
+			<a data-filters="ArtButton" class="jframe-cog"></a>
+			<a data-filters="ArtButton" class="jframe-cog large"></a>
+			<hr/>
 			<a data-filters="ArtButton" href="/" style="background: url(${get_asset_url('jframe_containers', 'info.png')}) left 50%; padding: 6px 6px 6px 20px; margin: 10px;" data-icon-styles="{'width': 14, 'height': 14}">I'm a button!</a>
 			<a data-filters="ArtButton" href="/" style="background: url(${get_asset_url('jframe_containers', 'error.png')}) left 50%; padding: 6px 6px 6px 20px; margin: 10px;" data-icon-styles="{'width': 14, 'height': 14}">I'm a button too!</a>
 			
