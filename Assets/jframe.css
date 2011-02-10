@@ -602,9 +602,9 @@ div.jframe_default h5 { font-size: 105%; margin-bottom: 0.3em; padding-top: 8px;
 	Note that you can have more than one right click menu per container. This allows a table row to be right clicked and show a different menu if the user right clicks, say, an image vs a link or different td elements. See jframe.ContextMenu.js.
 */
 .jframe-shared ul.context-menu {
-	border-radius: 2px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	background: #fff;
 	border: solid #777;
 	border-width: 1px;
@@ -614,6 +614,9 @@ div.jframe_default h5 { font-size: 105%; margin-bottom: 0.3em; padding-top: 8px;
 	overflow: visible;
 	margin: 0;
 	padding: 0;
+	box-shadow: 0 2px 5px #666;
+	-webkit-box-shadow: 0 2px 5px #666;
+	-moz-box-shadow: 0 2px 5px #666;
 }
 .jframe-shared li {
 	list-style: none;
