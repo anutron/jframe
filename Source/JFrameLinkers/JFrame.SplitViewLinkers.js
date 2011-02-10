@@ -27,13 +27,22 @@ script: JFrame.SplitViewLinkers.js
 (function(){
 
 var getWidget = function(link, container) {
+	var widget = link.retrieve('_splitviewTarget');
+	if (widget) return widget;
 	var splitview = link.getParent('.splitview');
 	if (!splitview) {
 		var target = link.getData('splitview-target');
 		if (target) splitview = container.getElement(target);
 		if (!splitview) return;
 	}
-	return splitview.get('widget');
+	widget = splitview.get('widget');
+	link.store('_splitviewTarget', widget);
+	widget.addEvent('fold', function(side, to, splitterhidden){
+		var target = link.get('widget') || link;
+		if (to > 0) target.addClass(side + '-open').addClass('splitview-open');
+		else target.removeClass(side + '-open').removeClass('splitview-open');
+	});
+	return widget;
 };
 JFrame.addGlobalLinkers({
 
@@ -57,7 +66,7 @@ JFrame.addGlobalLinkers({
 		if (!widget) return;
 		var resize = link.get('data', 'splitview-toggle', true);
 		if (!resize) return;
-		widget.toggle(resize.side, resize.hideSplitter, resize.noFx).chain(partialPostFold.bind(this, [resize, e, link]));
+		widget.toggle(resize.side, resize.hideSplitter, resize.noFx, resize.width).chain(partialPostFold.bind(this, [resize, e, link]));
 	}
 
 });
