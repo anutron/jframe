@@ -643,6 +643,10 @@ table[data-filters*=HtmlTable] tr.table-tr-selected td ul.context-menu li a {
 .jframe-shared ul.context-menu li:last-child {
 	border: none;
 }
+.jframe-shared ul.context-menu li a {
+	display: inline-block;
+	min-height: 16px;
+}
 /* button bar */
 input[data-filters*=ArtButton] {
 	padding: 0px 0px 0px 0px;
