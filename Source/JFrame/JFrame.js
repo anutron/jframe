@@ -598,8 +598,8 @@ JFrame = new Class({
 		force - (*boolean*) forces the behavior to reapply, even if it has already been applied; defaults to *false*.
 	*/
 	applyBehavior: function(name, element, force){
-		var behavior = this.behavior.getBehavior(name);
-		this.behavior.applyBehavior(element, behavior, force);
+		var behavior = this.behavior.getFilter(name);
+		this.behavior.applyFilter(element, behavior, force);
 	},
 
 	//Applies all the behavior filters for an element.
