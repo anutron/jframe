@@ -150,6 +150,12 @@ JFrame = new Class({
 			unregisterKeyboard: function(keyboard){
 				this.keyboard.drop(keyboard);
 			}.bind(this),
+			activateKeyboard: function() {
+				this.keyboard.activate();
+			}.bind(this),
+			deactivateKeyboard: function() {
+				this.keyboard.deactivate();
+			}.bind(this),
 			callClick: function(){
 				this.callClick.apply(this, arguments);
 			}.bind(this),
