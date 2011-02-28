@@ -37,7 +37,8 @@ Behavior.addGlobalFilters({
 			tabs: tabs,
 			sections: sections,
 			smooth: true,
-			smoothSize: true
+			smoothSize: true,
+			rearrangeDOM: false
 		});
 		element.store('TabSwapper', ts);
 	}
