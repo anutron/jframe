@@ -46,6 +46,7 @@ requires:
  - /Behavior.FlashMessage
  - /Behavior.HtmlTableCheckSelected
  - /Behavior.HtmlTableChromeHack
+ - /Behavior.HtmlTableClickSelected
  - /Behavior.HtmlTableKeyboard
  - /Behavior.HtmlTableLiveTreeKeyboard
  - /Behavior.HtmlTableMultiSelectMenu
