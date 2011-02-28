@@ -36,7 +36,7 @@ var events = {
 
 function HtmlTableCheckSelected(element){
 	element.retrieve('HtmlTable').addEvents(events);
-}
+};
 
 Behavior.addGlobalPlugin('HtmlTable', 'HtmlTableCheckSelected', HtmlTableCheckSelected);
 
