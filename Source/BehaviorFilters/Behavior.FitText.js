@@ -24,7 +24,6 @@ script: Behavior.FitText.js
 */
 
 (function(){
-	if (Browser.Engine.trident) return; //disable this for now as it's broken IE; bug #
 	/*
 		implements the FitText filter on an element; attaches to Behavior for events on resize
 		filter - the Behavior filter instance
@@ -100,6 +99,7 @@ script: Behavior.FitText.js
 		*/
 
 		FitText: function(element, behaviorAPI) {
+			if (Browser.Engine.trident) return; //disable this for now as it's broken IE; bug #
 			fitIt(this, element, behaviorAPI);
 		},
 
@@ -108,6 +108,7 @@ script: Behavior.FitText.js
 			for the elements to apply the FitText class to.
 		*/
 		'FitText-Children': function(element, behaviorAPI){
+			if (Browser.Engine.trident) return; //disable this for now as it's broken IE; bug #
 			var selector = element.get('data', 'fit-text');
 			element.getElements(selector).each(function(el){
 				fitIt(this, el, behaviorAPI, element);
