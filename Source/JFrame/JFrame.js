@@ -1014,17 +1014,25 @@ JFrame = new Class({
 		this.fireEvent('beforeRenderer', [content, content.options]);
 		//loop through all the renderers
 		for (name in this._renderers) {
-			var renderer = this._renderers[name];
-			dbug.conditional(function(){
-				rendered = renderer.call(this, content);
-			}.bind(this), function(e) {
-				dbug.error('renderer failed: name %s, error: ', e);
-			});
-			if (rendered) break;
+			if (this._applyRenderer(name, content)) {
+				rendered = true;
+				break;
+			}
 		}
 		//if no renderers returned true, then call the default one
 		if (!rendered) this._defaultRenderer(content);
 		this.fireEvent('afterRenderer', [content, content.options]);
+	},
+
+	_applyRenderer: function(name, content){
+		var renderer = this._renderers[name];
+		var rendered = false;
+		dbug.conditional(function(){
+			rendered = renderer.call(this, content);
+		}.bind(this), function(e) {
+			dbug.error('renderer failed: name %s, error: ', e);
+		});
+		return rendered;
 	},
 
 	/*
