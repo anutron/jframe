@@ -117,7 +117,7 @@ var setupAutoRefresh = function(content) {
 	//target refresh time
 	var timer,
 	startTimer = function(){
-		console.log('starting timer');
+		dbug.log('starting timer');
 		timer = (function(){
 			if (diff < 1) {
 				if (span) span.set('html', 0);
