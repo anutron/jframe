@@ -4,7 +4,7 @@
 		<a id="makeBrowser">Make a browser</a>
 		<script>
 			var makeWin = function(){
-				var jwin = new JFrame.Browser('http://localhost:9876/').inject($('mt-content'));
+				var jwin = new JFrame.Browser('/').inject($('mt-content'));
 			};
 			window.addEvent('domready', makeWin);
 			$('makeBrowser').addEvent('click', makeWin);
