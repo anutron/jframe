@@ -17,7 +17,7 @@
 ---
 description: Provides functionality for links that load content into a target element via ajax.
 provides: [JFrame.AjaxLoad]
-requires: [/JFrame]
+requires: [/JFrame, More-Behaviors/Behavior.FormRequest]
 script: JFrame.AjaxLoad.js
 ...
 */
@@ -28,7 +28,7 @@ script: JFrame.AjaxLoad.js
 		loads the contents of a link into a specific target
 		* event - the event object from the link click
 		* link - the link clicked
-		
+
 		notes:
 		* links have properties for one of data-ajax-append, data-ajax-replace, and data-ajax-target
 		* replace means destroy the target and replace it entirely with the response.
@@ -43,72 +43,107 @@ script: JFrame.AjaxLoad.js
 	var linkers = {};
 
 	['append', 'replace', 'target', 'after', 'before'].each(function(action){
-
 		linkers['[data-ajax-' + action + ']'] = function(event, link){
-			var target = $(this).getElement(link.get('data', 'ajax-' + action));
-			if (!target) {
-				link.erase('data-ajax-' + action);
-				dbug.log('could not ' + action + ' the target element with response; element matching selector %s was not found', link.get('data', 'ajax-' + action));
-				this.callClick(event, link, true);
-				return;
-			}
-
-			var requestTarget = target;
-			if (action != 'target') requestTarget = new Element('div');
-
-			var options = {
-				filter: link.get('data', 'ajax-filter'),
-				requestPath: link.get('href'),
-				spinnerTarget: target,
-				target: requestTarget,
-				onlyProcessPartials: true,
-				ignoreAutoRefresh: true,
-				suppressLoadComplete: true,
-				fullFrameLoad: false,
-				retainPath: true,
-				noScroll: true,
-				callback: function(data, caller){
-					if (caller !== "_defaultRenderer") {
-						// Only perform ajax replace for the default renderer.
-						return;
-					}
-					switch(action){
-						case 'replace':
-							//reverse the elements and inject them
-							//reversal is required since it injects each after the target
-							//pushing down the previously added element
-							data.elements.reverse().injectAfter(target);
-							target.destroy();
-							break;
-						case 'append':
-						case 'after':
-							//see note above in 'replace' case as to why we use reverse here
-							data.elements.reverse().injectAfter(target);
-							break;
-						case 'before':
-							data.elements.reverse().injectBefore(target);
-						//do nothing for update, as Request.HTML already does it for you
-					}
-					var state = {
-						event: event,
-						link: link,
-						target: target,
-						action: action
-					};
-					//pass along the data that came back from JFrame's response handler as well as the state of this ajax load.
-					this.fireEvent('ajaxLoad', [data, state]);
-					this.behavior.fireEvent('update', [data, state]);
-				}.bind(this)
-			};
-			var spinnerTarget = link.get('data', 'spinner-target');
-			if (spinnerTarget) {
-				spinnerTarget = $(this).getElement(spinnerTarget);
-				options.spinnerTarget = spinnerTarget;
-			}
-
-			this.load(options);
+			var options = configureOptions(link, action, event, $(this));
+			if (options) this.load(options);
+			else this.callClick(event, link, true);
 		};
 	});
 	JFrame.addGlobalLinkers(linkers);
 
+	//this runs AFTER Behavior.FormRequest
+	Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequestAjaxTargeting', function(element, behaviorAPI){
+		//get the Form.Request instance
+		var formRequest = element.get('formRequest');
+		formRequest.addEvent('send', function(form, query){
+			var options = {};
+			['append', 'replace', 'target', 'after', 'before'].each(function(action){
+				if (form.getData('ajax-' + action)) {
+					options = configureOptions(element, action, null, behaviorAPI.getContentElement()) || {};
+				}
+			}, this);
+			behaviorAPI.configureRequest(formRequest.request, options, true);
+		});
+	});
+
+	//configures the options for passing to JFrame's load method or through behaviorAPI's configureRequest method.
+	var configureOptions = function(element, action, event, containerElement){
+		var target,
+			selector = element.getData('ajax-' + action);
+		if (selector) {
+			if (selector == "parent") {
+				target = element.getParent();
+			} else if (selector == "self") {
+				target = element;
+			} else if (selector == "top") {
+				target = containerElement;
+			} else {
+				target = containerElement.getElement(selector);
+			}
+		}
+
+		if (!target) {
+			dbug.log('could not ' + action + ' the target element with response; element matching selector %s was not found', element.getData('ajax-' + action));
+			element.erase('data-ajax-' + action);
+			//we return here with no options; this allows the caller to do some default behavior.
+			return;
+		}
+
+		var requestTarget = target;
+		if (action != 'target') requestTarget = new Element('div');
+
+		var spinnerTarget = element.getData('spinner-target');
+		if (spinnerTarget) spinnerTarget = $(this).getElement(spinnerTarget);
+
+		return {
+			spinnerTarget: spinnerTarget || target,
+			target: requestTarget,
+			filter: element.getData('ajax-filter'),
+			requestPath: element.get('href'),
+			spinnerTarget: spinnerTarget || target,
+			target: requestTarget,
+			noScroll: true,
+			onlyProcessPartials: true,
+			ignoreAutoRefresh: true,
+			suppressLoadComplete: true,
+			fullFrameLoad: false,
+			retainPath: true,
+			callback: function(data, caller){
+				if (caller !== "_defaultRenderer") {
+					// Only perform ajax replace for the default renderer.
+					return;
+				}
+				switch(action){
+					case 'replace':
+						//reverse the elements and inject them
+						//reversal is required since it injects each after the target
+						//pushing down the previously added element
+						data.elements.reverse().injectAfter(target);
+						target.destroy();
+						break;
+					case 'append':
+					case 'after':
+						//see note above in 'replace' case as to why we use reverse here
+						data.elements.reverse().injectAfter(target);
+						break;
+					case 'before':
+						data.elements.reverse().injectBefore(target);
+					//do nothing for update, as Request.HTML already does it for you
+				}
+				var state = {
+					event: event,
+					target: target,
+					action: action
+				};
+				if (element.get('tag') == 'a') state.link = element;
+				else if (element.get('tag') == 'form') state.form = element;
+				//pass along the data that came back from JFrame's response handler as well as the state of this ajax load.
+				this.fireEvent('ajaxLoad', [data, state]);
+				this.behavior.fireEvent('update', [data, state]);
+			}
+		};
+	};
+
 })();
+
+

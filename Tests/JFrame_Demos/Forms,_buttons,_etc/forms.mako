@@ -40,6 +40,36 @@
 </div>
 
 <hr/>
+<h2>Form that replaces a target</h2>
+<div style="border: 1px solid #000; padding: 10px; margin: 10px 0px; max-height: 100px; overflow:auto;" class="ajax_form_replace">
+  <p>This text will <em>NOT</em> remain when the form below replaces itself.</p>
+  <form method="post" style="margin: 6px 0px 0px;" data-ajax-replace=".ajax_form_replace">
+    enter a value: <input type="text" name="prompt_value" value="Some text"/>
+    <input type="submit" name="submit"/>
+  </form>
+</div>
+
+<hr/>
+<h2>Form that inserts before a target</h2>
+<div style="border: 1px solid #000; padding: 10px; margin: 10px 0px; max-height: 100px; overflow:auto;">
+  <p class="ajax_form_before">The result will be inserted before this paragraph.</p>
+  <form method="post" style="margin: 6px 0px 0px;" data-ajax-before=".ajax_form_before">
+    enter a value: <input type="text" name="prompt_value" value="Some text"/>
+    <input type="submit" name="submit"/>
+  </form>
+</div>
+
+<hr/>
+<h2>Form that inserts after a target</h2>
+<div style="border: 1px solid #000; padding: 10px; margin: 10px 0px; max-height: 100px; overflow:auto;">
+  <p class="ajax_form_after">The result will be inserted after this paragraph.</p>
+  <form method="post" style="margin: 6px 0px 0px;" data-ajax-after=".ajax_form_after">
+    enter a value: <input type="text" name="prompt_value" value="Some text"/>
+    <input type="submit" name="submit"/>
+  </form>
+</div>
+
+<hr/>
 <h2>Form that updates by selector</h2>
 <form method="post" style="margin: 6px 0px 0px;" data-ajax-target=".ajax_form_target_by_selector">
   enter a value: <input type="text" name="prompt_value" value="Some text"/>

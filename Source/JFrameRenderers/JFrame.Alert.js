@@ -86,7 +86,7 @@ JFrame.addGlobalRenderers({
 					this.removeEvent('afterRenderer', alerter);
 				} else if (options.callback) {
 					var data = this.getCallbackData(content, target);
-					options.callback(data, "alert");
+					options.callback.apply(this, [data, "alert"]);
 				}
 			}
 		}.bind(this);

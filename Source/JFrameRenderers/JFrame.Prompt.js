@@ -91,7 +91,7 @@ JFrame.addGlobalRenderers({
 
 		if (options.callback) {
 			var data = this.getCallbackData(content, target);
-			options.callback(data, "prompt");
+			options.callback.apply(this, [data, "prompt"]);
 		}
 
 		return true;

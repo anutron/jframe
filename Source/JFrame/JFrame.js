@@ -183,13 +183,15 @@ JFrame = new Class({
 	/*
 		configureRequest - configures a passed in request to be have its response rendered within JFrame..
 		request - (* request object *) request object to be configured
+		force - (boolean) if true, will reconfigure a request that's previously been configured
 	*/
-	configureRequest: function(request, options){
+	configureRequest: function(request, options, force){
+		if (force) request.removeEvents('success');
 		this._setRequestOptions(request, $merge({
 			onSuccess: function(nodes, elements, text){
 				this._requestSuccessHandler(request, text, options);
 			}.bind(this)
-		}, options));
+		}, options), force);
 	},
 
 
@@ -796,7 +798,7 @@ JFrame = new Class({
 		options:
 			see renderContent
 	*/
-	_setRequestOptions: function(request, options) {
+	_setRequestOptions: function(request, options, force) {
 		/*
 			By default, there's only ever one request running per-jframe.
 			The linkers involved all create a new instance of request every time
@@ -804,7 +806,7 @@ JFrame = new Class({
 			that request instance from being "set up" twice, exit if there's already
 			a request and it's already been set up.
 		*/
-		if (request._jframeConfigured) return;
+		if (request._jframeConfigured && !force) return;
 		request._jframeConfigured = true;
 		request.setOptions($merge({
 			//determine if this request should be appearent to the user
@@ -1104,7 +1106,7 @@ JFrame = new Class({
 
 		// Let observers know
 		if (!options.suppressLoadComplete) this.fireEvent('loadComplete', data);
-		if (options.callback) options.callback(data, "_defaultRenderer");
+		if (options.callback) options.callback.apply(this, [data, "_defaultRenderer"]);
 	},
 
 	getCallbackData: function(content, target) {

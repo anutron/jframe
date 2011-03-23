@@ -42,6 +42,7 @@ JFrame.addGlobalFilters({
 
 });
 
+
 //this runs AFTER Behavior.FormRequest
 Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, behaviorAPI){
 	//get the Form.Request instance
@@ -49,31 +50,6 @@ Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, b
 	//tell it not to update anything
 	formRequest.request.options.update = null;
 	var options = {};
-	['append', 'replace', 'target', 'after', 'before'].each(function(action){
-		var selector = element.getData('ajax-' + action);
-		if (selector) {
-			var target;
-			if (selector == "parent") {
-				target = element.getParent();
-			} else if (selector =="self") {
-				target = element;
-			} else {
-				target = behaviorAPI.getContentElement().getElement(selector);
-			}
-			if (target) {
-				$extend(options, {
-					target: target,
-					spinnerTarget: target,
-					noScroll: true,
-					onlyProcessPartials: true,
-					ignoreAutoRefresh: true,
-					suppressLoadComplete: true,
-					fullFrameLoad: false,
-					retainPath: true
-				});
-			}
-		}
-	});
 	if (element.getData('ajax-filter')) options.filter = element.getData('ajax-filter');
 	//configure its request to use JFrame's response handler
 	behaviorAPI.configureRequest(formRequest.request, options);
@@ -81,11 +57,13 @@ Behavior.addGlobalPlugin('FormRequest', 'JFrameFormRequest', function(element, b
 	var pathUpdate = function(uri) {
 		element.set('action', uri);
 	};
-	if (element.get('data', 'live-path')) behaviorAPI.addEvent('rewritePath', pathUpdate);
+	if (element.getData('live-path')) behaviorAPI.addEvent('rewritePath', pathUpdate);
+
 	formRequest.addEvent('send', function(form, query){
-		formRequest.request.setOptions({
+		formRequest.setOptions({
 			formAction: form.get('action'),
-			formData: query
+			formData: query,
+			resetForm: false
 		});
 	});
 	this.markForCleanup(element, function() {
